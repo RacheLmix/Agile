@@ -1,4 +1,5 @@
 <?php
+use App\Controllers\admin\BookingController;
 // Create Router instance
 $router = new \Bramus\Router\Router();
 
@@ -12,9 +13,11 @@ $router->mount('', function () use ($router) {
         view('layout.layout');
     });
     //viết tiếp Router ở dưới!!
-    $router->mount('/users', function () use ($router){
-        $router->get('/index', UserControllers::class . '@index');
+    $router->mount('/admin', function () use ($router) {
+        $router->get('/booking', BookingController::class . '@index');
     });
+
+    $router->mount('/users', function () use ($router){});
 });
 
 // Run it!
