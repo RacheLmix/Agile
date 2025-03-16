@@ -1,3 +1,7 @@
+-- Tạo cơ sở dữ liệu homestaymanagement nếu chưa tồn tại
+CREATE DATABASE IF NOT EXISTS homestaymanagement;
+USE homestaymanagement;
+
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
@@ -28,7 +32,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bookings` (
-  `booking_id` int NOT NULL,
+  `id` int NOT NULL,
   `user_id` int DEFAULT NULL,
   `room_id` int DEFAULT NULL,
   `check_in` date NOT NULL,
@@ -46,7 +50,7 @@ CREATE TABLE `bookings` (
 --
 
 CREATE TABLE `categories` (
-  `category_id` int NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -58,7 +62,7 @@ CREATE TABLE `categories` (
 --
 
 CREATE TABLE `homestays` (
-  `homestay_id` int NOT NULL,
+  `id` int NOT NULL,
   `host_id` int DEFAULT NULL,
   `category_id` int DEFAULT NULL,
   `name` varchar(255) NOT NULL,
@@ -76,7 +80,7 @@ CREATE TABLE `homestays` (
 --
 
 CREATE TABLE `payments` (
-  `payment_id` int NOT NULL,
+  `id` int NOT NULL,
   `booking_id` int DEFAULT NULL,
   `amount` decimal(10,2) NOT NULL,
   `payment_method` enum('COD','credit_card','e_wallet','bank_transfer') NOT NULL,
@@ -91,7 +95,7 @@ CREATE TABLE `payments` (
 --
 
 CREATE TABLE `ratings` (
-  `rating_id` int NOT NULL,
+  `id` int NOT NULL,
   `user_id` int DEFAULT NULL,
   `homestay_id` int DEFAULT NULL,
   `score` int DEFAULT NULL,
@@ -105,7 +109,7 @@ CREATE TABLE `ratings` (
 --
 
 CREATE TABLE `reviews` (
-  `review_id` int NOT NULL,
+  `id` int NOT NULL,
   `user_id` int DEFAULT NULL,
   `homestay_id` int DEFAULT NULL,
   `rating` int DEFAULT NULL,
@@ -120,7 +124,7 @@ CREATE TABLE `reviews` (
 --
 
 CREATE TABLE `rooms` (
-  `room_id` int NOT NULL,
+  `id` int NOT NULL,
   `homestay_id` int DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `price` decimal(10,2) NOT NULL,
@@ -136,7 +140,7 @@ CREATE TABLE `rooms` (
 --
 
 CREATE TABLE `users` (
-  `user_id` int NOT NULL,
+  `id` int NOT NULL,
   `full_name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(15) NOT NULL,
@@ -154,7 +158,7 @@ CREATE TABLE `users` (
 -- Chỉ mục cho bảng `bookings`
 --
 ALTER TABLE `bookings`
-  ADD PRIMARY KEY (`booking_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `room_id` (`room_id`);
 
@@ -162,14 +166,14 @@ ALTER TABLE `bookings`
 -- Chỉ mục cho bảng `categories`
 --
 ALTER TABLE `categories`
-  ADD PRIMARY KEY (`category_id`),
+  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Chỉ mục cho bảng `homestays`
 --
 ALTER TABLE `homestays`
-  ADD PRIMARY KEY (`homestay_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `host_id` (`host_id`),
   ADD KEY `category_id` (`category_id`);
 
@@ -177,14 +181,14 @@ ALTER TABLE `homestays`
 -- Chỉ mục cho bảng `payments`
 --
 ALTER TABLE `payments`
-  ADD PRIMARY KEY (`payment_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `booking_id` (`booking_id`);
 
 --
 -- Chỉ mục cho bảng `ratings`
 --
 ALTER TABLE `ratings`
-  ADD PRIMARY KEY (`rating_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `homestay_id` (`homestay_id`);
 
@@ -192,7 +196,7 @@ ALTER TABLE `ratings`
 -- Chỉ mục cho bảng `reviews`
 --
 ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`review_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `homestay_id` (`homestay_id`);
 
@@ -200,14 +204,14 @@ ALTER TABLE `reviews`
 -- Chỉ mục cho bảng `rooms`
 --
 ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`room_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `homestay_id` (`homestay_id`);
 
 --
 -- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
+  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `phone` (`phone`);
 
@@ -219,93 +223,89 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `homestays`
 --
 ALTER TABLE `homestays`
-  MODIFY `homestay_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `rating_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `review_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `room_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
-
---
--- Các ràng buộc cho bảng `bookings`
---
 ALTER TABLE `bookings`
-  ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `homestays`
 --
 ALTER TABLE `homestays`
-  ADD CONSTRAINT `homestays_ibfk_1` FOREIGN KEY (`host_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `homestays_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `homestays_ibfk_1` FOREIGN KEY (`host_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `homestays_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL;
 
 --
 -- Các ràng buộc cho bảng `payments`
 --
 ALTER TABLE `payments`
-  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`booking_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `ratings`
 --
 ALTER TABLE `ratings`
-  ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`homestay_id`) REFERENCES `homestays` (`homestay_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`homestay_id`) REFERENCES `homestays` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `reviews`
 --
 ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`homestay_id`) REFERENCES `homestays` (`homestay_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`homestay_id`) REFERENCES `homestays` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `rooms`
 --
 ALTER TABLE `rooms`
-  ADD CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`homestay_id`) REFERENCES `homestays` (`homestay_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`homestay_id`) REFERENCES `homestays` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
@@ -313,7 +313,7 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 -- Inserting records into the `users` table
-INSERT INTO users (user_id, full_name, email, phone, password, role, status) VALUES
+INSERT INTO users (id, full_name, email, phone, password, role, status) VALUES
 (1, 'John Doe', 'john.doe@example.com', '1234567890', 'hashed_password', 'admin', 'active'),
 (2, 'Jane Smith', 'jane.smith@example.com', '0987654321', 'hashed_password', 'user', 'active'),
 (3, 'Alice Johnson', 'alice.j@example.com', '1230984567', 'hashed_password', 'user', 'active'),
@@ -321,7 +321,7 @@ INSERT INTO users (user_id, full_name, email, phone, password, role, status) VAL
 (5, 'Charlie Davis', 'charlie.d@example.com', '7890123456', 'hashed_password', 'guest', 'active');
 
 -- Inserting records into the `categories` table
-INSERT INTO categories (category_id, name, description) VALUES
+INSERT INTO categories (id, name, description) VALUES
 (1, 'Luxury', 'High-end luxury homestays for the ultimate comfort'),
 (2, 'Budget', 'Affordable homestays for budget travelers'),
 (3, 'Eco', 'Eco-friendly homestays for environmentally conscious guests'),
@@ -329,7 +329,7 @@ INSERT INTO categories (category_id, name, description) VALUES
 (5, 'Adventure', 'Homestays near adventure sports locations');
 
 -- Inserting records into the `homestays` table
-INSERT INTO homestays (homestay_id, host_id, category_id, name, location, description, rating) VALUES
+INSERT INTO homestays (id, host_id, category_id, name, location, description, rating) VALUES
 (1, 1, 1, 'Seaside Villa', 'Oceanview Boulevard, Miami', 'A luxurious seaside villa offering stunning ocean views.', 4.5),
 (2, 2, 2, 'Mountain Retreat', 'Highland Road, Denver', 'A budget-friendly lodge in the heart of the mountains.', 4.0),
 (3, 3, 3, 'Green Woods', 'Forest Lane, Portland', 'Eco-friendly cabins in the woods.', 4.8),
@@ -337,7 +337,7 @@ INSERT INTO homestays (homestay_id, host_id, category_id, name, location, descri
 (5, 5, 5, 'Adventure Basecamp', 'Valley Road, Boulder', 'Perfect spot for thrill-seekers looking to explore the rocky mountains.', 4.7);
 
 -- Inserting records into the `rooms` table
-INSERT INTO rooms (room_id, homestay_id, name, price, capacity, amenities) VALUES
+INSERT INTO rooms (id, homestay_id, name, price, capacity, amenities) VALUES
 (1, 1, 'Ocean Suite', 250.00, 2, 'King bed, Ensuite bathroom, Ocean view'),
 (2, 1, 'Beachfront Room', 200.00, 2, 'Queen bed, Direct beach access'),
 (3, 2, 'Mountain View', 100.00, 4, '2 Double beds, Mountain view'),
@@ -345,7 +345,7 @@ INSERT INTO rooms (room_id, homestay_id, name, price, capacity, amenities) VALUE
 (5, 4, 'Cultural Corner', 150.00, 2, 'Antique furniture, Cultural books collection');
 
 -- Inserting records into the `bookings` table
-INSERT INTO bookings (booking_id, user_id, room_id, check_in, check_out, guests, total_price, status) VALUES
+INSERT INTO bookings (id, user_id, room_id, check_in, check_out, guests, total_price, status) VALUES
 (1, 2, 1, '2023-12-20', '2023-12-25', 2, 1250.00, 'confirmed'),
 (2, 3, 3, '2023-12-15', '2023-12-18', 4, 400.00, 'confirmed'),
 (3, 4, 2, '2023-11-01', '2023-11-05', 2, 800.00, 'pending'),
