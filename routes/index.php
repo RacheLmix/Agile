@@ -47,6 +47,7 @@ $router->mount('', function () use ($router) {
         $router->get('/room/delete/{id}', CategoryController::class . '@delete');
 
         $router->get('/booking', BookingController::class . '@index');
+        $router->get('/booking/details/{id}', BookingController::class . '@details');
     });
 
     $router->mount('/users', function () use ($router){});
