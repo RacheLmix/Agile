@@ -19,9 +19,9 @@ $router->mount('', function () use ($router) {
         $router->get('/', HomeController::class . '@index');
         $router->get('/homestay', HomestayController::class . '@index');
         $router->get('/homestay/create', HomestayController::class . '@create');
-        $router->get('/homestay/store', HomestayController::class . '@store');
+        $router->post('/homestay/store', HomestayController::class . '@store');
         $router->get('/homestay/edit/{id}', HomestayController::class . '@edit');
-        $router->get('/homestay/update/{id}', HomestayController::class . '@update');
+        $router->post('/homestay/update/{id}', HomestayController::class . '@update');
         $router->get('/homestay/detail/{id}', HomestayController::class . '@detail');
         $router->get('/homestay/delete/{id}', HomestayController::class . '@delete');
 
