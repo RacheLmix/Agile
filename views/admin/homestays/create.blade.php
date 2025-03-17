@@ -77,10 +77,10 @@
 </style>
 
 <div class="create-container">
-    <a href="/admin/homestay" class="back-link">← Back to List</a>
+    <a href="/admin/homestays" class="back-link">← Back to List</a>
     <h1>Create New Homestay</h1>
     
-    <form class="create-form" action="/admin/homestay/store" method="POST" enctype="multipart/form-data">   
+    <form class="create-form" action="/admin/homestays/store" method="POST" enctype="multipart/form-data">   
         <div class="form-group">
             <label for="name">Homestay Name</label>
             <input type="text" id="name" name="name">

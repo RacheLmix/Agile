@@ -73,7 +73,7 @@
 </style>
 <div class="homestay-container">
     <h1>List Homestay</h1>
-    <a class="create" href="/admin/homestay/create">Create Homestay</a>
+    <a class="create" href="/admin/homestays/create">Create Homestay</a>
     <div class="homestay-list">
         @foreach ($homestays as $homestay)
             <div class="homestay-item">
@@ -84,7 +84,7 @@
                 <p><strong>Rating:</strong> {{ $homestay['rating'] }} / 5.0</p>
                 <a href="/admin/homestay/detail/{{ $homestay['id'] }}" class="btn btn-primary">View Details</a>
                 <a href="/admin/homestay/edit/{{ $homestay['id'] }}" class="btn btn-primary">Update</a>
-                <a onclick="return confirm('Bạn có chắc muốn xóa homestay {{ $homestay['name'] }} không?')" href="/admin/homestay/delete/{{ $homestay['id'] }}" class="btn btn-primary">Delete</a>
+                <a onclick="return confirm('Bạn có chắc muốn xóa homestay không?')" href="/admin/homestay/delete/{{ $homestay['id'] }}" class="btn btn-primary">Delete</a>
             </div>
         @endforeach
     </div>

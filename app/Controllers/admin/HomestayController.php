@@ -29,7 +29,7 @@ class HomestayController extends Controller{
         }
         $data['created_at'] = date('Y-m-d H:i:s');
         $this->homestays->insert($data);
-        redirect('/homestays');
+        redirect('/admin/homestays');
     }
     public function delete($id)
     {
@@ -38,6 +38,6 @@ class HomestayController extends Controller{
             unlink($homestay['image']);
         }
         $this->homestays->delete($id);
-        redirect('/admin/homestay');
+        redirect('/admin/homestays');
     }
 }
