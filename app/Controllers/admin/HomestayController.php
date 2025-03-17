@@ -30,6 +30,6 @@ class HomestayController extends Controller{
         }
         $data['created_at'] = date('Y-m-d H:i:s');
         $this->homestays->insert($data);
-        redirect('/homestays');
+        redirect('/admin/homestays');
     }
 }
