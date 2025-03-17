@@ -1,68 +1,111 @@
 @extends('admin.layout')
 @section('content')
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
             background-color: #f8f8f8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
 
-        .product-container {
-            display: flex;
+        .hotel-container {
+            margin-left: 500px;
+            max-width: 800px;
+            margin-top: 100px;
             background: #fff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            max-width: 700px;
-        }
-        .product-info {
-            margin-left: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .product-title {
-            font-size: 24px;
+        /* Tiêu đề */
+        .hotel-name {
             color: #333;
+            font-size: 24px;
+            margin-bottom: 5px;
         }
-        .product-price span {
-            color: red;
-            font-weight: bold;
+
+        /* Thông tin Booking */
+        .booking-details {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 10px;
         }
-        .product-description {
-            margin: 10px 0;
+
+        .booking-details p {
+            margin: 5px 0;
+            font-size: 16px;
         }
-        .buy-button {
-            background: #ff4d00;
+
+        .booking-details strong {
+            color: #007bff;
+        }
+
+        /* Đánh giá & Nhận xét */
+        .hotel-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .score {
+            background: #007bff;
             color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
+            padding: 10px;
             border-radius: 5px;
-            transition: 0.3s;
+            font-weight: bold;
+            font-size: 18px;
         }
-        .buy-button:hover {
-            background: #e60000;
+
+        .review p {
+            font-style: italic;
+            margin: 0;
+        }
+
+        .review span {
+            font-size: 12px;
+            color: #777;
         }
     </style>
-<div class="product-container">
-    <div class="product-info">
-        @if($booking['user_id'] == $users['id'])
-            <h1 class="product-title">{{$users['full_name']}}</h1>
-        @endif
-        <p class="product-price">Giá: <span>{{$booking['total_price']}}</span></p>
-        <p><span>{{$booking['check_in']}}</span></p>
-        <p><span>{{$booking['check_out']}}</span></p>
-        <p class="product-description">
-            Đây là một chiếc laptop gaming mạnh mẽ với CPU Intel Core i7, RAM 16GB, SSD 512GB.
-        </p>
-    </div>
-</div>
+
+    <div class="hotel-container">
+        <h1 class="hotel-name">Booking ID: {{$booking['id']}}</h1>
+        <!-- Thông tin chi tiết -->
+        <div class="booking-details">
+            @foreach($user as $users)
+                @if($booking['user_id'] == $users['id'])
+                    <p><strong>Khách hàng:</strong> {{$users['full_name']}}</p>
+                @endif
+            @endforeach
+                @foreach($room as $rooms)
+                    @if($booking['room_id'] == $rooms['id'])
+                        <p><strong>Phòng:</strong> {{$rooms['name']}}</p>
+                    @endif
+                @endforeach
+                <p><strong>Giá:</strong> {{ number_format($booking['total_price'], 0, ',', '.') }} VNĐ</p>
+                    <p><strong>Ngày đặt:</strong> {{date('d/m/Y H:i:s', strtotime($booking['created_at']))}}</p>
+            <p><strong>Trạng thái:</strong> {{$booking['status']}}</p>
+        </div>
+
+        <div class="hotel-info">
+            <div class="rating">
+                <div class="score">7.6</div>
+                <p>{{$booking['status']}}</p>
+            </div>
+            <div class="review">
+                <p>“Perfect location with easy accessibility to restaurants, shops, train and buses”</p>
+                <span>— Mohamed, United Kingdom 🇬🇧</span>
+            </div>
+        </div>
 @endsection

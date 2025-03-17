@@ -2,7 +2,6 @@
 namespace App\Controllers\admin;
 use App\Controller;
 use App\Models\Booking;
-use App\Model;
 use App\Models\Room;
 use App\Models\User;
 
@@ -24,8 +23,12 @@ class BookingController extends Controller{
     public function details($id)
     {
         $booking = $this->booking->find($id);
-        $rooms = $this->room->findAll();
-        $users = $this->user->findAll();
-        view('admin.booking.details', compact('booking', 'rooms', 'users'));
+        $room = $this->room->findAll();
+        $user = $this->user->findAll();
+        view('admin.booking.details', compact('booking', 'room', 'user'));
     }
+//    public function edit()
+//    {
+//
+//    }
 }
