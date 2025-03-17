@@ -31,4 +31,13 @@ class HomestayController extends Controller{
         $this->homestays->insert($data);
         redirect('/homestays');
     }
+    public function delete($id)
+    {
+        $homestay = $this->homestays->find($id);
+        if (file_exists($homestay['image'])) {
+            unlink($homestay['image']);
+        }
+        $this->homestays->delete($id);
+        redirect('/admin/homestay');
+    }
 }
