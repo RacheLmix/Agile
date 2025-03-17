@@ -24,12 +24,11 @@ class HomestayController extends Controller{
     }
     public function store(){
         $data = $_POST + $_FILES;
-        var_dump($data);
         if(is_upload('image')){
             $data['image'] = $this->uploadFile($data['image'], 'homestays');
         }
         $data['created_at'] = date('Y-m-d H:i:s');
         $this->homestays->insert($data);
-        redirect('/admin/homestays');
+        redirect('/homestays');
     }
 }

@@ -77,14 +77,14 @@
     <div class="homestay-list">
         @foreach ($homestays as $homestay)
             <div class="homestay-item">
-                <img src="{{ $homestay['image'] }}" alt="Image of {{ $homestay['name'] }}">
+                <img src="{{file_url($homestay['image'])}}" alt="Image of {{ $homestay['name'] }}">
                 <h3>{{ $homestay['name'] }}</h3>
                 <p><strong>Location:</strong> {{ $homestay['location'] }}</p>
                 <p><strong>Description:</strong> {{ $homestay['description'] }}</p>
                 <p><strong>Rating:</strong> {{ $homestay['rating'] }} / 5.0</p>
-                <a href="/admin/homestay/detail/{{ $homestay['homestay_id'] }}" class="btn btn-primary">View Details</a>
-                <a href="/admin/homestay/detail/{{ $homestay['homestay_id'] }}" class="btn btn-primary">Update</a>
-                <a href="/admin/homestay/detail/{{ $homestay['homestay_id'] }}" class="btn btn-primary">Delete</a>
+                <a href="/admin/homestay/detail/{{ $homestay['id'] }}" class="btn btn-primary">View Details</a>
+                <a href="/admin/homestay/edit/{{ $homestay['id'] }}" class="btn btn-primary">Update</a>
+                <a onclick="return confirm('Bạn có chắc muốn xóa homestay {{ $homestay['name'] }} không?')" href="/admin/homestay/delete/{{ $homestay['id'] }}" class="btn btn-primary">Delete</a>
             </div>
         @endforeach
     </div>

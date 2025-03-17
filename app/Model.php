@@ -36,7 +36,7 @@ class Model
     public function find($id)
     {
         $sql = $this->connection->createQueryBuilder();
-        $sql->select('*')->from($this->tableName)->where('id=:id')->setParameter('id', $id);
+        $sql->select('*')->from($this->tableName)->where('id = :id')->setParameter('id', $id);
         return $sql->fetchAssociative();
     }
     public function insert(array $data)
