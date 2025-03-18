@@ -48,6 +48,8 @@ $router->mount('', function () use ($router) {
 
         $router->get('/bookings', BookingController::class . '@index');
         $router->get('/bookings/details/{id}', BookingController::class . '@details');
+        $router->get('/bookings/edit/{id}', BookingController::class . '@edit');
+        $router->post('/bookings/update/{id}', BookingController::class . '@update');
     });
 
     $router->mount('/users', function () use ($router){});
