@@ -49,4 +49,5 @@ class Model
     public function delete($id){
         $this->connection->delete($this->tableName, ['id' => $id]);
     }
+
 }
