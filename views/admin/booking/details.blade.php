@@ -97,15 +97,5 @@
                     <p><strong>Ngày đặt:</strong> {{date('d/m/Y H:i:s', strtotime($booking['created_at']))}}</p>
             <p><strong>Trạng thái:</strong> {{$booking['status']}}</p>
         </div>
-
-        <div class="hotel-info">
-            <div class="rating">
-                <div class="score">7.6</div>
-                <p>{{$booking['status']}}</p>
-            </div>
-            <div class="review">
-                <p>“Perfect location with easy accessibility to restaurants, shops, train and buses”</p>
-                <span>— Mohamed, United Kingdom 🇬🇧</span>
-            </div>
-        </div>
+        <a href="/admin/bookings/">Back</a>
 @endsection

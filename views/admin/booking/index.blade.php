@@ -59,7 +59,8 @@
                     <td>{{ $book['total_price'] }}</td>
                     <td>{{ $book['status'] }}</td>
                     <td>
-                        <a href="/admin/booking/details/{{$book['id']}}">Details</a>
+                        <a href="/admin/bookings/details/{{$book['id']}}">Details</a>
+                        <a href="/admin/bookings/edit/{{$book['id']}}">Edit</a>
                     </td>
                 </tr>
             @endforeach

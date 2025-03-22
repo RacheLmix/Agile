@@ -110,6 +110,7 @@
     /* Homestay List */
     .homestay-list-container {
         flex: 1;
+        width: 100%;
     }
     
     .homestay-list-header {
@@ -117,6 +118,7 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 16px;
+        width: 80%;
     }
     
     .result-count {
@@ -145,6 +147,7 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
+        width: 80%;
     }
     
     .homestay-card {
@@ -531,7 +534,7 @@
                         <img src="{{ $homestay['image'] }}" alt="{{ $homestay['name'] }}">
                     </div>
                     <div class="homestay-details">
-                        <a href="{{ url('homestay/' . $homestay['id']) }}" class="homestay-name">{{ $homestay['name'] }}</a>
+                        <a href="{{ 'homestay/' . $homestay['id'] }}" class="homestay-name">{{ $homestay['name'] }}</a>
                         <div class="rating-badge">
                             <span class="rating-score">{{ number_format($homestay['rating'] ?? 0, 1) }}</span>
                             <span class="rating-text">
@@ -554,12 +557,6 @@
                             <i class="fas fa-comment"></i>
                             <span>{{ $homestay['description'] }}</span>
                         </p>
-                        <div class="price-container">
-                            <div class="price-label">Giá trung bình</div>
-                            <div class="price-value">{{ number_format($homestay['price'] ?? 500000, 0, ',', '.') }} VND</div>
-                            <div class="price-night">/ phòng / đêm</div>
-                            <a href="{{ url('homestay/' . $homestay['id']) }}" class="booking-button">Xem phòng trống</a>
-                        </div>
                     </div>
                 </div>
                 @endforeach
