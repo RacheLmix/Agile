@@ -6,7 +6,7 @@
 <style>
     .homestay-list {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(400px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(350px,1fr));
     }
     .container{
         margin: 70px 0 0 280px;
@@ -41,6 +41,9 @@
         margin-bottom: 10px;
         color: #666;
         font-size: 14px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .btn-primary {
@@ -80,11 +83,13 @@
                 <img src="{{file_url($homestay['image'])}}" alt="Image of {{ $homestay['name'] }}">
                 <h3>{{ $homestay['name'] }}</h3>
                 <p><strong>Location:</strong> {{ $homestay['location'] }}</p>
-                <p><strong>Description:</strong> {{ $homestay['description'] }}</p>
+                <p><strong>Address:</strong> {{ $homestay['address'] }}</p>
+                <p style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><strong>Description:</strong> {{ $homestay['description'] }}</p>
                 <p><strong>Rating:</strong> {{ $homestay['rating'] }} / 5.0</p>
-                <a href="/admin/homestay/detail/{{ $homestay['id'] }}" class="btn btn-primary">View Details</a>
-                <a href="/admin/homestay/edit/{{ $homestay['id'] }}" class="btn btn-primary">Update</a>
-                <a onclick="return confirm('Bạn có chắc muốn xóa homestay không?')" href="/admin/homestay/delete/{{ $homestay['id'] }}" class="btn btn-primary">Delete</a>
+                <p><strong>Category:</strong> {{ $homestay['category_name'] }} </p>
+                <a href="/admin/homestays/detail/{{ $homestay['id'] }}" class="btn btn-primary">View Details</a>
+                <a href="/admin/homestays/edit/{{ $homestay['id'] }}" class="btn btn-primary">Update</a>
+                <a onclick="return confirm('Bạn có chắc muốn xóa homestay không?')" href="/admin/homestays/delete/{{ $homestay['id'] }}" class="btn btn-primary">Delete</a>
             </div>
         @endforeach
     </div>

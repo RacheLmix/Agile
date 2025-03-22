@@ -66,7 +66,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.5px;  
     }
 
     .logo i {
@@ -405,14 +405,14 @@
         
         <ul class="menu">
             <li class="active"><a href="/admin" data-title="Trang chủ"><i class="fas fa-home"></i> <span>Trang chủ</span></a></li>
-            <li><a href="/admin/homestay" data-title="Homestay"><i class="fas fa-building"></i> <span>Homestay</span></a></li>
-            <li><a href="/admin/booking" data-title="Đặt phòng"><i class="fas fa-calendar-check"></i> <span>Đặt phòng</span></a></li>
+            <li><a href="/admin/homestays" data-title="Homestay"><i class="fas fa-building"></i> <span>Homestay</span></a></li>
+            <li><a href="/admin/bookings" data-title="Đặt phòng"><i class="fas fa-calendar-check"></i> <span>Đặt phòng</span></a></li>
             
             <div class="menu-divider"></div>
             
             <li><a href="#" data-title="Đánh giá"><i class="fas fa-star"></i> <span>Đánh giá</span></a></li>
-            <li><a href="/admin/user" data-title="Tài khoản"><i class="fas fa-user"></i> <span>Tài khoản</span></a></li>
-            <li><a href="#" data-title="Đăng xuất"><i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a></li>
+            <li><a href="/admin/users" data-title="Tài khoản"><i class="fas fa-user"></i> <span>Tài khoản</span></a></li>
+            <li><a href="#" data-title="Đăng xuất"><i class="       fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a></li>
         </ul>
     </div>
     <main>

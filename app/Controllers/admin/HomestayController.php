@@ -31,6 +31,31 @@ class HomestayController extends Controller{
         $this->homestays->insert($data);
         redirect('/admin/homestays');
     }
+    public function update($id){
+        $homestays = $this->homestays->find($id);
+        $data = $_POST + $_FILES;
+        if(is_upload('image')){
+            $data['image'] = $this->uploadFile($data['image'], 'homestays');
+            if($homestays['image'] && file_exists($homestays['image'])){
+                unlink($homestays['image']);
+            }
+        }else{
+            $data['image'] = $homestays['image'];
+        }
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        $this->homestays->update($id, $data);
+        redirect('/admin/homestays');
+    }
+    public function edit($id){
+        $categories = $this->categories->findAll();
+        $homestays = $this->homestays->find($id);
+        return view('admin.homestays.edit', compact('categories','homestays'));
+    }
+    public function detail($id){
+        $categories = $this->categories->findAll();
+        $homestays = $this->homestays->find($id);
+        return view('admin.homestays.detail', compact('categories','homestays'));
+    }
     public function delete($id)
     {
         $homestay = $this->homestays->find($id);
