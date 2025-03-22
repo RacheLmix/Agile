@@ -409,14 +409,11 @@
             <li><a href="/admin/bookings" data-title="Đặt phòng"><i class="fas fa-calendar-check"></i> <span>Đặt phòng</span></a></li>
             
             <div class="menu-divider"></div>
-            
+            <li><a href="/admin/rooms" data-title="Rooms"><i class="fa-solid fa-door-open"></i> <span>Phòng</span></a></li>
             <li><a href="#" data-title="Đánh giá"><i class="fas fa-star"></i> <span>Đánh giá</span></a></li>
             <li><a href="/admin/users" data-title="Tài khoản"><i class="fas fa-user"></i> <span>Tài khoản</span></a></li>
-<<<<<<< HEAD
+
             <li><a href="#" data-title="Đăng xuất"><i class="       fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a></li>
-=======
-            <li><a href="#" data-title="Đăng xuất"><i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a></li>
->>>>>>> 8e1e2ff6a38fb1336c0be78ffb625e5ec8303290
         </ul>
     </div>
     <main>
@@ -436,7 +433,9 @@
                 </div>
                 <div class="profile">
                     <img src="https://via.placeholder.com/40" alt="User">
-                    <span>Admin</span>
+                    <span>
+                         {{ $_SESSION['user']['full_name'] }}
+                    </span>
                 </div>
             </div>
         </header>
