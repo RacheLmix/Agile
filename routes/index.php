@@ -13,6 +13,7 @@ $router = new \Bramus\Router\Router();
 
 $router->get('/login', AuthController::class . '@showLoginForm');
 $router->post('/loginsession', AuthController::class . '@handleLogin');
+$router->get('/logout', AuthController::class . '@logout');
 $router->before('GET|POST', '/admin/.*', function () {
     if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'admin') {
         header('Location: /login');
@@ -49,11 +50,10 @@ $router->mount('', function () use ($router) {
 
         $router->get('/rooms', RoomController::class . '@index'); // Fixed: was using CategoryController
         $router->get('/rooms/create', RoomController::class . '@create');
-        $router->get('/rooms/store', RoomController::class . '@store');
+        $router->post('/rooms/store', RoomController::class . '@store');
         $router->get('/rooms/edit/{id}', RoomController::class . '@edit');
         $router->get('/rooms/update/{id}', RoomController::class . '@update');
-        $router->get('/rooms/detail/{id}', RoomController::class . '@detail');
-        $router->get('/rooms/delete/{id}', RoomController::class . '@delete');
+        $router->get('/rooms/detail/{id}', RoomController::class . '@show');
 
         $router->get('/bookings', BookingController::class . '@index');
         $router->get('/bookings/details/{id}', BookingController::class . '@details');
@@ -64,6 +64,7 @@ $router->mount('', function () use ($router) {
     $router->mount('/users', function () use ($router){
         // User specific routes can be added here
     });
+
 });
 
 // Run it!
