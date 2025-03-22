@@ -2,6 +2,15 @@
 
 @section('title', 'Homestay')
 
+@section('style')
+<style>
+    .homestay-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px,1fr));
+    }
+</style>
+@endsection
+
 @section('content')
 <style>
     .homestay-list {

@@ -9,7 +9,7 @@ class Homestay extends Model{
 
     public function findAllHomestaysWithDetails() {
         try {
-            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.rating, h.price, c.name AS category_name, u.full_name AS host_name
+            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.rating, c.name AS category_name, u.full_name AS host_name
                     FROM homestays h
                     LEFT JOIN categories c ON h.category_id = c.id
                     LEFT JOIN users u ON h.host_id = u.id
@@ -29,7 +29,7 @@ class Homestay extends Model{
     
     public function findHomestayWithDetails($id) {
         try {
-            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.ratin, c.name AS category_name, u.full_name AS host_name
+            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.rating, c.name AS category_name, u.full_name AS host_name
                     FROM homestays h
                     LEFT JOIN categories c ON h.category_id = c.id
                     LEFT JOIN users u ON h.host_id = u.id
