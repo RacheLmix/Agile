@@ -3,8 +3,7 @@
 <style>
     /* CSS cho container chính */
     .booking-container {
-        /* width: calc(100% - 50px); */
-        margin: 70px auto 30px 280px;
+        margin: 50px 0;
         background: white;
         padding: 20px;
         border-radius: 8px;

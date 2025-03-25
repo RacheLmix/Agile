@@ -50,7 +50,7 @@
 
 <style>
     .create-container {
-        margin: 70px 0 0 280px;
+        margin: 50px 0;
         padding: 20px;
     }
 
