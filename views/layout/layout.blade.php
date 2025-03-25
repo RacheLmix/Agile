@@ -41,7 +41,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             padding: 0 15px;
         }
@@ -863,7 +863,7 @@
             </div>
             <div class="logo-container">
                 <a href="/" class="logo">
-                    <img src="../Logo/icon.png" alt="Homestay" class="logo-img">
+                    <img src="../../Logo/icon.png" alt="Homestay" class="logo-img">
                 </a>
             </div>
             <div class="top-right">

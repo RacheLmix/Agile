@@ -530,11 +530,11 @@
                 @foreach($homestays as $homestay)
                 <!-- Homestay Item -->
                 <div class="homestay-card">
-                    <div class="homestay-image">
+                    <div class="homestay-image">    
                         <img src="{{ $homestay['image'] }}" alt="{{ $homestay['name'] }}">
                     </div>
                     <div class="homestay-details">
-                        <a href="{{ 'homestay/' . $homestay['id'] }}" class="homestay-name">{{ $homestay['name'] }}</a>
+                        <a href="{{ '/homestays/detail/' . $homestay['id'] }}" class="homestay-name">{{ $homestay['name'] }}</a>
                         <div class="rating-badge">
                             <span class="rating-score">{{ number_format($homestay['rating'] ?? 0, 1) }}</span>
                             <span class="rating-text">
