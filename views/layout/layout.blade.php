@@ -893,8 +893,8 @@
                     </a>
                     <a href="#" class="user-link">Hợp tác với chúng tôi</a>
                     <a href="#" class="user-link">Đặt chỗ của tôi</a>
-                    <a href="#" class="btn-login"><i class="fa-solid fa-user" style="margin-right: 5px;"></i>Đăng Nhập</a>
-                    <a href="#" class="btn-register">Đăng ký</a>
+                    <a href="/login" class="btn-login"><i class="fa-solid fa-user" style="margin-right: 5px;"></i>Đăng Nhập</a>
+                    <a href="/signin" class="btn-register">Đăng ký</a>
                 </div>
             </div>
         </div>

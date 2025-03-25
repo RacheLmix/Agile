@@ -8,6 +8,20 @@ class AuthController extends Controller{
     {
         $this->users = new User();
     }
+    public function showsignin()
+    {
+        return view('admin.auth.formsignup');
+    }
+    public function signin()
+    {
+        $data = $_POST + $_FILES;
+        if(is_upload('avatar')){
+            $data['avatar'] = $this->uploadFile($data['avatar'], 'avatar');
+        }
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $this->users->insert($data);
+        redirect('/admin/auth/');
+    }
     public function showLoginForm()
     {
         return view('admin.auth.index');

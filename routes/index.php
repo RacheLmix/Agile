@@ -13,6 +13,8 @@ use App\Controllers\admin\AuthController;
 $router = new \Bramus\Router\Router();
 
 $router->get('/login', AuthController::class . '@showLoginForm');
+$router->get('/signin', AuthController::class . '@showsignin');
+$router->post('/sign', AuthController::class . '@signin');
 $router->post('/loginsession', AuthController::class . '@handleLogin');
 $router->get('/logout', AuthController::class . '@logout');
 $router->before('GET|POST', '/admin/.*', function () {

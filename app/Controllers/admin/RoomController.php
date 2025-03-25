@@ -30,7 +30,8 @@ class RoomController extends Controller{
         if (empty($data['name']) || empty($data['description']) || empty($data['price'])) {
             $_SESSION['error'] = 'Vui lòng nhập đầy đủ thông tin phòng';
             header('Location: /admin/rooms/create');
-            exit();
+            exit(); 
+            
         }
         if(is_upload('image')){
             $data['image'] = $this->uploadFile($data['image'], 'rooms');
@@ -49,7 +50,7 @@ class RoomController extends Controller{
     }
     public function update($id)
     {
-
+        
     }
     public function show($id){
         $rooms = $this->rooms->find($id);
