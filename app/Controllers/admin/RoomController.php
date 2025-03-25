@@ -18,11 +18,11 @@ class RoomController extends Controller{
     }
     public function index(){
         $rooms = $this->rooms->findrooms();
-        return view('admin.room.index', compact('rooms'));
+        return view('admin.rooms.index', compact('rooms'));
     }
     public function create(){
         $homestays = $this->homestays->findAll();
-        return view('admin.room.create', compact('homestays'));
+        return view('admin.rooms.create', compact('homestays'));
     }
     public function store()
     {
@@ -45,7 +45,7 @@ class RoomController extends Controller{
     public function edit($id)
     {
         $room = $this->rooms->find($id);
-        return view('admin.room.edit', compact('room'));
+        return view('admin.rooms.edit', compact('room'));
     }
     public function update($id)
     {
@@ -54,6 +54,6 @@ class RoomController extends Controller{
     public function show($id){
         $rooms = $this->rooms->find($id);
         $homestays = $this->homestays->findAll();
-        return view('admin.room.details', compact('rooms', 'homestays'));
+        return view('admin.rooms.detail', compact('rooms', 'homestays'));
     }
 }

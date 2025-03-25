@@ -405,6 +405,7 @@
         
         <ul class="menu">
             <li class="active"><a href="/admin" data-title="Trang chủ"><i class="fas fa-home"></i> <span>Trang chủ</span></a></li>
+            <li><a href="/admin/categories" data-title="Category"><i class="fa-solid fa-layer-group"></i> <span>Category</span></a></li>
             <li><a href="/admin/homestays" data-title="Homestay"><i class="fas fa-building"></i> <span>Homestay</span></a></li>
             <li><a href="/admin/bookings" data-title="Đặt phòng"><i class="fas fa-calendar-check"></i> <span>Đặt phòng</span></a></li>
             

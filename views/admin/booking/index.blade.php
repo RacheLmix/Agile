@@ -11,18 +11,6 @@
             transition: margin-left 0.3s, width 0.3s;
         }
         
-        /* Áp dụng margin khi sidebar mở */
-        body.sidebar-open .table-container {
-            margin-left: 280px;
-            width: calc(100% - 330px);
-        }
-        
-        /* Áp dụng margin khi sidebar đóng */
-        body.sidebar-closed .table-container {
-            margin-left: 80px;
-            width: calc(100% - 130px);
-        }
-        
         .table-header {
             display: flex;
             justify-content: space-between;
@@ -132,12 +120,6 @@
             .table-container {
                 width: calc(100% - 40px);
                 margin: 70px 20px 30px 20px;
-            }
-            
-            body.sidebar-open .table-container,
-            body.sidebar-closed .table-container {
-                margin-left: 20px;
-                width: calc(100% - 40px);
             }
         }
     </style>

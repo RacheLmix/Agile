@@ -1,112 +1,143 @@
 @extends('admin.layout')
 @section('content')
 <style>
+    /* CSS cho container chính */
     .booking-container {
-        max-width: 600px;
-        margin: 20px auto;
-        background-color: #fff;
+        /* width: calc(100% - 50px); */
+        margin: 70px auto 30px 280px;
+        background: white;
+        padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        padding: 25px;
-        font-family: Arial, sans-serif;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+        transition: margin-left 0.3s, width 0.3s;
     }
-    
+
+    /* Tiêu đề */
     .booking-title {
-        text-align: center;
         color: #333;
-        margin-bottom: 20px;
-        font-size: 24px;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 15px;
+        font-size: 20px;
+        margin: 0 0 20px 0;
+        font-weight: 600;
+        text-align: center;
     }
-    
+
+    /* Thông tin chi tiết */
     .booking-info {
-        background-color: #f9f9f9;
-        padding: 15px;
-        border-radius: 5px;
-        margin-bottom: 20px;
+        margin-top: 15px;
     }
-    
+
     .booking-info p {
         margin: 10px 0;
-        font-size: 16px;
-        line-height: 1.5;
+        font-size: 14px;
+        color: #495057;
     }
-    
+
     .booking-info strong {
-        color: #555;
+        color: #0064be; /* Đồng bộ với btn-primary */
+        font-weight: 600;
         display: inline-block;
-        width: 100px;
+        width: 100px; /* Giữ chiều rộng cố định cho nhãn */
     }
-    
+
     .price-value {
-        color: #e74c3c;
+        color: #e74c3c; /* Giữ màu đỏ cho giá */
         font-weight: bold;
     }
-    
+
+    /* Form */
     .form-group {
         margin-bottom: 20px;
     }
-    
+
     .form-group label {
         display: block;
         margin-bottom: 8px;
-        font-weight: bold;
-        color: #555;
+        font-weight: 600;
+        color: #495057; /* Đồng bộ với bảng */
     }
-    
+
     .form-control {
         width: 100%;
         padding: 10px;
-        border: 1px solid #ddd;
+        border: 1px solid #eee; /* Đồng bộ với bảng */
         border-radius: 4px;
-        font-size: 16px;
+        font-size: 14px; /* Đồng bộ với bảng */
         box-sizing: border-box;
     }
-    
+
     .form-control:focus {
-        border-color: #4a90e2;
+        border-color: #0064be; /* Đồng bộ với btn-primary */
         outline: none;
+        box-shadow: 0 0 5px rgba(0, 100, 190, 0.3);
     }
-    
-    .btn-submit {
-        background-color: #4a90e2;
-        color: white;
+
+    /* Nút */
+    .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
         border: none;
+        display: inline-block;
+    }
+
+    .btn-submit {
+        background-color: #0064be; /* Đồng bộ với btn-primary */
+        color: white;
         padding: 12px 20px;
         width: 100%;
         border-radius: 4px;
-        font-size: 16px;
+        font-size: 14px;
         cursor: pointer;
         transition: background-color 0.3s;
     }
-    
+
     .btn-submit:hover {
-        background-color: #357ab8;
+        background-color: #004a8f; /* Tông đậm hơn khi hover */
     }
-    
+
+    .btn-back {
+        background-color: #ff9800; /* Đồng bộ với btn-warning */
+        color: white;
+        margin-top: 10px;
+    }
+
+    .btn-back:hover {
+        background-color: #e68900; /* Tông đậm hơn khi hover */
+    }
+
+    /* CSS cho trạng thái status */
+    .status {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        display: inline-block;
+    }
+
     .status-pending {
-        background-color: #fff8e1;
+        background-color: #fff8e6; /* Vàng nhạt */
+        color: #e6a700; /* Vàng đậm */
     }
-    
+
     .status-confirmed {
-        background-color: #e8f5e9;
+        background-color: #e6f7ee; /* Xanh nhạt */
+        color: #00b74a; /* Xanh lá */
     }
-    
+
     .status-cancelled {
-        background-color: #ffebee;
+        background-color: #feeaec; /* Hồng nhạt */
+        color: #f44336; /* Đỏ */
     }
-    
-    select option[value="pending"] {
-        background-color: #fff8e1;
-    }
-    
-    select option[value="confirmed"] {
-        background-color: #e8f5e9;
-    }
-    
-    select option[value="cancelled"] {
-        background-color: #ffebee;
+
+    /* Responsive cho màn hình nhỏ */
+    @media (max-width: 992px) {
+        .booking-container {
+            width: calc(100% - 40px);
+            margin: 70px 20px 30px 20px;
+        }
     }
 </style>
 
@@ -177,17 +208,17 @@
 </script>
 
 <div class="booking-container">
-    <h2 class="booking-title">Chi tiết đặt phòng</h2>
+    <h2 class="booking-title">Chỉnh sửa đặt phòng</h2>
     
     <div class="booking-info">
         @foreach($user as $users)
             @if($booking['user_id'] == $users['id'])
-                <p><strong>Khách hàng:</strong> {{$users['full_name']}}</p>
+                <p><strong>Khách hàng:</strong> {{ $users['full_name'] }}</p>
             @endif
         @endforeach
         @foreach($room as $rooms)
             @if($booking['room_id'] == $rooms['id'])
-                <p><strong>Phòng:</strong> {{$rooms['name']}}</p>
+                <p><strong>Phòng:</strong> {{ $rooms['name'] }}</p>
             @endif
         @endforeach
         <p><strong>Giá:</strong> <span class="price-value">{{ number_format($booking['total_price'], 0, ',', '.') }} VNĐ</span></p>
@@ -208,8 +239,8 @@
             </select>
         </div>
         
-        <button type="submit" class="btn-submit">Cập nhật đặt phòng</button>
-        <a href="/admin/bookings/" class="btn-back">Trở lại</a>
+        <button type="submit" class="btn btn-submit">Cập nhật đặt phòng</button>
+        <a href="/admin/bookings/" class="btn btn-back">Trở lại</a>
     </form>
 </div>
 @endsection
