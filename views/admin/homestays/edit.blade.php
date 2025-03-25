@@ -97,6 +97,16 @@
         </div>
 
         <div class="form-group">
+            <label for="location">Location</label>
+            <input id="location" name="location" value="{{ $homestays['location'] }}">
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input id="address" name="address" value="{{ $homestays['address'] }}">
+        </div>
+
+        <div class="form-group">
             <label for="category">Category</label>
             <select id="category" name="category_id">
                 @foreach ($categories as $category)

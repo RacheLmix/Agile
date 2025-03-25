@@ -262,30 +262,5 @@
             </div>
         </div>
     </div>
-    
-    <div class="rooms-section">
-        <h2>Available Rooms</h2>
-        
-        <div class="rooms-list">
-            @forelse ($rooms as $room)
-                <div class="room-card">
-                    <div class="room-image">
-                        <img src="{{ $room['image'] ?? '/images/default-room.jpg' }}" alt="{{ $room['name'] }}">
-                    </div>
-                    <div class="room-info">
-                        <h3>{{ $room['name'] }}</h3>
-                        <div class="room-price">${{ $room['price'] }} / night</div>
-                        <div class="room-details">
-                            <div><strong>Capacity:</strong> {{ $room['capacity'] }} guests</div>
-                            <div><strong>Amenities:</strong> {{ $room['amenities'] }}</div>
-                        </div>
-                        <a href="/admin/room/{{ $room['id'] }}" class="btn btn-primary">View Room</a>
-                    </div>
-                </div>
-            @empty
-                <p>No rooms available for this homestay.</p>
-            @endforelse
-        </div>
-    </div>
 </div>
 @endsection

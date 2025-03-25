@@ -1,95 +1,193 @@
 @extends('admin.layout')
 @section('content')
     <style>
-        /* Kiểu cơ bản cho bảng */
+        .table-container {
+            width: calc(100% - 300px);
+            margin: 70px 30px 30px 280px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .table-header h2 {
+            margin: 0;
+            color: #333;
+            font-size: 20px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: #0064be;
+            color: white;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            font-family: Arial, sans-serif;
+            font-size: 14px;
         }
 
-        /* Kiểu cho các ô tiêu đề */
-        table th {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-            border: 1px solid #dddddd;
+        th, td {
+            padding: 12px 15px;
             text-align: left;
+            border-bottom: 1px solid #eee;
         }
 
-        /* Kiểu cho các hàng xen kẽ */
-        table tbody tr:nth-child(odd) {
+        th {
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        tr:hover {
             background-color: #f8f9fa;
         }
-
-        /* Kiểu thông thường của các ô trong bảng */
-        table td {
-            padding: 10px;
-            border: 1px solid #dddddd;
+        
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
         }
-
-        /* Kiểu khi di chuột qua các hàng (hover) */
-        table tbody tr:hover {
-            background-color: #e9ecef;
+        
+        .status-active {
+            background-color: #e6f7ee;
+            color: #00b74a;
         }
-
-        /* Kiểu cho liên kết nút EDIT */
-        table td a {
-            display: inline-block;
-            background-color: #ffc107;
-            color: #212529;
-            text-decoration: none;
-            padding: 5px 10px;
+        
+        .status-inactive {
+            background-color: #fff8e6;
+            color: #e6a700;
+        }
+        
+        .status-banned {
+            background-color: #feeaec;
+            color: #f44336;
+        }
+        
+        .action-cell {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 12px;
             border-radius: 4px;
         }
-
-        table td a:hover {
-            background-color: #e0a800;
-        }
-
-        /* Kiểu cho nút tạo tài khoản mới */
-        a[href="/admin/users/create"] {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 15px;
-            background-color: #28a745;
+        
+        .btn-info {
+            background-color: #0064be;
             color: white;
-            text-decoration: none;
-            border-radius: 4px;
         }
-
-        a[href="/admin/users/create"]:hover {
-            background-color: #218838;
+        
+        .btn-warning {
+            background-color: #ff9800;
+            color: white;
+        }
+        
+        .empty-message {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+        }
+        
+        .role-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .role-admin {
+            background-color: #e6f7ee;
+            color: #00b74a;
+        }
+        
+        .role-user {
+            background-color: #e8f4f8;
+            color: #0064be;
+        }
+        
+        .role-guest {
+            background-color: #f8f9fa;
+            color: #6c757d;
         }
     </style>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Họ và tên</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Role</th>
-        <th>status</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($users as $user)
-        <tr>
-            <td>{{$user['id']}}</td>
-            <td>{{$user['full_name']}}</td>
-            <td>{{$user['email']}}</td>
-            <td>{{$user['phone']}}</td>
-            <td>{{$user['role']}}</td>
-            <td>{{$user['status']}}</td>
-            <td>
-                <a href="/admin/users/edit/{{$user['id']}}">EDIT</a>
-            </td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
-<a href="/admin/users/create">Tạo tài khoản mới</a>
+
+    <div class="table-container">
+        <div class="table-header">
+            <h2>Quản lý người dùng</h2>
+            <div class="action-buttons">
+                <a href="/admin/users/create" class="btn btn-primary">Tạo tài khoản mới</a>
+            </div>
+        </div>
+        
+        @if(count($users) > 0)
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Họ và tên</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($users as $user)
+                    <tr>
+                        <td>{{$user['id']}}</td>
+                        <td>{{$user['full_name']}}</td>
+                        <td>{{$user['email']}}</td>
+                        <td>{{$user['phone']}}</td>
+                        <td>
+                            <span class="role-badge role-{{strtolower($user['role'])}}">
+                                {{$user['role']}}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="status status-{{strtolower($user['status'])}}">
+                                {{ $user['status'] == 'active' ? 'Hoạt động' : 
+                                   ($user['status'] == 'inactive' ? 'Không hoạt động' : 'Đã khóa') }}
+                            </span>
+                        </td>
+                        <td class="action-cell">
+                            <a href="/admin/users/edit/{{$user['id']}}" class="btn-sm btn-warning">EDIT</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        @else
+        <div class="empty-message">
+            <p>Không có người dùng nào.</p>
+        </div>
+        @endif
+    </div>
 @endsection
