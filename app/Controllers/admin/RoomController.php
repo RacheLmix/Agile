@@ -50,7 +50,7 @@ class RoomController extends Controller{
     }
     public function update($id)
     {
-        
+
     }
     public function show($id){
         $rooms = $this->rooms->find($id);
