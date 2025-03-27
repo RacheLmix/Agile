@@ -70,9 +70,9 @@ $router->mount('', function () use ($router) {
         $router->post('/bookings/update/{id}', BookingController::class . '@update');
     });
 
-    $router->mount('/users', function () use ($router) {
-        // User specific routes can be added here
-    });
+//    $router->mount('/users', function () use ($router) {
+//        // User specific routes can be added here
+//    });
 });
 
 // Run it!
