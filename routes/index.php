@@ -32,7 +32,7 @@ $router->mount('', function () use ($router) {
     $router->get('/', ClientHomeController::class . '@index');
     $router->get('/homestays', ClientHomestayController::class . '@index');
     $router->get('/homestays/detail/{id}', ClientHomestayController::class . '@detail');
-    $router->post('/homestays/detail//{id}/book', ClientHomestayController::class . '@book');
+    $router->post('/homestays/detail/{id}/book', ClientHomestayController::class . '@book');
     //viết tiếp Router ở dưới!!
     $router->mount('/admin', function () use ($router) {
         $router->get('/', HomeController::class . '@index');
@@ -51,7 +51,7 @@ $router->mount('', function () use ($router) {
 
         $router->get('/categories', CategoryController::class . '@index');
         $router->get('/categories/create', CategoryController::class . '@create');
-        $router->get('/categories/store', CategoryController::class . '@store');
+        $router->post('/categories/store', CategoryController::class . '@store');
         $router->get('/categories/edit/{id}', CategoryController::class . '@edit');
         $router->post('/categories/update/{id}', CategoryController::class . '@update');
         $router->get('/categories/detail/{id}', CategoryController::class . '@detail');
@@ -61,7 +61,7 @@ $router->mount('', function () use ($router) {
         $router->get('/rooms/create', RoomController::class . '@create');
         $router->post('/rooms/store', RoomController::class . '@store');
         $router->get('/rooms/edit/{id}', RoomController::class . '@edit');
-        $router->get('/rooms/update/{id}', RoomController::class . '@update');
+        $router->post('/rooms/update/{id}', RoomController::class . '@update');
         $router->get('/rooms/detail/{id}', RoomController::class . '@show');
 
         $router->get('/bookings', BookingController::class . '@index');

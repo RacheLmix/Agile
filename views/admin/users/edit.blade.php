@@ -1,105 +1,127 @@
 @extends('admin.layout')
 @section('content')
-    <div class="status-container">
-        <p>Trạng thái hiện tại của tài khoản: <strong>{{ ucfirst($users['status']) }}</strong></p>
+<div class="create-container">
+    <a href="/admin/users" class="back-link">← Back to List</a>
+    <h1>Edit User Status</h1>
 
-        <form action="/admin/users/update/{{ $users['id'] }}" method="POST">
+    <div class="create-form">
+        <p>Current Account Status: <strong>{{ ucfirst($users['status']) }}</strong></p>
+
+        <form action="/admin/users/update/{{ $users['id'] }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="user_id" value="{{ $users['id'] }}">
-            <div>
-                <label>Full name</label>
-                <input type="text" disabled value="{{ $users['full_name'] }}">
-            </div>
-            <div>
-                <label>Email</label>
-                <input type="email" disabled value="{{ $users['email'] }}">
-            </div>
-            <div>
-                <label>Phone</label>
-                <input type="text" disabled value="{{ $users['phone'] }}">
+
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" disabled value="{{ $users['full_name'] }}">
             </div>
 
-            <label for="status">Chọn trạng thái:</label>
-            <select id="status" name="status">
-                @if($users['status'] === 'active')
-                    <option value="inactive">Inactive</option>
-                @elseif($users['status'] === 'inactive')
-                    <option value="banned">Banned</option>
-                @elseif($users['status'] === 'banned')
-                    <option disabled>Tài Khoản Đã Bị Cấm Vui lòng Liên Hệ Quản Trị Viên</option>
-                @else
-                    <option disabled>Không thể thay đổi tiếp</option>
-                @endif
-            </select>
-            <button type="submit" {{ $users['status'] === 'banned' ? '' : '' }}>Cập nhật</button>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" disabled value="{{ $users['email'] }}">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" disabled value="{{ $users['phone'] }}">
+            </div>
+
+            <div class="form-group">
+                <label for="status">Select Status</label>
+                <select id="status" name="status">
+                    @if($users['status'] === 'active')
+                        <option value="inactive">Inactive</option>
+                    @elseif($users['status'] === 'inactive')
+                        <option value="banned">Banned</option>
+                    @elseif($users['status'] === 'banned')
+                        <option disabled>Account Banned - Contact Administrator</option>
+                    @else
+                        <option disabled>No Further Changes Allowed</option>
+                    @endif
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn-submit" {{ $users['status'] === 'banned' ? 'disabled' : '' }}>Update Status</button>
+            </div>
         </form>
     </div>
+</div>
 
-    <style>
-        .status-container {
-            max-width: 500px;
-            margin: 40px auto;
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            background: #fcfcfc;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-        }
+<style>
+    .create-container {
+        margin: 50px 0;
+        padding: 20px;
+    }
 
-        /* Style cho các nhãn và input */
-        .status-container label {
-            margin-top: 15px;
-            font-weight: bold;
-            color: #555;
-        }
+    .create-form {
+        background: #ffffff;
+        border: 1px solid #ddd;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        .status-container input[disabled] {
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            color: #888;
-        }
+    .form-group {
+        margin-bottom: 20px;
+    }
 
-        /* Style chung cho input và select */
-        .status-container input,
-        .status-container select {
-            display: block;
-            width: 100%;
-            padding: 8px 10px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-            transition: border .3s ease-in-out, box-shadow .3s ease-in-out;
-        }
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: bold;
+    }
 
-        .status-container input:focus,
-        .status-container select:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
-        }
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
 
-        /* Style nút submit */
-        .status-container button {
-            margin-top: 25px;
-            padding: 10px 20px;
-            background-color: #3b82f6;
-            color: #fff;
-            font-weight: 600;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background .3s ease;
-        }
+    .form-group input[disabled] {
+        background-color: #f0f0f0;
+        color: #888;
+    }
 
-        .status-container button:hover {
-            background-color: #2563eb;
-        }
+    .btn-submit {
+        background-color: #4e73df;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
 
-        .status-container button:disabled {
-            background-color: #bbb;
-            cursor: not-allowed;
-        }
-    </style>
+    .btn-submit:hover {
+        background-color: #4056a1;
+    }
+
+    .btn-submit:disabled {
+        background-color: #bbb;
+        cursor: not-allowed;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #4e73df;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
 @endsection

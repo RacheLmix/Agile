@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th3 24, 2025 lúc 06:03 PM
+-- Thời gian đã tạo: Th3 25, 2025 lúc 08:21 AM
 -- Phiên bản máy phục vụ: 8.0.30
 -- Phiên bản PHP: 8.2.20
 
@@ -45,11 +45,11 @@ CREATE TABLE `bookings` (
 --
 
 INSERT INTO `bookings` (`id`, `user_id`, `room_id`, `check_in`, `check_out`, `guests`, `total_price`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, '2023-12-20', '2023-12-25', 2, 1250.00, 'confirmed', '2025-03-16 09:44:31', '2025-03-20 05:37:41'),
-(2, 3, 3, '2023-12-15', '2023-12-18', 4, 400.00, 'confirmed', '2025-03-16 09:44:31', '2025-03-20 05:37:41'),
-(3, 4, 2, '2023-11-01', '2023-11-05', 2, 800.00, 'pending', '2025-03-16 09:44:31', '2025-03-20 05:37:41'),
-(4, 5, 4, '2023-10-10', '2023-10-15', 2, 600.00, 'cancelled', '2025-03-16 09:44:31', '2025-03-20 05:37:41'),
-(5, 1, 5, '2023-09-05', '2023-09-10', 2, 750.00, 'confirmed', '2025-03-16 09:44:31', '2025-03-20 05:37:41');
+(1, 2, 1, '2023-12-20', '2023-12-25', 2, 1250.00, 'cancelled', '2025-03-16 02:44:31', '2025-03-25 08:07:34'),
+(2, 3, 3, '2023-12-15', '2023-12-18', 4, 400.00, 'confirmed', '2025-03-16 02:44:31', '2025-03-19 22:37:41'),
+(3, 4, 2, '2023-11-01', '2023-11-05', 2, 800.00, 'pending', '2025-03-16 02:44:31', '2025-03-19 22:37:41'),
+(4, 5, 4, '2023-10-10', '2023-10-15', 2, 600.00, 'cancelled', '2025-03-16 02:44:31', '2025-03-19 22:37:41'),
+(5, 1, 5, '2023-09-05', '2023-09-10', 2, 750.00, 'confirmed', '2025-03-16 02:44:31', '2025-03-19 22:37:41');
 
 -- --------------------------------------------------------
 
@@ -103,8 +103,8 @@ CREATE TABLE `homestays` (
 --
 
 INSERT INTO `homestays` (`id`, `host_id`, `category_id`, `name`, `location`, `address`, `city`, `country`, `description`, `image`, `rating`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Seaside Villa', 'Oceanview Boulevard, Miami', NULL, NULL, 'Vietnam', 'A luxurious seaside villa offering stunning ocean views.', NULL, 4.5, 'active', '2025-03-16 09:44:31', '2025-03-17 13:34:49'),
-(2, 2, 2, 'Libré Homestay Dao Tan', 'Hồ Tây', 'Số 2, Ngõ 118, Đào Tấn, Cống Vị, Quận Ba Đình, Hà Nội, Việt Nam', 'Hà Nội', 'Vietnam', 'Lưu ý: nơi nghỉ trước đây mang tên Libre Homestay Đao Tan Libré Homestay Dao Tan là một nơi nghỉ nằm trong khu vực an ninh, toạ lạc tại Cống Vị. Quầy tiếp tân 24 giờ luôn sẵn sàng phục vụ quý khách từ thủ tục nhận phòng đến trả phòng hay bất kỳ yêu cầu nào. Nếu cần giúp đỡ xin hãy liên hệ đội ngũ tiếp tân, chúng tôi luôn sẵn sàng hỗ trợ quý khách. Sóng WiFi phủ khắp các khu vực chung của nơi nghỉ cho phép quý khách luôn kết nối với gia đình và bè bạn.', 'https://ik.imagekit.io/tvlk/apr-asset/Ixf4aptF5N2Qdfmh4fGGYhTN274kJXuNMkUAzpL5HuD9jzSxIGG5kZNhhHY-p7nw/hotel/asset/10035778-265771da0b14f5d082b7fd93a73a9b79.jpeg?_src=imagekit&tr=dpr-2,c-at_max,f-jpg,fo-auto,h-332,pr-true,q-80,w-480', 4, 'active', '2025-03-16 09:44:31', '2025-03-24 17:58:33'),
+(1, 1, 1, 'Seaside Villa', 'Hồ Gươm', 'No. 29 Hang Chao Alley, Cát Linh, Quận Đống Đa, Hà Nội, Việt Nam', NULL, 'Vietnam', 'A luxurious seaside villa offering stunning ocean views.', 'storage/uploads/homestays/1742882459-dt2.jpeg', 4.5, 'active', '2025-03-16 09:44:31', '2025-03-24 23:03:25'),
+(2, 2, 2, 'Libré Homestay Dao Tan', 'Hồ Tây', 'Số 2, Ngõ 118, Đào Tấn, Cống Vị, Quận Ba Đình, Hà Nội, Việt Nam', 'Hà Nội', 'Vietnam', 'Lưu ý: nơi nghỉ trước đây mang tên Libre Homestay Đao Tan Libré Homestay Dao Tan là một nơi nghỉ nằm trong khu vực an ninh, toạ lạc tại Cống Vị. Quầy tiếp tân 24 giờ luôn sẵn sàng phục vụ quý khách từ thủ tục nhận phòng đến trả phòng hay bất kỳ yêu cầu nào. Nếu cần giúp đỡ xin hãy liên hệ đội ngũ tiếp tân, chúng tôi luôn sẵn sàng hỗ trợ quý khách. Sóng WiFi phủ khắp các khu vực chung của nơi nghỉ cho phép quý khách luôn kết nối với gia đình và bè bạn.', 'storage/uploads/homestays/1742839972-dt1.jpeg', 4, 'active', '2025-03-16 09:44:31', '2025-03-24 11:12:52'),
 (3, 3, 3, 'Green Woods', 'Forest Lane, Portland', NULL, NULL, 'Vietnam', 'Eco-friendly cabins in the woods.', NULL, 4.8, 'active', '2025-03-16 09:44:31', '2025-03-17 13:34:49'),
 (4, 4, 4, 'Heritage House', 'Old Town, Charleston', NULL, NULL, 'Vietnam', 'Experience the charm of the old city in our cultural homestay.', NULL, 4.3, 'active', '2025-03-16 09:44:31', '2025-03-17 13:34:49'),
 (5, 5, 5, 'Adventure Basecamp', 'Valley Road, Boulder', NULL, NULL, 'Vietnam', 'Perfect spot for thrill-seekers looking to explore the rocky mountains.', NULL, 4.7, 'active', '2025-03-16 09:44:31', '2025-03-17 13:34:49'),
@@ -174,7 +174,8 @@ CREATE TABLE `reviews` (
   `rating` int DEFAULT NULL,
   `comment` text,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` enum('active','pending','deleted') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -191,9 +192,6 @@ CREATE TABLE `rooms` (
   `price` decimal(10,2) NOT NULL,
   `quantity` int NOT NULL DEFAULT '1',
   `capacity` int NOT NULL,
-  `beds` varchar(100) DEFAULT NULL COMMENT 'e.g. 1 King, 2 Twin',
-  `size` int DEFAULT NULL COMMENT 'Room size in square meters',
-  `amenities` text,
   `image1` varchar(255) DEFAULT NULL,
   `image2` varchar(255) DEFAULT NULL,
   `image3` varchar(255) DEFAULT NULL,
@@ -206,12 +204,12 @@ CREATE TABLE `rooms` (
 -- Đang đổ dữ liệu cho bảng `rooms`
 --
 
-INSERT INTO `rooms` (`id`, `homestay_id`, `name`, `description`, `price`, `quantity`, `capacity`, `beds`, `size`, `amenities`, `image1`, `image2`, `image3`, `image4`, `status`, `updated_at`) VALUES
-(1, 1, 'Ocean Suite', NULL, 250.00, 1, 2, NULL, NULL, 'King bed, Ensuite bathroom, Ocean view', NULL, NULL, NULL, NULL, 'available', '2025-03-20 05:37:41'),
-(2, 1, 'Beachfront Room', NULL, 200.00, 1, 2, NULL, NULL, 'Queen bed, Direct beach access', NULL, NULL, NULL, NULL, 'available', '2025-03-20 05:37:41'),
-(3, 2, 'Mountain View', NULL, 100.00, 1, 4, NULL, NULL, '2 Double beds, Mountain view', NULL, NULL, NULL, NULL, 'available', '2025-03-20 05:37:41'),
-(4, 3, 'Eco Pod', NULL, 120.00, 1, 2, NULL, NULL, 'Sustainable materials, Minimalist design', NULL, NULL, NULL, NULL, 'available', '2025-03-20 05:37:41'),
-(5, 4, 'Cultural Corner', NULL, 150.00, 1, 2, NULL, NULL, 'Antique furniture, Cultural books collection', NULL, NULL, NULL, NULL, 'available', '2025-03-20 05:37:41');
+INSERT INTO `rooms` (`id`, `homestay_id`, `name`, `description`, `price`, `quantity`, `capacity`, `image1`, `image2`, `image3`, `image4`, `status`, `updated_at`) VALUES
+(1, 1, 'Phòng Deluxe', 'Phòng sang trọng với view biển', 1500.00, 2, 4, 'image1_deluxe.jpg', 'image2_deluxe.jpg', NULL, NULL, 'available', '2025-03-25 07:59:02'),
+(2, 1, 'Phòng Standard', 'Phòng tiêu chuẩn tiện nghi', 800.00, 3, 2, 'image1_standard.jpg', NULL, NULL, NULL, 'available', '2025-03-25 07:59:02'),
+(3, 2, 'Phòng Suite', 'Phòng cao cấp với ban công', 2500.00, 1, 6, 'image1_suite.jpg', 'image2_suite.jpg', 'image3_suite.jpg', NULL, 'unavailable', '2025-03-25 07:59:02'),
+(4, 3, 'Phòng Family', 'Phòng gia đình rộng rãi', 1800.00, 2, 5, 'image1_family.jpg', 'image2_family.jpg', NULL, NULL, 'maintenance', '2025-03-25 07:59:02'),
+(5, 2, 'Phòng Economy', 'Phòng tiết kiệm chi phí', 500.00, 5, 2, 'image1_economy.jpg', NULL, NULL, NULL, 'available', '2025-03-25 07:59:02');
 
 -- --------------------------------------------------------
 

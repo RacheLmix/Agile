@@ -1,101 +1,113 @@
 @extends('admin.layout')
 @section('content')
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f8f8;
-        }
-
+        /* CSS cho container chính */
         .hotel-container {
-            margin-left: 500px;
-            max-width: 800px;
-            margin-top: 100px;
-            background: #fff;
+            margin: 50px 0;
+            background: white;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+            transition: margin-left 0.3s, width 0.3s;
         }
 
         /* Tiêu đề */
         .hotel-name {
             color: #333;
-            font-size: 24px;
-            margin-bottom: 5px;
+            font-size: 20px;
+            margin: 0 0 20px 0;
+            font-weight: 600;
         }
 
-        /* Thông tin Booking */
+        /* Thông tin chi tiết */
         .booking-details {
             margin-top: 15px;
-            padding: 15px;
-            background: #f1f1f1;
-            border-radius: 10px;
         }
 
         .booking-details p {
-            margin: 5px 0;
-            font-size: 16px;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #495057;
         }
 
         .booking-details strong {
-            color: #007bff;
+            color: #0064be; /* Đồng bộ với btn-primary */
+            font-weight: 600;
         }
 
-        /* Đánh giá & Nhận xét */
-        .hotel-info {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 15px;
-            padding: 10px;
-            background: #f1f1f1;
-            border-radius: 10px;
+        /* Nút Back */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
         }
 
-        .rating {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .score {
-            background: #007bff;
+        .btn-primary {
+            background-color: #0064be;
             color: white;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 18px;
         }
 
-        .review p {
-            font-style: italic;
-            margin: 0;
-        }
-
-        .review span {
+        /* CSS cho trạng thái status */
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
             font-size: 12px;
-            color: #777;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background-color: #fff8e6; /* Vàng nhạt */
+            color: #e6a700; /* Vàng đậm */
+        }
+
+        .status-confirmed {
+            background-color: #e6f7ee; /* Xanh nhạt */
+            color: #00b74a; /* Xanh lá */
+        }
+
+        .status-cancelled {
+            background-color: #feeaec; /* Hồng nhạt */
+            color: #f44336; /* Đỏ */
+        }
+
+        /* Responsive cho màn hình nhỏ */
+        @media (max-width: 992px) {
+            .hotel-container {
+                width: calc(100% - 40px);
+                margin: 70px 20px 30px 20px;
+            }
         }
     </style>
 
     <div class="hotel-container">
-        <h1 class="hotel-name">Booking ID: {{$booking['id']}}</h1>
+        <h1 class="hotel-name">Booking ID: {{ $booking['id'] }}</h1>
         <!-- Thông tin chi tiết -->
         <div class="booking-details">
             @foreach($user as $users)
                 @if($booking['user_id'] == $users['id'])
-                    <p><strong>Khách hàng:</strong> {{$users['full_name']}}</p>
+                    <p><strong>Khách hàng:</strong> {{ $users['full_name'] }}</p>
                 @endif
             @endforeach
-                @foreach($room as $rooms)
-                    @if($booking['room_id'] == $rooms['id'])
-                        <p><strong>Phòng:</strong> {{$rooms['name']}}</p>
-                    @endif
-                @endforeach
-                <p><strong>Giá:</strong> {{ number_format($booking['total_price'], 0, ',', '.') }} VNĐ</p>
-                    <p><strong>Ngày đặt:</strong> {{date('d/m/Y H:i:s', strtotime($booking['created_at']))}}</p>
-            <p><strong>Trạng thái:</strong> {{$booking['status']}}</p>
+            @foreach($room as $rooms)
+                @if($booking['room_id'] == $rooms['id'])
+                    <p><strong>Phòng:</strong> {{ $rooms['name'] }}</p>
+                @endif
+            @endforeach
+            <p><strong>Giá:</strong> {{ number_format($booking['total_price'], 0, ',', '.') }} VNĐ</p>
+            <p><strong>Ngày đặt:</strong> {{ date('d/m/Y H:i:s', strtotime($booking['created_at'])) }}</p>
+            <p><strong>Trạng thái:</strong> 
+                <span class="status status-{{ strtolower($booking['status']) }}">
+                    {{ $booking['status'] == 'pending' ? 'Đang chờ' : 
+                       ($booking['status'] == 'confirmed' ? 'Đã xác nhận' : 'Đã hủy') }}
+                </span>
+            </p>
+            <a href="/admin/bookings/" class="btn btn-primary">Quay lại</a>
         </div>
-        <a href="/admin/bookings/">Back</a>
+    </div>
 @endsection
