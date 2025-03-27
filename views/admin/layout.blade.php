@@ -97,7 +97,6 @@
         /* Menu */
         .menu {
             list-style-type: none;
-            padding: 10px 0;
         }
 
         .menu li {
@@ -400,10 +399,10 @@
             <li><a href="/admin/bookings"><i class="fas fa-calendar-check"></i> <span>Đặt phòng</span></a></li>
             <div class="menu-divider"></div>
             <li><a href="/admin/rooms"><i class="fa-solid fa-door-open"></i> <span>Phòng</span></a></li>
-            <li><a href="/admin/amenities"><i class="fa-solid fa-door-open"></i> <span>Tiện ích</span></a></li>
+            <li><a href="/admin/amenities"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Tiện ích</span></a></li>
             <li><a href="/admin/ratings"><i class="fas fa-star"></i> <span>Đánh giá</span></a></li>
             <li><a href="/admin/users"><i class="fas fa-user"></i> <span>Tài khoản</span></a></li>
-            <li><a href="#"><i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a></li>
+            <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a></li>
         </ul>
     </div>
     <main>
@@ -421,7 +420,7 @@
                     <span class="badge">3</span>
                 </div>
                 <div class="profile">
-                    <img src="https://via.placeholder.com/40" alt="User">
+                    <img src="" alt="User">
                     <span>{{ $_SESSION['user']['full_name'] }}</span>
                 </div>
             </div>

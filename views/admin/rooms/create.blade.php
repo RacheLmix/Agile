@@ -1,6 +1,9 @@
 @extends('admin.layout')
 @section('content')
     <style>
+        .d-none {
+            display: none !important;
+        }
         /* Container chính */
         .create-container {
             margin: 50px 0;
@@ -143,17 +146,15 @@
     <div class="create-container">
         <a href="/admin/rooms" class="back-link">← Quay lại</a>
         <h1>Thêm Phòng Mới</h1>
-
         @if(isset($_SESSION['error']))
             <div class="error-message">
                 {{ $_SESSION['error'] }}
                 <button type="button" class="close" onclick="this.parentElement.style.display='none'">×</button>
-                <?php unset($_SESSION['error']); ?>
             </div>
+            @unset($_SESSION['error'])
         @endif
 
         <form action="/admin/rooms/store" method="POST" enctype="multipart/form-data">
-            @csrf
             <div class="form-group">
                 <label for="name">Tên phòng</label>
                 <input type="text" id="name" name="name" required>
@@ -200,12 +201,35 @@
 
             <div class="form-group">
                 <label for="image">Ảnh phòng</label>
-                <input type="file" id="image" name="image" accept="image/*">
+                <input type="file" id="image" name="image1" accept="image/*">
                 <div class="image-preview" id="imagePreview">
                     <img src="" alt="Ảnh xem trước" class="img-preview d-none">
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="image2">Ảnh phụ 1</label>
+                <input type="file" id="image2" name="image2" accept="image/*">
+                <div class="image-preview" id="preview2">
+                    <img src="" alt="Ảnh xem trước" class="img-preview d-none">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="image3">Ảnh phụ 2</label>
+                <input type="file" id="image3" name="image3" accept="image/*">
+                <div class="image-preview" id="preview3">
+                    <img src="" alt="Ảnh xem trước" class="img-preview d-none">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="image4">Ảnh phụ 3</label>
+                <input type="file" id="image4" name="image4" accept="image/*">
+                <div class="image-preview" id="preview4">
+                    <img src="" alt="Ảnh xem trước" class="img-preview d-none">
+                </div>
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn-submit">Thêm Phòng</button>
             </div>
@@ -213,36 +237,66 @@
     </div>
 
     <script>
-        document.getElementById('image').addEventListener('change', function (e) {
-            const previewImg = document.querySelector('.img-preview');
-            if (this.files && this.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    previewImg.src = e.target.result;
-                    previewImg.classList.remove('d-none');
-                }
-                reader.readAsDataURL(this.files[0]);
-            } else {
-                previewImg.classList.add('d-none');
+        document.addEventListener('DOMContentLoaded', function () {
+            function previewImage(inputId, previewId) {
+                const imageInput = document.getElementById(inputId);
+                const previewContainer = document.getElementById(previewId);
+                const previewImg = previewContainer.querySelector('.img-preview');
+
+                imageInput.addEventListener('change', function () {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            previewImg.src = e.target.result;
+                            previewImg.classList.remove('d-none'); // Sử dụng classList.remove thay vì style.display
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                    } else {
+                        previewImg.classList.add('d-none'); // Ẩn ảnh nếu không có file
+                    }
+                });
             }
+
+            // Gọi hàm cho từng input ảnh
+            previewImage('image', 'imagePreview');
+            previewImage('image2', 'preview2');
+            previewImage('image3', 'preview3');
+            previewImage('image4', 'preview4');
         });
 
-        // Validation đơn giản
-        document.querySelector('.create-form').addEventListener('submit', function (e) {
-            const requiredFields = this.querySelectorAll('[required]');
-            let isValid = true;
-            requiredFields.forEach(field => {
-                if (!field.value) {
-                    isValid = false;
-                    field.style.borderColor = '#e74c3c';
-                } else {
-                    field.style.borderColor = '#ddd';
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                let isValid = true;
+                const requiredFields = this.querySelectorAll('[required]');
+
+                requiredFields.forEach(field => {
+                    const errorSpan = field.nextElementSibling;
+                    if (!field.value.trim()) {
+                        isValid = false;
+                        field.style.borderColor = '#e74c3c';
+
+                        // Thêm thông báo lỗi nếu chưa có
+                        if (!errorSpan || !errorSpan.classList.contains('error-text')) {
+                            const errorMessage = document.createElement('span');
+                            errorMessage.classList.add('error-text');
+                            errorMessage.style.color = '#e74c3c';
+                            errorMessage.style.fontSize = '12px';
+                            errorMessage.innerText = 'Trường này là bắt buộc!';
+                            field.insertAdjacentElement('afterend', errorMessage);
+                        }
+                    } else {
+                        field.style.borderColor = '#ddd';
+                        if (errorSpan && errorSpan.classList.contains('error-text')) {
+                            errorSpan.remove();
+                        }
+                    }
+                });
+
+                if (!isValid) {
+                    e.preventDefault();
+                    alert('Vui lòng điền đầy đủ các trường bắt buộc!');
                 }
             });
-            if (!isValid) {
-                e.preventDefault();
-                alert('Vui lòng điền đầy đủ các trường bắt buộc!');
-            }
-        });
+        }
     </script>
 @endsection

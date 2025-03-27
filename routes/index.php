@@ -18,6 +18,8 @@ use App\Controllers\admin\AmenityController;
 $router = new \Bramus\Router\Router();
 
 $router->get('/login', AuthController::class . '@showLoginForm');
+$router->get('/signin', AuthController::class . '@showsignin');
+$router->post('/sign', AuthController::class . '@signin');
 $router->post('/loginsession', AuthController::class . '@handleLogin');
 $router->get('/logout', AuthController::class . '@logout');
 $router->before('GET|POST', '/admin/.*', function () {
@@ -32,7 +34,7 @@ $router->mount('', function () use ($router) {
     $router->get('/', ClientHomeController::class . '@index');
     $router->get('/homestays', ClientHomestayController::class . '@index');
     $router->get('/homestays/detail/{id}', ClientHomestayController::class . '@detail');
-    $router->post('/homestays/detail//{id}/book', ClientHomestayController::class . '@book');
+    $router->post('/homestays/detail/{id}/book', ClientHomestayController::class . '@book');
     //viết tiếp Router ở dưới!!
     $router->mount('/admin', function () use ($router) {
         $router->get('/', HomeController::class . '@index');
@@ -46,14 +48,14 @@ $router->mount('', function () use ($router) {
 
         $router->get('/users', UserController::class . '@index');
         $router->get('/users/edit/{id}', UserController::class . '@edit');
-        $router->get('/users/update/{id}', UserController::class . '@update');
+        $router->post('/users/update/{id}', UserController::class . '@update');
         $router->get('/users/detail/{id}', UserController::class . '@detail');
 
         $router->get('/categories', CategoryController::class . '@index');
         $router->get('/categories/create', CategoryController::class . '@create');
-        $router->get('/categories/store', CategoryController::class . '@store');
+        $router->post('/categories/store', CategoryController::class . '@store');
         $router->get('/categories/edit/{id}', CategoryController::class . '@edit');
-        $router->get('/categories/update/{id}', CategoryController::class . '@update');
+        $router->post('/categories/update/{id}', CategoryController::class . '@update');
         $router->get('/categories/detail/{id}', CategoryController::class . '@detail');
         $router->get('/categories/delete/{id}', CategoryController::class . '@delete');
 
@@ -61,7 +63,7 @@ $router->mount('', function () use ($router) {
         $router->get('/rooms/create', RoomController::class . '@create');
         $router->post('/rooms/store', RoomController::class . '@store');
         $router->get('/rooms/edit/{id}', RoomController::class . '@edit');
-        $router->get('/rooms/update/{id}', RoomController::class . '@update');
+        $router->post('/rooms/update/{id}', RoomController::class . '@update');
         $router->get('/rooms/detail/{id}', RoomController::class . '@show');
 
         $router->get('/bookings', BookingController::class . '@index');

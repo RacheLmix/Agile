@@ -140,9 +140,9 @@
     <div class="table-container">
         <div class="table-header">
             <h2>Quản lý người dùng</h2>
-            <div class="action-buttons">
-                <a href="/admin/users/create" class="btn btn-primary">Tạo tài khoản mới</a>
-            </div>
+{{--            <div class="action-buttons">--}}
+{{--                <a href="/admin/users/create" class="btn btn-primary">Tạo tài khoản mới</a>--}}
+{{--            </div>--}}
         </div>
         
         @if(count($users) > 0)
