@@ -82,13 +82,10 @@
 
         /* Image preview */
         .image-preview {
-            width: 100%;
+            width: 15%;
             min-height: 100px;
             border: 1px dashed #ddd;
             border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 10px;
             margin-top: 10px;
         }
@@ -98,7 +95,7 @@
         }
 
         .img-preview {
-            max-height: 100px;
+            max-width: 100%;
             width: auto;
             border-radius: 4px;
         }
@@ -140,6 +137,12 @@
             right: 10px;
             top: 10px;
             cursor: pointer;
+        }
+        .image{
+            width: 15%;
+            border-radius: 4px;
+            border: 1px dashed #ddd;
+            padding: 10px;
         }
     </style>
 
@@ -201,6 +204,7 @@
 
             <div class="form-group">
                 <label for="image">Ảnh phòng</label>
+                <img src="{{ file_url($room['image1']) }}" class="image" alt="">
                 <input type="file" id="image" name="image1" accept="image/*">
                 <div class="image-preview" id="imagePreview">
                     <img src="" alt="Ảnh xem trước" class="img-preview d-none">
@@ -209,6 +213,7 @@
 
             <div class="form-group">
                 <label for="image2">Ảnh phụ 1</label>
+                <img src="{{ file_url($room['image2']) }}" class="image" alt="">
                 <input type="file" id="image2" name="image2" accept="image/*">
                 <div class="image-preview" id="preview2">
                     <img src="" alt="Ảnh xem trước" class="img-preview d-none">
@@ -217,6 +222,7 @@
 
             <div class="form-group">
                 <label for="image3">Ảnh phụ 2</label>
+                <img src="{{ file_url($room['image3']) }}" class="image" alt="">
                 <input type="file" id="image3" name="image3" accept="image/*">
                 <div class="image-preview" id="preview3">
                     <img src="" alt="Ảnh xem trước" class="img-preview d-none">
@@ -225,6 +231,7 @@
 
             <div class="form-group">
                 <label for="image4">Ảnh phụ 3</label>
+                <img src="{{ file_url($room['image4']) }}" class="image" alt="">
                 <input type="file" id="image4" name="image4" accept="image/*">
                 <div class="image-preview" id="preview4">
                     <img src="" alt="Ảnh xem trước" class="img-preview d-none">

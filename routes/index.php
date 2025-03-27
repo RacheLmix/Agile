@@ -12,6 +12,8 @@ use App\Controllers\admin\UserController;
 use App\Controllers\client\HomeController as ClientHomeController;
 use App\Controllers\client\HomestayController as ClientHomestayController;
 use App\Controllers\admin\AuthController;
+use App\Controllers\admin\RatingController;
+use App\Controllers\admin\AmenityController;
 
 $router = new \Bramus\Router\Router();
 
@@ -68,6 +70,20 @@ $router->mount('', function () use ($router) {
         $router->get('/bookings/details/{id}', BookingController::class . '@details');
         $router->get('/bookings/edit/{id}', BookingController::class . '@edit');
         $router->post('/bookings/update/{id}', BookingController::class . '@update');
+
+        $router->get('/', RatingController::class . '@index');
+        $router->get('/ratings', RatingController::class . '@index');
+        $router->get('/ratings/edit/{id}', RatingController::class . '@edit');
+        $router->post('/ratings/update/{id}', RatingController::class . '@update');
+        $router->get('/ratings/detail/{id}', RatingController::class . '@detail');
+
+        $router->get('/amenities', AmenityController::class. '@index');
+        $router->get('/amenities/create', AmenityController::class. '@create');
+        $router->post('/amenities/store', AmenityController::class. '@store');
+        $router->get('/amenities/edit/{id}', AmenityController::class. '@edit');
+        $router->post('/amenities/update/{id}', AmenityController::class. '@update');
+        $router->get('/amenities/detail/{id}', AmenityController::class. '@detail');
+        $router->get('/amenities/delete/{id}', AmenityController::class. '@delete');
     });
 
 //    $router->mount('/users', function () use ($router) {

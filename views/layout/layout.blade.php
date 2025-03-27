@@ -34,12 +34,7 @@
             color: inherit;
         }
 
-        /* Header Styles */
-        .site-header {
-            width: 100%;
-            position: relative;
-        }
-
+        /* Container */
         .container {
             max-width: 1300px;
             margin: 0 auto;
@@ -53,7 +48,7 @@
             color: white;
             position: relative;
         }
-        .background img{
+        .background img {
             z-index: -1;
             position: absolute;
             right: 0;
@@ -125,7 +120,7 @@
             font-weight: 600;
         }
 
-        .user-link:hover{
+        .user-link:hover {
             background-color: #999;
             opacity: 0.5;
             border-radius: 3px;
@@ -175,7 +170,8 @@
             display: flex;
             align-items: center;
         }
-        .nav-link:hover{
+
+        .nav-link:hover {
             background-color: #999;
             opacity: 0.5;
             border-radius: 3px;
@@ -212,16 +208,6 @@
             color: white;
         }
 
-        .hero-banner:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
-        }
-
         .hero-content {
             position: absolute;
             bottom: 12%;
@@ -253,10 +239,6 @@
             position: relative;
             z-index: 2;
             margin-bottom: 30px;
-        }
-
-        .search-form-header {
-            width: 100%;
         }
 
         .search-form {
@@ -303,11 +285,6 @@
             background: transparent;
         }
 
-        .input-with-icon input:focus {
-            outline: none;
-            border-color: #0770cd;
-        }
-
         .search-button {
             background-color: #ff5e1f;
             color: white;
@@ -320,48 +297,7 @@
             align-items: center;
             justify-content: center;
             font-size: 18px;
-            margin-top: 23px; /* Để căn chỉnh với các input khác */
-        }
-
-        .search-button:hover {
-            background-color: #e54e19;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 992px) {
-            .search-form {
-                flex-direction: column;
-            }
-            
-            .search-input {
-                width: 100%;
-                margin-bottom: 15px;
-            }
-            
-            .search-button {
-                width: 100%;
-                margin-top: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .user-links {
-                flex-wrap: wrap;
-                justify-content: flex-end;
-            }
-            
-            .hero-content h1 {
-                font-size: 24px;
-            }
-            
-            .nav-links {
-                overflow-x: auto;
-                padding-bottom: 5px;
-            }
-            
-            .nav-link {
-                white-space: nowrap;
-            }
+            margin-top: 23px;
         }
 
         /* Breadcrumbs */
@@ -378,407 +314,53 @@
             color: var(--primary-color);
         }
 
-        /* Destination Cards */
-        .section-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .destination-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .destination-card {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .destination-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .destination-card .info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 15px;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
-            color: white;
-        }
-
-        .destination-card h3 {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .destination-card p {
-            font-size: 12px;
-            margin: 0;
-            opacity: 0.8;
-        }
-
-        /* Filters */
-        .filters-container {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .filters {
-            flex: 0 0 250px;
+        /* Common Card Styles */
+        .panel-section, .info-card {
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             padding: 20px;
-        }
-
-        .filter-group {
             margin-bottom: 20px;
         }
 
-        .filter-title {
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            cursor: pointer;
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .container {
+                padding: 0 10px;
+            }
+            .search-form {
+                flex-direction: column;
+            }
+            .search-input {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            .search-button {
+                width: 100%;
+                margin-top: 0;
+            }
         }
 
-        .filter-options {
-            margin-top: 10px;
+        @media (max-width: 768px) {
+            .top-header .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .user-links {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+            .hero-content h1 {
+                font-size: 24px;
+            }
+            .nav-links {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            .nav-link {
+                white-space: nowrap;
+            }
         }
-
-        .filter-option {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .filter-option input[type="checkbox"] {
-            margin-right: 10px;
-        }
-
-        .filter-option label {
-            cursor: pointer;
-            flex: 1;
-        }
-
-        .filter-option .count {
-            color: #999;
-        }
-
-        .price-range {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .price-range input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .filter-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .btn-reset {
-            background-color: white;
-            border: 1px solid #ddd;
-            padding: 8px 15px;
-            border-radius: 4px;
-            color: #666;
-            cursor: pointer;
-        }
-
-        .btn-apply {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        /* Homestay List */
-        .homestay-container {
-            flex: 1;
-        }
-
-        .homestay-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .homestay-count {
-            font-weight: 500;
-        }
-
-        .sort-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .sort-dropdown select {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: white;
-            cursor: pointer;
-        }
-
-        .homestay-list {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-
-        .homestay-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            overflow: hidden;
-            display: flex;
-        }
-
-        .homestay-image {
-            flex: 0 0 250px;
-            position: relative;
-        }
-
-        .homestay-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .homestay-info {
-            flex: 1;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .homestay-name {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        .homestay-location {
-            color: #666;
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-
-        .homestay-amenities {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .amenity {
-            background-color: #f5f5f5;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            color: #666;
-            display: flex;
-            align-items: center;
-        }
-
-        .amenity i {
-            margin-right: 5px;
-            font-size: 10px;
-        }
-
-        .homestay-price {
-            margin-top: auto;
-            text-align: right;
-        }
-
-        .price-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .price-note {
-            font-size: 12px;
-            color: #999;
-        }
-
-        .homestay-rating {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .rating-score {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 3px 5px;
-            border-radius: 4px;
-            font-weight: 600;
-            margin-right: 8px;
-        }
-
-        .rating-label {
-            font-weight: 500;
-            margin-right: 5px;
-        }
-
-        .rating-count {
-            color: #999;
-            font-size: 12px;
-        }
-
-        .btn-view {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 4px;
-            text-align: center;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .btn-view:hover {
-            background-color: #005aa3;
-        }
-
-        /* Customer Reviews */
-        .customer-reviews {
-            margin: 40px 0;
-        }
-
-        .review-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .review-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .review-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .review-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-            object-fit: cover;
-        }
-
-        .review-user {
-            font-weight: 500;
-        }
-
-        .review-date {
-            color: #999;
-            font-size: 12px;
-            margin-top: 2px;
-        }
-
-        .review-score {
-            margin-left: auto;
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-
-        .review-score .out-of {
-            font-size: 12px;
-            color: #999;
-            margin-left: 2px;
-        }
-
-        .review-content {
-            line-height: 1.5;
-        }
-
-        .review-footer {
-            margin-top: 15px;
-            font-size: 12px;
-            color: #999;
-            text-align: right;
-        }
-
-        /* Promotional Section */
-        .promo-section {
-            background-color: #f9f9f9;
-            padding: 30px;
-            text-align: center;
-            margin: 40px 0;
-            border-radius: 8px;
-        }
-
-        .promo-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .promo-description {
-            margin-bottom: 20px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .promo-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .btn-promo {
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: 500;
-        }
-
-        .btn-promo.primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-promo.outline {
-            background-color: white;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-        }
-
         /* Footer */
         footer {
             background-color: #fff;
@@ -934,7 +516,7 @@
         <!-- Hero Content -->
         <div class="hero-content">
             <h1>Homestay Hà Nội tốt trên MộcHomestay</h1>
-            <p>Hãy khám phá những khách sạn tốt nhất tại Hà Nội, để bắt đầu chuyến hành trình kì diệu của bạn</p>
+            <p>Hãy khám phá những khách sạn tốt nhất tại Hà Nội, để bắt đầu chuyến hành trình kỳ diệu của bạn</p>
         </div>
     </div>
 
@@ -1042,7 +624,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Toggle filter groups
         document.querySelectorAll('.filter-title').forEach(item => {
             item.addEventListener('click', event => {
                 const content = item.nextElementSibling;

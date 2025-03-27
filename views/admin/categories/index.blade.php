@@ -103,6 +103,11 @@
             color: white;
         }
 
+        .btn-detail {
+            background-color: #28a745; /* Màu xanh lá cho nút xem chi tiết */
+            color: white;
+        }
+
         .empty-message {
             text-align: center;
             padding: 30px;
@@ -125,6 +130,7 @@
                         <h3 class="category-title">{{ $categories['name'] }}</h3>
                         <p class="category-description">{{ $categories['description'] }}</p>
                         <div class="card-actions">
+                            <a href="/admin/categories/detail/{{ $categories['id'] }}" class="btn-sm btn-detail">Xem chi tiết</a>
                             <a href="/admin/categories/edit/{{ $categories['id'] }}" class="btn-sm btn-edit">Sửa</a>
                             <a onclick="return confirm('Bạn có chắc muốn xóa danh mục {{ $categories['name'] }} không?')"
                                href="/admin/categories/delete/{{ $categories['id'] }}" class="btn-sm btn-delete">Xóa</a>

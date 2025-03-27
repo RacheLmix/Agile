@@ -13,8 +13,7 @@ class Room extends Model{
     }
 
     public function findByHomestay($homestay_id) {
-        $query = "SELECT id, homestay_id, name, description, price, quantity, capacity, beds, 
-                  size, amenities, image1, image2, image3, image4, status
+        $query = "SELECT id, homestay_id, name, description, price, quantity, capacity, image1, image2, image3, image4, status
                   FROM rooms 
                   WHERE homestay_id = ? AND status = 'available'";
         
