@@ -4,65 +4,6 @@
 
 @section('styles')
 <style>
-    /* Global styles */
-    body {
-        background-color: #f5f5f5;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-
-    /* Top navigation */
-    .top-nav {
-        background-color: white;
-        border-bottom: 1px solid #e0e0e0;
-        padding: 8px 0;
-    }
-
-    .top-nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 15px;
-    }
-
-    .logo-container img {
-        height: 24px;
-    }
-
-    .nav-actions {
-        display: flex;
-        align-items: center;
-    }
-
-    .nav-link {
-        margin-left: 20px;
-        font-size: 14px;
-        color: #333;
-        text-decoration: none;
-    }
-
-    .nav-link.primary {
-        color: #0770cd;
-    }
-
-    .nav-link.cta {
-        background-color: #ff6f00;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 4px;
-    }
-
-    /* Container */
-    .container {
-        max-width: 1300px;
-        margin: 0 auto;
-        padding: 0 15px;
-    }
-
     /* Breadcrumb */
     .breadcrumb {
         display: flex;
@@ -94,18 +35,9 @@
         padding: 0 15px;
     }
 
-    .content-sidebar {
-        width: 300px;
-        padding: 0 15px;
-    }
-
-    /* Homestay header section - updated to match Traveloka design */
+    /* Homestay header section */
     .header-container {
-        background-color: white;
         padding: 15px 20px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
@@ -129,7 +61,6 @@
     }
 
     .homestay-type {
-        display: inline-block;
         background-color: #e8f4f8;
         padding: 4px 8px;
         border-radius: 4px;
@@ -143,7 +74,7 @@
         font-size: 18px;
     }
 
-    /* Pricing section - right side */
+    /* Pricing section */
     .pricing-container {
         text-align: right;
     }
@@ -214,13 +145,6 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 15px;
         margin-bottom: 20px;
-    }
-
-    .info-card {
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        padding: 15px 20px;
     }
 
     /* Rating card */
@@ -381,32 +305,6 @@
         font-size: 13px;
     }
 
-    @media (max-width: 992px) {
-        .info-cards {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .header-container {
-            flex-direction: column;
-        }
-        
-        .pricing-container {
-            text-align: left;
-            margin-top: 10px;
-        }
-        
-        .book-button {
-            margin-top: 10px;
-            width: 100%;
-        }
-        
-        .info-cards {
-            grid-template-columns: 1fr;
-        }
-    }
-
     /* Gallery styles */
     .gallery-grid {
         display: grid;
@@ -481,14 +379,6 @@
     }
 
     /* Available rooms section */
-    .panel-section {
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-
     .room-header {
         margin-bottom: 20px;
     }
@@ -600,7 +490,32 @@
         font-size: 13px;
     }
 
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .info-cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
     @media (max-width: 768px) {
+        .header-container {
+            flex-direction: column;
+        }
+        
+        .pricing-container {
+            text-align: left;
+            margin-top: 10px;
+        }
+        
+        .book-button {
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .info-cards {
+            grid-template-columns: 1fr;
+        }
+
         .room-item-content {
             flex-direction: column;
         }
@@ -633,7 +548,7 @@
 @section('content')
 @if(isset($homestay))
 <div class="container">
-    <!-- Content tabs - moved to top of page -->
+    <!-- Content tabs -->
     <div class="content-tabs">
         <div class="tab-item active">Tổng quan</div>
         <div class="tab-item">Phòng</div>
@@ -643,7 +558,7 @@
         <div class="tab-item">Đánh giá</div>
     </div>
 
-    <!-- Breadcrumb - updated to match image -->
+    <!-- Breadcrumb -->
     <div class="breadcrumb">
         <a href="{{ '/' }}">Khách sạn</a>
         <span>/</span>
@@ -662,65 +577,56 @@
         </a>
     </div>
 
-    <!-- Photo gallery - updated to match image -->
+    <!-- Photo gallery -->
     <div class="gallery-grid">
-        <!-- Ảnh chính của homestay luôn hiển thị ở ô lớn -->
         <div class="gallery-item gallery-main">
             <img src="{{ file_url($homestay['image']) }}" alt="{{ $homestay['name'] }}">
         </div>
         
-        <!-- Hiển thị tối đa 4 ảnh nhỏ hơn từ các phòng -->
         <?php 
         $gallery_images = [];
-        
-        // Thu thập tất cả ảnh từ phòng
-        if(isset($rooms) && count($rooms) > 0) {
-            foreach($rooms as $room) {
-                if(!empty($room['image'])) {
+        if (isset($rooms) && is_array($rooms) && count($rooms) > 0) {
+            foreach ($rooms as $room) {
+                if (!empty($room['image1'])) {
                     $gallery_images[] = [
-                        'src' => file_url($room['image1']), 
+                        'src' => file_url($room['image1']),
                         'alt' => $room['name']
                     ];
                 }
-                if(!empty($room['image2'])) {
+                if (!empty($room['image2'])) {
                     $gallery_images[] = [
-                        'src' => file_url($room['image2']), 
+                        'src' => file_url($room['image2']),
                         'alt' => $room['name']
                     ];
                 }
-                if(!empty($room['image3'])) {
+                if (!empty($room['image3'])) {
                     $gallery_images[] = [
-                        'src' => file_url($room['image3']), 
+                        'src' => file_url($room['image3']),
                         'alt' => $room['name']
                     ];
                 }
-                if(!empty($room['image4'])) {
+                if (!empty($room['image4'])) {
                     $gallery_images[] = [
-                        'src' => file_url($room['image4']), 
+                        'src' => file_url($room['image4']),
                         'alt' => $room['name']
                     ];
                 }
             }
         }
-        
-        // Nếu không có đủ ảnh, sử dụng ảnh homestay để lấp đầy
-        if(count($gallery_images) < 4) {
-            for($i = count($gallery_images); $i < 4; $i++) {
+        if (count($gallery_images) < 4) {
+            for ($i = count($gallery_images); $i < 4; $i++) {
                 $gallery_images[] = [
-                    'src' => file_url($homestay['image']), 
+                    'src' => file_url($homestay['image']),
                     'alt' => $homestay['name']
                 ];
             }
         }
-        
-        // Hiển thị 4 ảnh đầu tiên
-        for($i = 0; $i < 4; $i++) {
-            if($i < 3) {
+        for ($i = 0; $i < min(4, count($gallery_images)); $i++) {
+            if ($i < 3) {
                 echo '<div class="gallery-item">';
                 echo '<img src="' . $gallery_images[$i]['src'] . '" alt="' . $gallery_images[$i]['alt'] . '">';
                 echo '</div>';
             } else {
-                // Ảnh cuối cùng có nút "Xem tất cả"
                 echo '<div class="gallery-item">';
                 echo '<img src="' . $gallery_images[$i]['src'] . '" alt="' . $gallery_images[$i]['alt'] . '">';
                 echo '<div class="view-all-photos">';
@@ -735,7 +641,7 @@
     <div class="main-grid">
         <div class="content-main">
             <!-- Homestay header section -->
-            <div class="header-container">
+            <div class="header-container panel-section">
                 <div class="homestay-info">
                     <h1 class="homestay-title">{{ $homestay['name'] }}</h1>
                     <div class="homestay-type-rating">
@@ -765,7 +671,6 @@
             
             <!-- Three info cards -->
             <div class="info-cards">
-                <!-- Rating card -->
                 <div class="info-card">
                     <div class="rating-display">
                         <i class="fas fa-dove" style="color: #0064be; font-size: 22px; margin-right: 10px;"></i>
@@ -793,7 +698,6 @@
                     <div class="review-text">View xịn đét, phòng sạch sẽ, giá cả hợp lí 😘 ưng lém ạ</div>
                 </div>
                 
-                <!-- Location card -->
                 <div class="info-card">
                     <div class="card-header">
                         <div class="card-title">Trong khu vực</div>
@@ -829,7 +733,6 @@
                     </div>
                 </div>
                 
-                <!-- Amenities card -->
                 <div class="info-card">
                     <div class="card-header">
                         <div class="card-title">Tiện ích chính</div>
@@ -858,67 +761,55 @@
                 </div>
             </div>
 
-            <!-- Content panel -->
-            <div class="content-panel">
-                <!-- Available rooms section -->
-                <div class="panel-section">
-                    <div class="room-header">
-                        <h2 class="section-title">Những phòng còn trống tại {{ $homestay['name'] }}</h2>
-                    </div>
+            <!-- Available rooms section -->
+            <div class="panel-section">
+                <div class="room-header">
+                    <h2 class="section-title">Những phòng còn trống tại {{ $homestay['name'] }}</h2>
+                </div>
 
-                    @if(isset($rooms) && count($rooms) > 0)
-                        <div style="display: none;">
-                            <pre>{{ print_r($rooms, true) }}</pre>
+                @if(isset($rooms) && count($rooms) > 0)
+                    <div style="display: none;">
+                        <pre>{{ print_r($rooms, true) }}</pre>
+                    </div>
+                    @foreach($rooms as $room)
+                    <div class="room-item">
+                        <div class="room-item-header">
+                            {{ $room['name'] }}
                         </div>
-                        @foreach($rooms as $room)
-                        <div class="room-item">
-                            <div class="room-item-header">
-                                {{ $room['name'] }}
+                        <div class="room-item-content">
+                            <div class="room-image">
+                                <img src="{{ !empty($room['image1']) ? file_url($room['image1']) : file_url($homestay['image']) }}" alt="{{ $room['name'] }}">
                             </div>
-                            <div class="room-item-content">
-                                <div class="room-image">
-                                    <img src="{{ !empty($room['image']) ? file_url($room['image']) : file_url($homestay['image']) }}" alt="{{ $room['name'] }}">
-                                </div>
-                                <div class="room-details">
-                                    <div class="room-description">{{ $room['description'] ?? 'Phòng tiện nghi với đầy đủ tiện ích hiện đại.' }}</div>
-                                    <div class="room-features">
-                                        <div class="room-feature">
-                                            <i class="fas fa-user-friends"></i>
-                                            <span>{{ $room['capacity'] ?? 2 }} khách</span>
-                                        </div>
-                                        <div class="room-feature">
-                                            <i class="fas fa-bed"></i>
-                                            <span>{{ $room['beds'] ?? '1 giường đôi' }}</span>
-                                        </div>
-                                        <div class="room-feature">
-                                            <i class="fas fa-expand-arrows-alt"></i>
-                                            <span>{{ $room['size'] ?? '20m²' }}</span>
-                                        </div>
+                            <div class="room-details">
+                                <div class="room-description">{{ $room['description'] ?? 'Phòng tiện nghi với đầy đủ tiện ích hiện đại.' }}</div>
+                                <div class="room-features">
+                                    <div class="room-feature">
+                                        <i class="fas fa-user-friends"></i>
+                                        <span>{{ $room['capacity'] ?? 3 }} khách</span>
                                     </div>
                                 </div>
-                                <div class="room-pricing">
-                                    <div class="price-label">Giá mỗi đêm từ</div>
-                                    <div class="price-value">{{ number_format($room['price'] ?? 450000, 0, ',', '.') }} VND</div>
-                                    <div class="price-unit">/ đêm</div>
-                                    <a href="{{ '/homestay/' . $homestay['id'] . '/room/' . $room['id'] }}" class="book-button">Chọn phòng</a>
-                                </div>
+                            </div>
+                            <div class="room-pricing">
+                                <div class="price-label">Giá mỗi đêm từ</div>
+                                <div class="price-value">{{ number_format($room['price'] ?? 450000, 0, ',', '.') }} VND</div>
+                                <div class="price-unit">/ đêm</div>
+                                <a href="{{ '/homestay/' . $homestay['id'] . '/room/' . $room['id'] }}" class="book-button">Chọn phòng</a>
                             </div>
                         </div>
-                        @endforeach
-                    @else
-                        <div style="padding: 20px 0; text-align: center; color: #666;">
-                            <p>Không tìm thấy phòng trống cho homestay này.</p>
-                        </div>
-                    @endif
-                </div>
+                    </div>
+                    @endforeach
+                @else
+                    <div style="padding: 20px 0; text-align: center; color: #666;">
+                        <p>Không tìm thấy phòng trống cho homestay này.</p>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
 </div>
 @else
-<!-- Display when homestay not found -->
 <div class="container" style="padding: 50px 0; text-align: center;">
-    <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <div class="panel-section">
         <h2 style="margin-bottom: 15px; color: #333;">Không tìm thấy thông tin homestay</h2>
         <p style="color: #666; margin-bottom: 20px;">Homestay này không tồn tại hoặc đã bị xóa</p>
         <a href="{{ '/' }}" style="display: inline-block; background: #0770cd; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: 600;">Quay lại trang chủ</a>
@@ -926,7 +817,7 @@
 </div>
 @endif
 
-<!-- Room selection modal (hidden by default, would be shown via JavaScript) -->
+<!-- Room selection modal -->
 <div id="room-selection-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000;">
     <div style="background: white; width: 90%; max-width: 800px; border-radius: 8px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-height: 90vh; overflow-y: auto;">
         <div style="padding: 15px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
@@ -1002,24 +893,16 @@
 
 @section('scripts')
 <script>
-    // Tab switching functionality
     document.addEventListener('DOMContentLoaded', function() {
         const tabItems = document.querySelectorAll('.tab-item');
         
         tabItems.forEach(tab => {
             tab.addEventListener('click', () => {
-                // Remove active class from all tabs
                 tabItems.forEach(item => item.classList.remove('active'));
-                
-                // Add active class to clicked tab
                 tab.classList.add('active');
-                
-                // In a real implementation, you would also switch the content panels here
-                // For now we're just switching tabs visually
             });
         });
 
-        // View all photos functionality
         const viewAllPhotosBtn = document.querySelector('.view-all-photos');
         if (viewAllPhotosBtn) {
             viewAllPhotosBtn.addEventListener('click', function() {
@@ -1027,7 +910,6 @@
             });
         }
 
-        // Room selection modal functionality (simplified example)
         const roomButtons = document.querySelectorAll('.book-button');
         const modal = document.getElementById('room-selection-modal');
         const closeModal = document.getElementById('close-modal');
@@ -1046,7 +928,6 @@
                 modal.style.display = 'none';
             });
             
-            // Close modal when clicking outside
             window.addEventListener('click', function(e) {
                 if (e.target === modal) {
                     modal.style.display = 'none';

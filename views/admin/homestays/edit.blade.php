@@ -87,11 +87,6 @@
         </div>
 
         <div class="form-group">
-            <label for="location">Location</label>
-            <input type="text" id="location" name="location" value="{{ $homestays['location'] }}">
-        </div>
-
-        <div class="form-group">
             <label for="description">Description</label>
             <input id="description" name="description" value="{{ $homestays['description'] }}">
         </div>
