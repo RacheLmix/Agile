@@ -73,6 +73,7 @@
     
     .homestay-details {
         padding: 15px;
+        position: relative;
     }
     
     .homestay-title {
@@ -164,6 +165,17 @@
         background-color: #f8f9fa;
         border-radius: 8px;
     }
+    .id{
+        position: absolute;
+        right: 0;
+        padding: 10px;
+        font-size: 30px;
+        transition: all ease-in-out 0.25s;
+    }
+    .homestay-card:hover .id{
+        right: 50px;
+        font-size: 40px;
+    }
 </style>
 <div class="table-container">
     <div class="table-header">
@@ -180,7 +192,7 @@
             <img src="{{ file_url($homestay['image']) }}" alt="{{ $homestay['name'] }}" class="homestay-image">
             <div class="homestay-details">
                 <h3 class="homestay-title">{{ $homestay['name'] }}</h3>
-                
+                <h2 class="id">{{ $homestay['id'] }}</h2>
                 <div class="category-badge">{{ $homestay['category_name'] }}</div>
                 
                 <div class="rating">
@@ -203,7 +215,7 @@
                 <div class="card-actions">
                     <a href="/admin/homestays/detail/{{ $homestay['id'] }}" class="btn-sm btn-view">Chi tiết</a>
                     <a href="/admin/homestays/edit/{{ $homestay['id'] }}" class="btn-sm btn-edit">Sửa</a>
-                    <a onclick="return confirm('Bạn có chắc muốn xóa homestay {{ $homestay['name'] }} không?')" 
+                    <a onclick="return confirm('Bạn có chắc muốn xóa homestay {{ $homestay['name'] }} không?')"
                        href="/admin/homestays/delete/{{ $homestay['id'] }}" class="btn-sm btn-delete">Xóa</a>
                 </div>
             </div>
