@@ -10,6 +10,10 @@ class AuthController extends Controller{
     }
     public function showsignin()
     {
+        if (isset($_SESSION['user'])) {
+            redirect('/');
+        }
+        
         return view('admin.auth.formsignup');
     }
     public function signin()
