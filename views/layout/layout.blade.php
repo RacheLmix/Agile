@@ -323,6 +323,130 @@
             margin-bottom: 20px;
         }
 
+        /* CSS cho phần User Menu */
+        .header-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 4px;
+            color: white;
+            transition: background-color 0.2s;
+        }
+
+        .user-info:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .user-name {
+            font-weight: 500;
+            margin-right: 5px;
+            max-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            margin-top: 10px;
+            display: none;
+            overflow: hidden;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown-item i {
+            margin-right: 10px;
+            font-size: 14px;
+            color: #666;
+            width: 16px;
+            text-align: center;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 5px 0;
+        }
+
+        /* CSS cho phần nút đăng nhập/đăng ký */
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .auth-btn {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: 500;
+            margin-left: 10px;
+            transition: all 0.2s;
+        }
+
+        .login-btn {
+            color: white;
+            border: 1px solid white;
+            background-color: transparent;
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .register-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid white;
+        }
+
+        .register-btn:hover {
+            background-color: #f5f5f5;
+        }
+
         /* Responsive Adjustments */
         @media (max-width: 992px) {
             .container {
@@ -359,6 +483,14 @@
             }
             .nav-link {
                 white-space: nowrap;
+            }
+            
+            .user-name {
+                max-width: 80px;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
             }
         }
         /* Footer */
@@ -475,8 +607,51 @@
                     </a>
                     <a href="#" class="user-link">Hợp tác với chúng tôi</a>
                     <a href="#" class="user-link">Đặt chỗ của tôi</a>
-                    <a href="/login" class="btn-login"><i class="fa-solid fa-user" style="margin-right: 5px;"></i>Đăng Nhập</a>
-                    <a href="/signin" class="btn-register">Đăng ký</a>
+                    <div class="header-right">
+                    @if(isset($_SESSION['user']))
+                        <!-- Đã đăng nhập: Hiển thị menu người dùng -->
+                        <div class="user-menu">
+                            <div class="user-info" data-dropdown="userDropdown">
+                                @if(isset($_SESSION['user']['avatar']) && $_SESSION['user']['avatar'])
+                                    <img src="{{ $_SESSION['user']['avatar'] }}" alt="Avatar" class="user-avatar">
+                                @else
+                                    <i class="fas fa-user-circle" style="font-size: 24px; margin-right: 8px; color: white;"></i>
+                                @endif
+                                <span class="user-name">{{ $_SESSION['user']['full_name'] }}</span>
+                                <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 8px;"></i>
+                            </div>
+                            <div class="user-dropdown" id="userDropdown">
+                                <a href="/profile" class="dropdown-item">
+                                    <i class="fas fa-user"></i>
+                                    <span>Tài khoản của tôi</span>
+                                </a>
+                                <a href="/bookings" class="dropdown-item">
+                                    <i class="fas fa-list"></i>
+                                    <span>Đặt chỗ của tôi</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="/logout" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Đăng xuất</span>
+                                </a>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Chưa đăng nhập: Hiển thị nút đăng nhập/đăng ký -->
+                        <div class="auth-buttons">
+                            <a href="/login" class="auth-btn login-btn">
+                                <i class="fas fa-sign-in-alt" style="margin-right: 5px;"></i>
+                                <span>Đăng nhập</span>
+                            </a>
+                            <a href="/signin" class="auth-btn register-btn">
+                                <i class="fas fa-user-plus" style="margin-right: 5px;"></i>
+                                <span>Đăng ký</span>
+                            </a>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
                 </div>
             </div>
         </div>
@@ -633,6 +808,38 @@
                 } else {
                     content.style.display = 'none';
                     item.querySelector('i').classList.replace('fa-chevron-up', 'fa-chevron-down');
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Xử lý dropdown khi click
+            document.querySelectorAll('[data-dropdown]').forEach(toggleBtn => {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const dropdownId = this.getAttribute('data-dropdown');
+                    const dropdown = document.getElementById(dropdownId);
+                    dropdown.classList.toggle('show');
+                });
+            });
+            
+            // Đóng dropdown khi click bên ngoài
+            document.addEventListener('click', function(e) {
+                const dropdowns = document.querySelectorAll('.user-dropdown');
+                dropdowns.forEach(dropdown => {
+                    if (!dropdown.contains(e.target) && !e.target.hasAttribute('data-dropdown')) {
+                        dropdown.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Đóng dropdown khi nhấn Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const dropdowns = document.querySelectorAll('.user-dropdown');
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('show');
+                    });
                 }
             });
         });
