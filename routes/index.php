@@ -86,9 +86,9 @@ $router->mount('', function () use ($router) {
         $router->get('/amenities/delete/{id}', AmenityController::class. '@delete');
     });
 
-    $router->mount('/users', function () use ($router) {
-        // User specific routes can be added here
-    });
+//    $router->mount('/users', function () use ($router) {
+//        // User specific routes can be added here
+//    });
 });
 
 // Run it!
