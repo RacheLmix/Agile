@@ -14,6 +14,7 @@ use App\Controllers\client\HomestayController as ClientHomestayController;
 use App\Controllers\admin\AuthController;
 use App\Controllers\admin\RatingController;
 use App\Controllers\admin\AmenityController;
+use App\Controllers\client\ProfileController;
 
 $router = new \Bramus\Router\Router();
 
@@ -35,6 +36,9 @@ $router->mount('', function () use ($router) {
     $router->get('/homestays', ClientHomestayController::class . '@index');
     $router->get('/homestays/detail/{id}', ClientHomestayController::class . '@detail');
     $router->post('/homestays/detail/{id}/book', ClientHomestayController::class . '@book');
+    $router->get('/profile', profileController::class . '@index');
+    $router->get('/profile/edit/{id}', profileController::class . '@edit');
+    $router->post('/profile/update/{id}', profileController::class . '@update');
     //viết tiếp Router ở dưới!!
     $router->mount('/admin', function () use ($router) {
         $router->get('/', HomeController::class . '@index');

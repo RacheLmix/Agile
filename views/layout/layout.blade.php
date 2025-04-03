@@ -833,7 +833,6 @@
                 });
             });
             
-            // Đóng dropdown khi nhấn Escape
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     const dropdowns = document.querySelectorAll('.user-dropdown');
