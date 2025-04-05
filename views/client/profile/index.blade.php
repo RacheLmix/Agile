@@ -430,11 +430,19 @@
                 <div class="info-group">
                     <div class="info-label">Trạng thái</div>
                     <div class="info-value">
-                        @if($user['status'] == 1)
-                            <span style="color: #28a745">Đang hoạt động</span>
-                        @else
-                            <span style="color: #dc3545">Đã khóa</span>
-                        @endif
+                        @switch($user['status'])
+                            @case('active')
+                                <span style="color: #28a745">Đang hoạt động</span>
+                                @break
+                            @case('inactive')
+                                <span style="color: #dc3545">Đã khóa</span>
+                                @break
+                            @case('banned')
+                                <span style="color: #fd7e14">Đã bị cấm</span>
+                                @break
+                            @default
+                                <span style="color: #6c757d">Không xác định</span>
+                        @endswitch
                     </div>
                 </div>
 
