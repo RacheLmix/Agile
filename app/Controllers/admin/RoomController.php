@@ -8,21 +8,27 @@ use App\Models\Booking;
 use App\Models\Homestay;
 use App\Models\Room;
 use App\Models\Category;
-
+use App\Models\Promotions;
 class RoomController extends Controller
 {
     protected $rooms;
     protected $homestays;
+    protected $promotions;
 
     public function __construct()
     {
         $this->rooms = new Room();
         $this->homestays = new Homestay();
+        $this->promotions = new Promotions();
     }
 
     public function index()
     {
         $rooms = $this->rooms->findrooms();
+        foreach ($rooms as &$room) {
+            $promotions = $this->promotions->getRoomPromotions($room['id']);
+            $room['promotions'] = $promotions;
+        }
         return view('admin.rooms.index', compact('rooms'));
     }
 
@@ -91,6 +97,7 @@ class RoomController extends Controller
     {
         $rooms = $this->rooms->find($id);
         $homestays = $this->homestays->findAll();
-        return view('admin.rooms.detail', compact('rooms', 'homestays'));
+        $promotions = $this->promotions->getRoomPromotions($id);
+        return view('admin.rooms.detail', compact('rooms', 'homestays', 'promotions'));
     }
 }

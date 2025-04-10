@@ -130,6 +130,39 @@
                 margin: 70px 20px 30px 20px;
             }
         }
+
+        /* Giữ nguyên CSS cũ và thêm CSS cho phần khuyến mãi */
+        .promotion-badge {
+            background-color: #ff4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .promotion-info {
+            font-size: 13px;
+            color: #ff4444;
+            margin-top: 4px;
+        }
+
+        .price-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .discounted-price {
+            color: #ff4444;
+            font-weight: bold;
+        }
     </style>
 
 <div class="table-container">
@@ -161,9 +194,23 @@
                     <tr>
                         <td>{{ $room['id'] }}</td>
                         <td>{{ $room['homestay_id'] }}</td>
-                        <td>{{ $room['name'] }}</td>
+                        <td>
+                            {{ $room['name'] }}
+                            
+                        </td>
                         <td>{{ $room['description'] }}</td>
-                        <td>{{ number_format($room['price'], 0, ',', '.') }} VND</td>
+                        <td class="price-section">
+                            @if(!empty($room['promotions']))
+                                @php
+                                    $promotion = $room['promotions'][0];
+                                    $discountedPrice = $room['price'] * (1 - $promotion['discount_percent'] / 100);
+                                @endphp
+                                <span class="original-price">{{ number_format($room['price'], 0, ',', '.') }} VND</span>
+                                <span class="discounted-price">{{ number_format($discountedPrice, 0, ',', '.') }} VND</span>
+                            @else
+                                {{ number_format($room['price'], 0, ',', '.') }} VND
+                            @endif
+                        </td>
                         <td>{{ $room['quantity'] }}</td>
                         <td>{{ $room['capacity'] }}</td>
                         <td>

@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Model;
 
-class Homestay extends Model
+class Promotions extends Model
 {
-    protected $tableName = "homestays";
+    protected $tableName = "promotions";
 
     public function findAllHomestaysWithDetails()
     {
@@ -157,4 +157,113 @@ class Homestay extends Model
                 return [];
             }
         }
+
+    public function getRoomPromotions($roomId)
+    {
+        $currentDate = date('Y-m-d');
+        $sql = "SELECT p.*, r.name as room_name 
+                FROM {$this->tableName} p
+                LEFT JOIN rooms r ON p.room_id = r.id
+                WHERE p.room_id = :room_id 
+                AND p.status = 'active'
+                AND p.start_date <= :current_date 
+                AND p.end_date >= :current_date";
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':room_id', $roomId);
+        $stmt->bindValue(':current_date', $currentDate);
+        $stmt->bindValue(':current_date', $currentDate);
+        
+        return $stmt->executeQuery()->fetchAllAssociative();
+    }
+
+    public function findAll()
+    {
+        $sql = "SELECT p.*, r.name as room_name 
+                FROM {$this->tableName} p
+                LEFT JOIN rooms r ON p.room_id = r.id
+                ORDER BY p.created_at DESC";
+        
+        return $this->connection->executeQuery($sql)->fetchAllAssociative();
+    }
+
+    public function find($id)
+    {
+        $sql = "SELECT * FROM {$this->tableName} WHERE id = :id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        return $stmt->executeQuery()->fetchAssociative();
+    }
+
+    public function insert($data)
+    {
+        $fields = implode(', ', array_keys($data));
+        $placeholders = ':' . implode(', :', array_keys($data));
+        
+        $sql = "INSERT INTO {$this->tableName} ($fields) VALUES ($placeholders)";
+        $stmt = $this->connection->prepare($sql);
+        
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(':' . $key, $value);
+        }
+        
+        return $stmt->executeQuery();
+    }
+
+    public function update($id, $data)
+    {
+        $fields = [];
+        foreach (array_keys($data) as $field) {
+            $fields[] = "$field = :$field";
+        }
+        $fields = implode(', ', $fields);
+        
+        $sql = "UPDATE {$this->tableName} SET $fields WHERE id = :id";
+        $stmt = $this->connection->prepare($sql);
+        
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(':' . $key, $value);
+        }
+        $stmt->bindValue(':id', $id);
+        
+        return $stmt->executeQuery();
+    }
+
+    public function delete($id)
+    {
+        $sql = "DELETE FROM {$this->tableName} WHERE id = :id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        return $stmt->executeQuery();
+    }
+
+    public function getActivePromotions()
+    {
+        $currentDate = date('Y-m-d');
+        $sql = "SELECT p.*, r.name as room_name, r.price as room_price 
+                FROM {$this->tableName} p
+                INNER JOIN rooms r ON p.room_id = r.id
+                WHERE p.status = 'active' 
+                AND p.start_date <= :current_date 
+                AND p.end_date >= :current_date";
+        
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':current_date', $currentDate);
+        $stmt->bindValue(':current_date', $currentDate);
+        
+        return $stmt->executeQuery()->fetchAllAssociative();
+    }
+
+    public function updatePromotionStatus()
+    {
+        $currentDate = date('Y-m-d');
+        $sql = "UPDATE {$this->tableName} 
+                SET status = 'expired' 
+                WHERE end_date < :current_date 
+                AND status = 'active'";
+        
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':current_date', $currentDate);
+        return $stmt->executeQuery();
+    }
 }

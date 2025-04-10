@@ -15,6 +15,7 @@ use App\Controllers\admin\AuthController;
 use App\Controllers\admin\RatingController;
 use App\Controllers\admin\AmenityController;
 use App\Controllers\client\ProfileController;
+use App\Controllers\admin\PromotionController;
 
 $router = new \Bramus\Router\Router();
 
@@ -81,16 +82,23 @@ $router->mount('', function () use ($router) {
         $router->post('/ratings/update/{id}', RatingController::class . '@update');
         $router->get('/ratings/detail/{id}', RatingController::class . '@detail');
 
-        $router->get('/amenities', AmenityController::class. '@index');
-        $router->get('/amenities/create', AmenityController::class. '@create');
-        $router->post('/amenities/store', AmenityController::class. '@store');
-        $router->get('/amenities/edit/{id}', AmenityController::class. '@edit');
-        $router->post('/amenities/update/{id}', AmenityController::class. '@update');
-        $router->get('/amenities/detail/{id}', AmenityController::class. '@detail');
-        $router->get('/amenities/delete/{id}', AmenityController::class. '@delete');
+        $router->get('/amenities', AmenityController::class . '@index');
+        $router->get('/amenities/create', AmenityController::class . '@create');
+        $router->post('/amenities/store', AmenityController::class . '@store');
+        $router->get('/amenities/edit/{id}', AmenityController::class . '@edit');
+        $router->post('/amenities/update/{id}', AmenityController::class . '@update');
+        $router->get('/amenities/detail/{id}', AmenityController::class . '@detail');
+        $router->get('/amenities/delete/{id}', AmenityController::class . '@delete');
+
+        $router->get('/promotions', PromotionController::class . '@index');
+        $router->get('/promotions/create', PromotionController::class . '@create');
+        $router->post('/promotions/store', PromotionController::class . '@store');
+        $router->get('/promotions/edit/{id}', PromotionController::class . '@edit');
+        $router->post('/promotions/update/{id}', PromotionController::class . '@update');
+        $router->get('/promotions/delete/{id}', PromotionController::class . '@delete');
     });
 
-//    $router->mount('/users', function () use ($router) {
+    //    $router->mount('/users', function () use ($router) {
 //        // User specific routes can be added here
 //    });
 });
