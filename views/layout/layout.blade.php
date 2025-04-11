@@ -623,7 +623,7 @@
                                     <i class="fas fa-user"></i>
                                     <span>Tài khoản của tôi</span>
                                 </a>
-                                <a href="/bookings" class="dropdown-item">
+                                <a href="/orderview" class="dropdown-item">
                                     <i class="fas fa-list"></i>
                                     <span>Đặt chỗ của tôi</span>
                                 </a>
@@ -686,10 +686,10 @@
         </nav>
         
         <!-- Hero Content -->
-        <div class="hero-content">
+        {{-- <div class="hero-content">
             <h1>Homestay Hà Nội tốt trên MộcHomestay</h1>
             <p>Hãy khám phá những khách sạn tốt nhất tại Hà Nội, để bắt đầu chuyến hành trình kỳ diệu của bạn</p>
-        </div>
+        </div> --}}
     </div>
 
     <!-- Search Form Section -->
@@ -731,6 +731,7 @@
         @yield('content')
     </div>
 
+    @extends('chatbot.chatbot');
     <!-- Footer -->
     <footer>
         <div class="footer-container">

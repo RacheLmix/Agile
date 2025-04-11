@@ -7,17 +7,20 @@ use App\Models\Homestay;
 use App\Models\Room;
 use App\Models\Category;
 use App\Models\Booking;
+use App\Models\Promotions;
 
 class HomestayController extends Controller{
     protected $homestays;
     protected $rooms;
     protected $categories;
+    protected $promotions;
     
     public function __construct()
     {
         $this->homestays = new Homestay();
         $this->rooms = new Room();
         $this->categories = new Category();
+        $this->promotions = new Promotions();
     }
     
     // Homepage with all homestays
@@ -31,26 +34,26 @@ class HomestayController extends Controller{
         
         return view("client.list", compact('homestays', 'categories'));
     }
-    public function detail($id){
-        // Get the homestay with all related details
+    public function detail($id) {
         $homestay = $this->homestays->findHomestayWithDetails($id);
-        
         if (!$homestay) {
-            // If homestay not found, redirect to homepage
-            redirect('/');
+            view('client.detail', ['error' => 'Không tìm thấy homestay']);
+            return;
         }
         
-        // Get rooms associated with this homestay
-        $rooms = $this->rooms->findByHomestay($id);
+        $rooms = $this->homestays->getRooms($id);
+        $promotions = new Promotions();
         
-        // Get similar homestays in the same category or location
-        $similar_homestays = $this->homestays->findSimilarHomestays($homestay['category_id'], $homestay['location'], $id, 3);
+        foreach ($rooms as &$room) {
+            $roomPromotions = $promotions->getRoomPromotions($room['id']);
+            if (!empty($roomPromotions)) {
+
+                $room['discount'] = $roomPromotions[0]['discount_percent'];
+                $room['promotion_title'] = $roomPromotions[0]['title'];
+            }
+        }
         
-        // Get categories for sidebar or filters
-        $categories = $this->categories->findAll();
-        
-        // Pass all data to the view
-        return view('client.detail', compact('homestay', 'rooms', 'similar_homestays', 'categories'));
+        view('client.detail', compact('homestay', 'rooms'));
     }
     
     // Search homestays by criteria
@@ -175,4 +178,5 @@ class HomestayController extends Controller{
         
         return view("client.room_detail", compact('homestay', 'room'));
     }
-} 
+    
+}
