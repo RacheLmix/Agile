@@ -1,3 +1,4 @@
 .env
-vendor
+.envvendor
 composer.lock
+config/app.php

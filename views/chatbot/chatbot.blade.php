@@ -227,9 +227,9 @@
     const chatbotInput = document.getElementById('chatbot-input');
     
     // OpenRouter API configuration
-    const apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
-    const apiKey = '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';
-    const modelId = 'nvidia/llama-3.3-nemotron-super-49b-v1:free';
+    const apiUrl = '{{ config('openrouter.api_url') }}';
+    const apiKey = '{{ config('openrouter.api_key') }}';
+    const modelId = '{{ config('openrouter.model') }}';
     
     // Show chatbot with animation when button is clicked
     chatbotButton.addEventListener('click', function() {
