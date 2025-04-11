@@ -11,7 +11,6 @@
         gap: 20px;
     }
 
-    /* Filter Sidebar */
     .filter-sidebar {
         width: 250px;
         flex-shrink: 0;
@@ -107,7 +106,7 @@
         font-weight: 500;
     }
 
-    /* Homestay List */
+
     .homestay-list-container {
         flex: 1;
         width: 100%;
@@ -400,12 +399,25 @@
             <div class="result-count">Hà Nội - {{ is_countable($homestays) ? count($homestays) : 0 }} nơi lưu trú được tìm thấy</div>
             <div class="sort-container">
                 <span class="sort-label">Xếp theo:</span>
-                <select class="sort-select" onchange="this.form.submit()">
-                    <option>Độ phổ biến</option>
-                    <option>Giá: Thấp đến Cao</option>
-                    <option>Giá: Cao đến Thấp</option>
-                    <option>Đánh giá: Cao đến Thấp</option>
-                </select>
+                <form method="GET" action="/" style="display: inline;">
+                    <!-- Preserve existing filters -->
+                    @if($keyword)
+                    <input type="hidden" name="keyword" value="{{ $keyword }}">
+                    @endif
+                    @if($location)
+                    <input type="hidden" name="location" value="{{ $location }}">
+                    @endif
+                    @if($category_id)
+                    <input type="hidden" name="category_id" value="{{ $category_id }}">
+                    @endif
+                    
+                    <select name="sort" class="sort-select" onchange="this.form.submit()">
+                        <option value="popular" {{ ($sort ?? '') == 'popular' ? 'selected' : '' }}>Độ phổ biến</option>
+                        <option value="price_asc" {{ ($sort ?? '') == 'price_asc' ? 'selected' : '' }}>Giá: Thấp đến Cao</option>
+                        <option value="price_desc" {{ ($sort ?? '') == 'price_desc' ? 'selected' : '' }}>Giá: Cao đến Thấp</option>
+                        <option value="rating_desc" {{ ($sort ?? '') == 'rating_desc' ? 'selected' : '' }}>Đánh giá: Cao đến Thấp</option>
+                    </select>
+                </form>
             </div>
         </div>
 

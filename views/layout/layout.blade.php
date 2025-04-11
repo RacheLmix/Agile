@@ -608,11 +608,10 @@
                     <a href="#" class="user-link">Hợp tác với chúng tôi</a>
                     <div class="header-right">
                     @if(isset($_SESSION['user']))
-                        <!-- Đã đăng nhập: Hiển thị menu người dùng -->
                         <div class="user-menu">
                             <div class="user-info" data-dropdown="userDropdown">
                                 @if(isset($_SESSION['user']['avatar']) && $_SESSION['user']['avatar'])
-                                    <img src="{{ $_SESSION['user']['avatar'] }}" alt="Avatar" class="user-avatar">
+                                    <img src="/storage/uploads/avatar/{{ $_SESSION['user']['avatar'] }}" alt="Avatar" class="user-avatar">
                                 @else
                                     <i class="fas fa-user-circle" style="font-size: 24px; margin-right: 8px; color: white;"></i>
                                 @endif
@@ -636,7 +635,6 @@
                             </div>
                         </div>
                     @else
-                        <!-- Chưa đăng nhập: Hiển thị nút đăng nhập/đăng ký -->
                         <div class="auth-buttons">
                             <a href="/login" class="auth-btn login-btn">
                                 <i class="fas fa-sign-in-alt" style="margin-right: 5px;"></i>
