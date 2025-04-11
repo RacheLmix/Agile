@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-use App\Controllers\admin\BookingController;
+use App\Controllers\admin\BookingController as AdminBookingController;
 use App\Controllers\admin\HomeController;
 use App\Controllers\admin\CategoryController;
 use App\Controllers\admin\HomestayController;
@@ -15,6 +15,7 @@ use App\Controllers\admin\AuthController;
 use App\Controllers\admin\RatingController;
 use App\Controllers\admin\AmenityController;
 use App\Controllers\client\ProfileController;
+use App\Controllers\client\BookingController;
 
 $router = new \Bramus\Router\Router();
 
@@ -31,15 +32,18 @@ $router->before('GET|POST', '/admin/.*', function () {
 });
 
 $router->mount('', function () use ($router) {
-
     $router->get('/', ClientHomeController::class . '@index');
     $router->get('/homestays', ClientHomestayController::class . '@index');
     $router->get('/homestays/detail/{id}', ClientHomestayController::class . '@detail');
     $router->post('/homestays/detail/{id}/book', ClientHomestayController::class . '@book');
-    $router->get('/profile', profileController::class . '@index');
-    $router->get('/profile/edit/{id}', profileController::class . '@edit');
-    $router->post('/profile/update/{id}', profileController::class . '@update');
-    //viết tiếp Router ở dưới!!
+    $router->get('/profile', ProfileController::class . '@index');
+    $router->get('/profile/edit/{id}', ProfileController::class . '@edit');
+    $router->post('/profile/update/{id}', ProfileController::class . '@update');
+    $router->get('/booking/{homestay_id}', BookingController::class . '@show');
+    $router->post('/booking/store', BookingController::class . '@store');
+    $router->get('/booking/success/{booking_id}', BookingController::class . '@success');
+    $router->get('/cart', BookingController::class . '@cart'); // Thêm tuyến đường mới cho giỏ hàng
+
     $router->mount('/admin', function () use ($router) {
         $router->get('/', HomeController::class . '@index');
         $router->get('/homestays', HomestayController::class . '@index');
@@ -63,37 +67,31 @@ $router->mount('', function () use ($router) {
         $router->get('/categories/detail/{id}', CategoryController::class . '@detail');
         $router->get('/categories/delete/{id}', CategoryController::class . '@delete');
 
-        $router->get('/rooms', RoomController::class . '@index'); // Fixed: was using CategoryController
+        $router->get('/rooms', RoomController::class . '@index');
         $router->get('/rooms/create', RoomController::class . '@create');
         $router->post('/rooms/store', RoomController::class . '@store');
         $router->get('/rooms/edit/{id}', RoomController::class . '@edit');
         $router->post('/rooms/update/{id}', RoomController::class . '@update');
         $router->get('/rooms/detail/{id}', RoomController::class . '@show');
 
-        $router->get('/bookings', BookingController::class . '@index');
-        $router->get('/bookings/details/{id}', BookingController::class . '@details');
-        $router->get('/bookings/edit/{id}', BookingController::class . '@edit');
-        $router->post('/bookings/update/{id}', BookingController::class . '@update');
+        $router->get('/bookings', AdminBookingController::class . '@index');
+        $router->get('/bookings/details/{id}', AdminBookingController::class . '@details');
+        $router->get('/bookings/edit/{id}', AdminBookingController::class . '@edit');
+        $router->post('/bookings/update/{id}', AdminBookingController::class . '@update');
 
-        $router->get('/', RatingController::class . '@index');
         $router->get('/ratings', RatingController::class . '@index');
         $router->get('/ratings/edit/{id}', RatingController::class . '@edit');
         $router->post('/ratings/update/{id}', RatingController::class . '@update');
         $router->get('/ratings/detail/{id}', RatingController::class . '@detail');
 
-        $router->get('/amenities', AmenityController::class. '@index');
-        $router->get('/amenities/create', AmenityController::class. '@create');
-        $router->post('/amenities/store', AmenityController::class. '@store');
-        $router->get('/amenities/edit/{id}', AmenityController::class. '@edit');
-        $router->post('/amenities/update/{id}', AmenityController::class. '@update');
-        $router->get('/amenities/detail/{id}', AmenityController::class. '@detail');
-        $router->get('/amenities/delete/{id}', AmenityController::class. '@delete');
+        $router->get('/amenities', AmenityController::class . '@index');
+        $router->get('/amenities/create', AmenityController::class . '@create');
+        $router->post('/amenities/store', AmenityController::class . '@store');
+        $router->get('/amenities/edit/{id}', AmenityController::class . '@edit');
+        $router->post('/amenities/update/{id}', AmenityController::class . '@update');
+        $router->get('/amenities/detail/{id}', AmenityController::class . '@detail');
+        $router->get('/amenities/delete/{id}', AmenityController::class . '@delete');
     });
-
-//    $router->mount('/users', function () use ($router) {
-//        // User specific routes can be added here
-//    });
 });
 
-// Run it!
 $router->run();
