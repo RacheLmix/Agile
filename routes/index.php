@@ -14,6 +14,7 @@ use App\Controllers\client\HomestayController as ClientHomestayController;
 use App\Controllers\admin\AuthController;
 use App\Controllers\admin\RatingController;
 use App\Controllers\admin\AmenityController;
+use App\Controllers\admin\PromotionController;
 use App\Controllers\client\ProfileController;
 use App\Controllers\client\BookingController;
 
@@ -91,7 +92,18 @@ $router->mount('', function () use ($router) {
         $router->post('/amenities/update/{id}', AmenityController::class . '@update');
         $router->get('/amenities/detail/{id}', AmenityController::class . '@detail');
         $router->get('/amenities/delete/{id}', AmenityController::class . '@delete');
+
+        $router->get('/promotions', PromotionController::class . '@index');
+        $router->get('/promotions/create', PromotionController::class . '@create');
+        $router->post('/promotions/store', PromotionController::class . '@store');
+        $router->get('/promotions/edit/{id}', PromotionController::class . '@edit');
+        $router->post('/promotions/update/{id}', PromotionController::class . '@update');
+        $router->get('/promotions/delete/{id}', PromotionController::class . '@delete');
     });
+
+    //    $router->mount('/users', function () use ($router) {
+//        // User specific routes can be added here
+//    });
 });
 
 $router->run();

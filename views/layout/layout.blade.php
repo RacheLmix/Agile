@@ -606,7 +606,6 @@
                         <i style="margin-left: 5px;" class="fas fa-chevron-down fa-xs"></i>
                     </a>
                     <a href="#" class="user-link">Hợp tác với chúng tôi</a>
-                    <a href="#" class="user-link">Đặt chỗ của tôi</a>
                     <div class="header-right">
                     @if(isset($_SESSION['user']))
                         <!-- Đã đăng nhập: Hiển thị menu người dùng -->

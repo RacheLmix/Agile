@@ -84,6 +84,89 @@
             background-color: #0064be;
             color: white;
         }
+
+        /* Thêm CSS cho phần khuyến mãi */
+        .promotion-section {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff8f8;
+            border: 1px dashed #ff4444;
+        }
+
+        .promotion-title {
+            color: #ff4444;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .promotion-details {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .price-section {
+            margin: 15px 0;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .discounted-price {
+            color: #ff4444;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .no-promotion {
+            color: #666;
+            font-style: italic;
+            padding: 10px 0;
+        }
+
+        .promotion-period {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #ffcdd2;
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* Thêm style cho khuyến mãi hết hạn */
+        .expired-promotion {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border: 1px dashed #999;
+            border-radius: 8px;
+        }
+
+        .expired-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            background-color: #999;
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .promotion-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .current-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
     </style>
 
     <div class="hotel-container">
@@ -95,10 +178,64 @@
         <h1 class="hotel-name">Room ID: {{ $rooms['id'] }}</h1>
 
         <div class="booking-details">
+            <p><strong>Tên phòng:</strong> {{ $rooms['name'] }}</p>
             <p><strong>Mô tả:</strong> {{ $rooms['description'] }}</p>
             <p><strong>Số lượng:</strong> {{ $rooms['quantity'] }}</p>
             <p><strong>Dung tích:</strong> {{ $rooms['capacity'] }}</p>
-            <p><strong>Giá:</strong> {{ number_format($rooms['price'], 0, ',', '.') }} VNĐ</p>
+
+            <!-- Phần hiển thị giá và khuyến mãi -->
+            <div class="price-section">
+                <p><strong>Giá phòng:</strong></p>
+                @if(!empty($promotions) && isset($promotions[0]) && $promotions[0]['status'] === 'active')
+                    @php
+                        $promotion = $promotions[0];
+                        $discountedPrice = $rooms['price'] * (1 - $promotion['discount_percent'] / 100);
+                    @endphp
+                    <div class="promotion-section">
+                        <div class="promotion-title">
+                            🎉 Khuyến mãi đang áp dụng
+                        </div>
+                        <div class="promotion-details">
+                            <p><strong>{{ $promotion['title'] }}</strong></p>
+                            <p>{{ $promotion['description'] }}</p>
+                            <div class="price-details">
+                                <span class="original-price">
+                                    Giá gốc: {{ number_format($rooms['price'], 0, ',', '.') }} VNĐ
+                                </span>
+                                <div class="discounted-price">
+                                    Giá sau giảm: {{ number_format($discountedPrice, 0, ',', '.') }} VNĐ
+                                    (Giảm {{ $promotion['discount_percent'] }}%)
+                                </div>
+                            </div>
+                            <div class="promotion-period">
+                                Thời gian áp dụng: {{ date('d/m/Y', strtotime($promotion['start_date'])) }} - 
+                                {{ date('d/m/Y', strtotime($promotion['end_date'])) }}
+                            </div>
+                        </div>
+                    </div>
+                @elseif(!empty($promotions) && isset($promotions[0]) && $promotions[0]['status'] === 'expired')
+                    <div class="price-section">
+                        <div class="expired-promotion">
+                            <div class="expired-tag">Khuyến mãi đã kết thúc</div>
+                            <div class="promotion-info">
+                                <p>{{ $promotions[0]['title'] }}</p>
+                                <p>Đã hết hạn vào ngày: {{ date('d/m/Y', strtotime($promotions[0]['end_date'])) }}</p>
+                            </div>
+                        </div>
+                        <div class="current-price">
+                            Giá hiện tại: {{ number_format($rooms['price'], 0, ',', '.') }} VNĐ
+                        </div>
+                    </div>
+                @else
+                    <div class="price-section">
+                        <div class="no-promotion">Không có khuyến mãi</div>
+                        <div class="current-price">
+                            {{ number_format($rooms['price'], 0, ',', '.') }} VNĐ
+                        </div>
+                    </div>
+                @endif
+            </div>
+
             <p><strong>Trạng thái:</strong>
                 <span class="status status-{{ strtolower($rooms['status']) }}">
                     {{ $rooms['status'] == 'available' ? 'Còn trống' :

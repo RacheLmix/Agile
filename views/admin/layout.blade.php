@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script defer src="script.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         /* Reset CSS */
         * {
@@ -65,7 +67,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            letter-spacing: 0.5px;  
+            letter-spacing: 0.5px;
         }
 
         .logo i {
@@ -142,7 +144,7 @@
             transition: transform var(--transition-speed) ease;
             margin-right: 10px;
         }
-        
+
         .menu li a span {
             transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
             opacity: 1;
@@ -219,7 +221,7 @@
             min-height: 100vh;
         }
 
-        .sidebar.collapsed + .content {
+        .sidebar.collapsed+.content {
             margin-left: var(--sidebar-collapsed-width);
         }
 
@@ -228,15 +230,15 @@
             :root {
                 --sidebar-width: var(--sidebar-collapsed-width);
             }
-            
+
             .sidebar .menu li a span {
                 display: none;
             }
-            
+
             .content {
                 margin-left: var(--sidebar-collapsed-width);
             }
-            
+
             .logo span {
                 display: none;
             }
@@ -259,7 +261,7 @@
             z-index: 900;
         }
 
-        .sidebar.collapsed + .admin-header {
+        .sidebar.collapsed+.admin-header {
             left: var(--sidebar-collapsed-width);
             width: calc(100% - var(--sidebar-collapsed-width));
         }
@@ -377,12 +379,13 @@
             .search-box input {
                 width: 180px;
             }
-            
+
             .header-left h1 {
                 font-size: 18px;
             }
         }
     </style>
+
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
@@ -391,15 +394,17 @@
                 <i class="fas fa-chevron-left"></i>
             </button>
         </div>
-        
+
         <ul class="menu">
             <li><a href="/admin" data-title="Trang chủ"><i class="fas fa-home"></i> <span>Trang chủ</span></a></li>
             <li><a href="/admin/categories"><i class="fa-solid fa-layer-group"></i> <span>Category</span></a></li>
             <li><a href="/admin/homestays"><i class="fas fa-building"></i> <span>Homestay</span></a></li>
             <li><a href="/admin/bookings"><i class="fas fa-calendar-check"></i> <span>Đặt phòng</span></a></li>
+            <li><a href="/admin/promotions"><i class="fas fa-money-bill-wave"></i> <span>khuyến Mại</span></a></li>
             <div class="menu-divider"></div>
             <li><a href="/admin/rooms"><i class="fa-solid fa-door-open"></i> <span>Phòng</span></a></li>
-            <li><a href="/admin/amenities"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Tiện ích</span></a></li>
+            <li><a href="/admin/amenities"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Tiện ích</span></a>
+            </li>
             <li><a href="/admin/ratings"><i class="fas fa-star"></i> <span>Đánh giá</span></a></li>
             <li><a href="/admin/users"><i class="fas fa-user"></i> <span>Tài khoản</span></a></li>
             <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a></li>
@@ -492,7 +497,7 @@
 
             // Xử lý click vào menu item
             menuItems.forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', function (e) {
                     const link = this.querySelector('a');
                     const href = link.getAttribute('href');
 
@@ -516,4 +521,5 @@
         });
     </script>
 </body>
+
 </html>
