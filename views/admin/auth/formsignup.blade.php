@@ -126,6 +126,7 @@
         input[type="file"]::file-selector-button:hover {
             background: rgba(255, 255, 255, 0.3);
         }
+
         .form-group {
             position: relative;
             animation: slideIn 0.5s ease-out forwards;
@@ -179,7 +180,6 @@
             color: white;
             border-radius: 10px;
         }
-
         button {
             background: linear-gradient(45deg, #6a11cb, #2575fc);
             border: none;
@@ -214,13 +214,21 @@
 <body>
 <div class="container">
     <h2>Đăng Ký</h2>
+    @if(isset($_SESSION['error']))
+    <div class="alert alert-danger">
+        @foreach($_SESSION['error'] as $error)
+            <div>{{ $error }}</div>
+        @endforeach
+    </div>
+    @php unset($_SESSION['error']); @endphp
+    @endif
     <div class="avatar-preview">
         <img id="preview" src="https://via.placeholder.com/100/FFFFFF/808080/?text=Avatar" alt="Avatar Preview">
     </div>
-    <form action="/admin/auth/signin" method="POST" enctype="multipart/form-data">
+    <form action="/sign" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="full_name">Họ và tên</label>
-            <input type="text" id="full_name" name="full_name" placeholder="Nhập họ và tên của bạn" required>
+            <input type="text" id="full_name" name="full_name" placeholder="Nhập họ và tên của bạn">
         </div>
         
         <div class="form-group">
@@ -230,17 +238,17 @@
         
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email" required>
+            <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email">
         </div>
         
         <div class="form-group">
             <label for="phone">Số điện thoại</label>
-            <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
+            <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại">
         </div>
-        
+            
         <div class="form-group">
             <label for="password">Mật khẩu</label>
-            <input type="password" id="password" name="password" placeholder="Tạo mật khẩu mới" required>
+            <input type="password" id="password" name="password" placeholder="Tạo mật khẩu mới">
         </div>
         
         <button type="submit">Đăng Ký</button>

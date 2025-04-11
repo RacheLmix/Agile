@@ -3,7 +3,10 @@ namespace App\Controllers\admin;
 
 use App\Models\User;
 use App\Controller;
-
+use Rakit\Validation\Validator;
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 class AuthController extends Controller
 {
     protected $users;
@@ -25,12 +28,41 @@ class AuthController extends Controller
     public function signin()
     {
         $data = $_POST + $_FILES;
+        $validator = new Validator();
+        $email = $data['email'] ?? '';
+        if (!empty($email)) {
+            $users = $this->users->fetchUsers();
+            foreach ($users as $user) {
+                if ($user['email'] === $email) {
+                    $_SESSION['error'] = ['email' => 'Email này đã được sử dụng. Vui lòng chọn email khác.'];
+                    redirect('/signin');
+                    exit;
+                }
+            }
+        }
+        $rules = [
+            'full_name' => 'required|min:6|max:255|regex:/^[a-zA-ZÀ-ỹ\s]+$/u',
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:6|max:32|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/',
+            'phone' => 'required|numeric|min:10|max:11',
+        ];
+        $err = $this->validate($validator, $data, $rules);
+        if(!empty($err)) {
+            $_SESSION['error'] = $err;
+            redirect('/signin');
+            exit;
+        }
+
         if (is_upload('avatar')) {
             $data['avatar'] = $this->uploadFile($data['avatar'], 'avatar');
         }
+        
         $data['created_at'] = date('Y-m-d H:i:s');
         $this->users->insert($data);
-        redirect('/admin/auth/');
+        
+        $_SESSION['success'] = 'Đăng ký thành công! Vui lòng đăng nhập.';
+        redirect('/login');
+        exit;
     }
 
     public function showLoginForm()

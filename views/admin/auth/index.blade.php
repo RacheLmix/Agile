@@ -9,11 +9,12 @@
         body {
             margin: 0;
             min-height: 100vh;
-            background: linear-gradient(45deg, #0a192f, #20314e);
+            background: linear-gradient(135deg, #667eea, #764ba2); /* Thay đổi màu gradient */
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .parallax-bg {
@@ -24,24 +25,18 @@
             height: 100%;
             z-index: 0;
             perspective: 1000px;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .star {
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-            animation: twinkle 2s infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            perspective: 1000px;
+            display: none; /* Ẩn các ngôi sao vì không phù hợp với theme homestay */
         }
 
         .login-container {
@@ -52,38 +47,46 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 2rem;
             transform-style: preserve-3d;
-            transition: transform 0.6s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         .card:hover {
-            transform: translateZ(20px);
-        }
-
-        .card-header {
-            border: none;
-            background: transparent;
-            padding-bottom: 2rem;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         h3 {
             color: #fff;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            transform: translateZ(40px);
-            transition: transform 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        h3:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
         }
 
         .form-label {
-            color: #fff;
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 500;
-            transform: translateZ(20px);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
         }
 
         .form-control {
@@ -91,52 +94,61 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             color: #fff;
-            padding: 12px;
+            padding: 15px;
             transition: all 0.3s ease;
-            transform: translateZ(30px);
+            margin-bottom: 20px;
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            transform: translateZ(40px);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
 
         .form-check-label {
-            color: #fff;
-        }
-
-        .form-check-input {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, #4a90e2, #63b3ed);
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
             border: none;
-            padding: 12px;
+            border-radius: 10px;
+            padding: 15px;
             font-weight: 600;
+            font-size: 1.1rem;
             letter-spacing: 1px;
-            transform: translateZ(35px);
+            text-transform: uppercase;
             transition: all 0.3s ease;
-            width: 100%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary:hover {
-            transform: translateZ(45px);
-            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.4);
-            background: linear-gradient(45deg, #63b3ed, #4a90e2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #2575fc, #6a11cb);
         }
 
         .error-message {
             background: rgba(255, 59, 48, 0.1);
             border: 1px solid rgba(255, 59, 48, 0.2);
-            color: #ff3b30;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            transform: translateZ(25px);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            background: rgba(52, 199, 89, 0.1) !important;
+            border: 1px solid rgba(52, 199, 89, 0.2) !important;
+            color: #fff !important;
+            padding: 15px !important;
+            border-radius: 10px !important;
+            margin-bottom: 20px !important;
+            text-align: center;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -153,6 +165,12 @@
                 <div class="error-message text-center">
                         <?php echo $_SESSION['error'];
                          unset($_SESSION['error']); ?>
+                </div>
+                <?php endif; ?>
+                
+                <?php if(isset($_SESSION['success'])): ?>
+                <div class="alert alert-success text-center mb-4" style="background: rgba(52, 199, 89, 0.1); border: 1px solid rgba(52, 199, 89, 0.2); color: #34c759; padding: 10px; border-radius: 8px; transform: translateZ(25px);">
+                    <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
                 </div>
                 <?php endif; ?>
 
