@@ -227,9 +227,9 @@
     const chatbotInput = document.getElementById('chatbot-input');
     
     // OpenRouter API configuration
-    const apiUrl = '{{ config('openrouter.api_url') }}';
-    const apiKey = '{{ config('openrouter.api_key') }}';
-    const modelId = '{{ config('openrouter.model') }}';
+    const apiUrl = 'Your OpenRouter API URL';
+    const apiKey = 'Your OpenRouter API Key';
+    const modelId = 'Your OpenRouter Model ID';
     
     // Show chatbot with animation when button is clicked
     chatbotButton.addEventListener('click', function() {
