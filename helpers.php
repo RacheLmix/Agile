@@ -125,5 +125,16 @@ function config($key, $default = null) {
     if ($config === null) {
         $config = require __DIR__ . '/config/app.php';
     }
-    return $config[$key] ?? $default;
+    
+    $keys = explode('.', $key);
+    $value = $config;
+    
+    foreach ($keys as $segment) {
+        if (!isset($value[$segment])) {
+            return $default;
+        }
+        $value = $value[$segment];
+    }
+    
+    return $value;
 }
