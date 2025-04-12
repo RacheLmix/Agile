@@ -91,7 +91,7 @@ $router->mount('', function () use ($router) {
         $router->get('/amenities/edit/{id}', AmenityController::class . '@edit');
         $router->post('/amenities/update/{id}', AmenityController::class . '@update');
         $router->get('/amenities/detail/{id}', AmenityController::class . '@detail');
-        $router->get('/amenities/delete/{id}', AmenityController::class . '@delete');
+        $router->get('/amenities/delete/{id}', AmenityController::class . '@delete'); 
 
         $router->get('/promotions', PromotionController::class . '@index');
         $router->get('/promotions/create', PromotionController::class . '@create');
