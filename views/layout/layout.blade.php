@@ -6,6 +6,7 @@
     <title>@yield('title', 'Homestay - Tìm kiếm và đặt phòng dễ dàng')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #0070cc;
@@ -62,11 +63,10 @@
         .top-header .container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
         }
 
         .logo-img {
-            width: 25%;
+            width: 20%;
             background-color: white;
             border-radius: 30%;
         }
@@ -74,7 +74,6 @@
         .top-right {
             display: flex;
             align-items: center;
-            width: 100%;
         }
 
         .language-currency {
@@ -150,53 +149,6 @@
             color: #0770cd;
         }
 
-        /* Main Navigation */
-        .main-nav {
-            z-index: 1;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 10px 0;
-        }
-
-        .nav-links {
-            display: flex;
-        }
-
-        .nav-link {
-            color: #fff;
-            text-decoration: none;
-            padding: 8px 15px;
-            font-size: 14px; 
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-link:hover {
-            background-color: #999;
-            opacity: 0.5;
-            border-radius: 3px;
-        }
-
-        .nav-link i {
-            margin-right: 8px;
-            font-size: 16px;
-        }
-
-        .nav-link.active {
-            color: #0770cd;
-            position: relative;
-        }
-
-        .nav-link.active:after {
-            content: '';
-            position: absolute;
-            bottom: -11px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background-color: #0770cd;
-        }
-
         /* Hero Banner */
         .hero-banner {
             height: 400px;
@@ -227,77 +179,6 @@
             font-size: 16px;
             line-height: 1.5;
             margin-bottom: 10px;
-        }
-
-        /* Search Box */
-        .search-container {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            margin-top: -50px;
-            position: relative;
-            z-index: 2;
-            margin-bottom: 30px;
-        }
-
-        .search-form {
-            display: flex;
-            align-items: flex-end;
-            gap: 10px;
-        }
-
-        .search-input {
-            flex: 1;
-        }
-
-        .search-input label {
-            display: block;
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .input-with-icon {
-            position: relative;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-            height: 48px;
-            background-color: white;
-        }
-
-        .input-with-icon i {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #0770cd;
-        }
-
-        .input-with-icon input {
-            width: 100%;
-            height: 100%;
-            border: none;
-            padding: 0 15px 0 35px;
-            font-size: 14px;
-            background: transparent;
-        }
-
-        .search-button {
-            background-color: #ff5e1f;
-            color: white;
-            border: none;
-            height: 48px;
-            width: 48px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            margin-top: 23px;
         }
 
         /* Breadcrumbs */
@@ -573,7 +454,7 @@
     <div class="top-header">
         <div class="container">
             <div class="background">
-                <img src="https://ik.imagekit.io/tvlk/image/imageResource/2023/03/07/1678166313016-1942f4720ce7d002b6a8ab9742602eb5.jpeg?tr=h-460,q-75" alt="">
+                <img src="https://ik.imagekit.io/tvlk/image/imageResource/2019/10/10/1570674738648-1337bd802b0a2aa503a105ec976bd3f3.jpeg?tr=h-460,q-75" alt="">
             </div>
             <div class="logo-container">
                 <a href="/" class="logo">
@@ -608,11 +489,10 @@
                     <a href="#" class="user-link">Hợp tác với chúng tôi</a>
                     <div class="header-right">
                     @if(isset($_SESSION['user']))
-                        <!-- Đã đăng nhập: Hiển thị menu người dùng -->
                         <div class="user-menu">
                             <div class="user-info" data-dropdown="userDropdown">
                                 @if(isset($_SESSION['user']['avatar']) && $_SESSION['user']['avatar'])
-                                    <img src="{{ $_SESSION['user']['avatar'] }}" alt="Avatar" class="user-avatar">
+                                    <img src="/storage/uploads/avatar/{{ $_SESSION['user']['avatar'] }}" alt="Avatar" class="user-avatar">
                                 @else
                                     <i class="fas fa-user-circle" style="font-size: 24px; margin-right: 8px; color: white;"></i>
                                 @endif
@@ -624,7 +504,7 @@
                                     <i class="fas fa-user"></i>
                                     <span>Tài khoản của tôi</span>
                                 </a>
-                                <a href="/bookings" class="dropdown-item">
+                                <a href="/orderview" class="dropdown-item">
                                     <i class="fas fa-list"></i>
                                     <span>Đặt chỗ của tôi</span>
                                 </a>
@@ -636,7 +516,6 @@
                             </div>
                         </div>
                     @else
-                        <!-- Chưa đăng nhập: Hiển thị nút đăng nhập/đăng ký -->
                         <div class="auth-buttons">
                             <a href="/login" class="auth-btn login-btn">
                                 <i class="fas fa-sign-in-alt" style="margin-right: 5px;"></i>
@@ -654,78 +533,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Main Navigation -->
-        <nav class="main-nav">
-            <div class="container">
-                <div class="nav-links">
-                    <a href="#" class="nav-link active">
-                        <i class="fas fa-hotel"></i>
-                        Khách sạn
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-plane"></i>
-                        Vé máy bay
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-bus"></i>
-                        Vé xe khách
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-shuttle-van"></i>
-                        Đưa đón sân bay
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-car"></i>
-                        Cho thuê xe
-                    </a>
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-umbrella-beach"></i>
-                        Hoạt động & Vui chơi
-                    </a>
-                </div>
-            </div>
-        </nav>
-        
-        <!-- Hero Content -->
-        <div class="hero-content">
-            <h1>Homestay Hà Nội tốt trên MộcHomestay</h1>
-            <p>Hãy khám phá những khách sạn tốt nhất tại Hà Nội, để bắt đầu chuyến hành trình kỳ diệu của bạn</p>
-        </div>
-    </div>
-
-    <!-- Search Form Section -->
-    <div class="container">
-        <div class="search-container">
-            <div class="search-form-header">
-                <div class="search-form">
-                    <div class="search-input location">
-                        <label>Thành phố, địa điểm hoặc tên khách sạn:</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <input type="text" placeholder="Hà Nội" value="Hà Nội">
-                        </div>
-                    </div>
-                    <div class="search-input date">
-                        <label>Ngày nhận phòng và trả phòng</label>
-                        <div class="input-with-icon">
-                            <i class="far fa-calendar-alt"></i>
-                            <input type="text" placeholder="21 thg 3 - 22 thg 3, 1 đêm" value="21 thg 3 - 22 thg 3, 1 đêm">
-                        </div>
-                    </div>
-                    <div class="search-input guests">
-                        <label>Khách và Phòng</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-user"></i>
-                            <input type="text" placeholder="2 người lớn, 0 Trẻ em, 1 phòng" value="2 người lớn, 0 Trẻ em, 1 phòng">
-                        </div>
-                    </div>
-                    <button class="search-button">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Main Content -->
@@ -733,6 +540,7 @@
         @yield('content')
     </div>
 
+    @extends('chatbot.chatbot');
     <!-- Footer -->
     <footer>
         <div class="footer-container">

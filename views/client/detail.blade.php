@@ -4,95 +4,136 @@
 
 @section('styles')
 <style>
-    /* Giữ nguyên CSS như trong file gốc */
+    /* Keep original CSS with modifications for room section */
     .breadcrumb { display: flex; padding: 10px 0; font-size: 12px; color: #666; flex-wrap: wrap; }
     .breadcrumb a { color: #0770cd; text-decoration: none; }
     .breadcrumb span { margin: 0 8px; }
-    .main-grid { display: flex; flex-wrap: wrap; margin: 0 -15px; }
-    .content-main { flex: 1; min-width: 0; padding: 0 15px; }
-    .header-container { padding: 15px 20px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .main-grid { display: flex; flex-wrap: wrap; margin: 0 -10px; }
+    .content-main { flex: 1; min-width: 0; padding: 0 10px; }
+    .header-container { padding: 10px 15px; display: flex; justify-content: space-between; align-items: flex-start; }
     .homestay-info { flex: 1; }
-    .homestay-title { font-size: 24px; font-weight: 700; margin: 0 0 8px; color: #222; }
-    .homestay-type-rating { display: flex; align-items: center; margin-bottom: 8px; }
-    .homestay-type { background-color: #e8f4f8; padding: 4px 8px; border-radius: 4px; color: #0064be; margin-right: 10px; font-size: 14px; }
-    .star-rating { color: #ffc107; font-size: 18px; }
+    .homestay-title { font-size: 22px; font-weight: 700; margin: 0 0 6px; color: #222; }
+    .homestay-type-rating { display: flex; align-items: center; margin-bottom: 6px; }
+    .homestay-type { background-color: #e8f4f8; padding: 3px 6px; border-radius: 4px; color: #0064be; margin-right: 8px; font-size: 13px; }
+    .star-rating { color: #ffc107; font-size: 16px; }
+    .star-rating .fa-star-half-alt { color: #ffc107; }
     .pricing-container { text-align: right; }
-    .price-label { font-size: 13px; color: #666; margin-bottom: 4px; }
-    .price-value { font-size: 24px; font-weight: 700; color: #ff5e1f; margin-bottom: 10px; }
-    .book-button { background-color: #ff5e1f; color: white; padding: 10px 20px; font-weight: 600; font-size: 14px; border-radius: 4px; text-decoration: none; display: inline-block; border: none; cursor: pointer; }
-    .booking-form { background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-    .form-row { display: flex; gap: 15px; flex-wrap: wrap; }
-    .form-group { flex: 1; min-width: 150px; }
-    .form-label { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 5px; }
-    .form-input { width: 100%; padding: 8px; font-size: 14px; border: 1px solid #e0e0e0; border-radius: 4px; }
-    .urgency-alert { display: flex; align-items: center; background-color: #e8f4f8; padding: 12px 15px; border-radius: 8px; margin-bottom: 15px; }
-    .clock-icon { background-color: #0064be; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; }
-    .clock-icon i { color: white; font-size: 16px; }
-    .urgency-message { font-size: 14px; color: #333; }
+    .price-label { font-size: 12px; color: #666; margin-bottom: 3px; }
+    .price-value { font-size: 22px; font-weight: 700; color: #ff5e1f; margin-bottom: 8px; }
+    .book-button { background-color: #ff5e1f; color: white; padding: 8px 15px; font-weight: 600; font-size: 13px; border-radius: 4px; text-decoration: none; display: inline-block; border: none; cursor: pointer; }
+    .booking-form { background-color: #f5f5f5; padding: 10px; border-radius: 6px; margin-bottom: 15px; }
+    .form-row { display: flex; flex-direction: column; gap: 10px; }
+    .form-group { min-width: 100%; }
+    .form-label { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 4px; }
+    .form-input { width: 100%; padding: 6px; font-size: 13px; border: 1px solid #e0e0e0; border-radius: 4px; }
+    .urgency-alert { display: flex; align-items: center; background-color: #e8f4f8; padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; }
+    .clock-icon { background-color: #0064be; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px; }
+    .clock-icon i { color: white; font-size: 14px; }
+    .urgency-message { font-size: 13px; color: #333; }
     .urgency-highlight { color: #0064be; font-weight: 600; }
-    .info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
-    .rating-display { display: flex; align-items: center; margin-bottom: 8px; }
-    .rating-value { font-size: 24px; font-weight: 700; margin-right: 5px; color: #333; }
-    .rating-scale { font-size: 14px; color: #666; }
-    .rating-label { font-weight: 600; font-size: 16px; color: #0064be; margin-bottom: 8px; }
-    .review-link { color: #0064be; text-decoration: none; display: flex; align-items: center; font-size: 14px; margin-bottom: 15px; }
-    .review-link i { font-size: 12px; margin-left: 5px; }
-    .review-heading { font-weight: 600; font-size: 14px; margin: 15px 0 10px; }
-    .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-    .tag { background-color: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 15px; font-size: 12px; }
-    .review-divider { height: 1px; background-color: #eee; margin: 12px 0; }
-    .reviewer-name { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
-    .review-score { color: #0064be; font-weight: 600; font-size: 14px; margin-bottom: 3px; }
-    .review-text { font-size: 13px; line-height: 1.4; color: #333; }
-    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .card-title { font-weight: 600; font-size: 16px; color: #333; }
-    .card-link { color: #0064be; text-decoration: none; font-size: 14px; display: flex; align-items: center; }
-    .card-link i { font-size: 12px; margin-left: 5px; }
-    .location-item { display: flex; align-items: flex-start; margin-bottom: 10px; }
-    .location-icon { color: #666; margin-right: 10px; min-width: 16px; margin-top: 3px; }
-    .location-text { flex: 1; font-size: 13px; line-height: 1.4; }
-    .location-distance { color: #666; font-size: 13px; text-align: right; white-space: nowrap; margin-left: 5px; }
-    .amenity-item { display: flex; align-items: center; margin-bottom: 10px; }
-    .amenity-icon { color: #0064be; margin-right: 10px; min-width: 16px; }
-    .amenity-text { font-size: 13px; }
-    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 4px; height: 400px; overflow: hidden; margin-bottom: 15px; }
+    .info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px; }
+    .rating-display { display: flex; align-items: center; margin-bottom: 6px; }
+    .rating-value { font-size: 22px; font-weight: 700; margin-right: 5px; color: #333; }
+    .rating-scale { font-size: 13px; color: #666; }
+    .rating-label { font-weight: 600; font-size: 15px; color: #0064be; margin-bottom: 6px; }
+    .review-link { color: #0064be; text-decoration: none; display: flex; align-items: center; font-size: 13px; margin-bottom: 12px; }
+    .review-link i { font-size: 11px; margin-left: 5px; }
+    .review-heading { font-weight: 600; font-size: 13px; margin: 12px 0 8px; }
+    .tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+    .tag { background-color: #e8f5e9; color: #2e7d32; padding: 3px 8px; border-radius: 12px; font-size: 11px; }
+    .review-divider { height: 1px; background-color: #eee; margin: 10px 0; }
+    .reviewer-name { font-weight: 600; font-size: 13px; margin-bottom: 3px; }
+    .review-score { color: #0064be; font-weight: 600; font-size: 13px; margin-bottom: 3px; }
+    .review-text { font-size: 12px; line-height: 1.4; color: #333; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .card-title { font-weight: 600; font-size: 15px; color: #333; }
+    .card-link { color: #0064be; text-decoration: none; font-size: 13px; display: flex; align-items: center; }
+    .card-link i { font-size: 11px; margin-left: 5px; }
+    .location-item { display: flex; align-items: flex-start; margin-bottom: 8px; }
+    .location-icon { color: #666; margin-right: 8px; min-width: 14px; margin-top: 3px; }
+    .location-text { flex: 1; font-size: 12px; line-height: 1.4; }
+    .location-distance { color: #666; font-size: 12px; text-align: right; white-space: nowrap; margin-left: 5px; }
+    .amenity-item { display: flex; align-items: center; margin-bottom: 8px; }
+    .amenity-icon { color: #0064be; margin-right: 8px; min-width: 14px; }
+    .amenity-text { font-size: 12px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 3px; height: 350px; overflow: hidden; margin-bottom: 12px; }
     .gallery-main { grid-column: span 2; grid-row: span 2; }
     .gallery-item { position: relative; overflow: hidden; }
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
     .gallery-item:hover img { transform: scale(1.05); }
-    .view-all-photos { position: absolute; bottom: 15px; right: 15px; background: rgba(255, 255, 255, 0.9); color: #333; padding: 8px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+    .view-all-photos { position: absolute; bottom: 12px; right: 12px; background: rgba(255, 255, 255, 0.9); color: #333; padding: 6px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
     .content-tabs { display: flex; background-color: white; border-bottom: 2px solid #e0e0e0; overflow-x: auto; white-space: nowrap; position: sticky; top: 0; z-index: 100; }
-    .tab-item { padding: 12px 25px; color: #666; font-weight: 600; font-size: 14px; cursor: pointer; border-bottom: 3px solid transparent; }
+    .tab-item { padding: 10px 20px; color: #666; font-weight: 600; font-size: 13px; cursor: pointer; border-bottom: 3px solid transparent; }
     .tab-item.active { color: #0064be; border-bottom-color: #0064be; }
-    .room-header { margin-bottom: 20px; }
-    .section-title { font-size: 18px; font-weight: 600; color: #333; margin: 0; }
-    .room-item { border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
-    .room-item-header { background-color: #f5f5f5; padding: 12px 15px; font-weight: 600; font-size: 16px; color: #333; border-bottom: 1px solid #e0e0e0; }
-    .room-item-content { padding: 15px; display: flex; flex-wrap: wrap; }
-    .room-image { width: 180px; height: 120px; overflow: hidden; border-radius: 4px; margin-right: 20px; }
-    .room-image img { width: 100%; height: 100%; object-fit: cover; }
-    .room-details { flex: 1; min-width: 250px; padding-right: 20px; }
-    .room-description { font-size: 14px; color: #333; margin-bottom: 15px; line-height: 1.4; }
-    .room-features { display: flex; flex-wrap: wrap; gap: 15px; }
-    .room-feature { display: flex; align-items: center; font-size: 13px; color: #666; }
-    .room-feature i { color: #0064be; margin-right: 5px; font-size: 14px; }
-    .room-pricing { width: 180px; text-align: right; display: flex; flex-direction: column; justify-content: center; }
-    .room-pricing .price-label { font-size: 12px; color: #666; margin-bottom: 3px; }
-    .room-pricing .price-value { font-size: 18px; font-weight: 700; color: #ff5e1f; margin-bottom: 0; }
-    .room-pricing .price-unit { font-size: 12px; color: #666; margin-bottom: 10px; }
-    .room-pricing .book-button { padding: 8px 15px; font-size: 13px; }
-    @media (max-width: 992px) { .info-cards { grid-template-columns: repeat(2, 1fr); } }
+    .room-header { margin-bottom: 15px; }
+    .section-title { font-size: 16px; font-weight: 600; color: #333; margin: 0; }
+    .room-item { border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 10px; overflow: hidden; }
+    .room-item-header { background-color: #f5f5f5; padding: 8px 10px; font-weight: 600; font-size: 14px; color: #333; border-bottom: 1px solid #e0e0e0; }
+    .room-item-content { padding: 10px; display: flex; flex-wrap: wrap; align-items: flex-start; }
+    .room-image { width: 50%; overflow: hidden; border-radius: 4px; margin-right: 10px; }
+    .room-image img { width: 100%; height: 100%; object-fit: cover;  border-radius: 4px;}
+    .room-details { flex: 1; min-width: 200px; padding-right: 10px; }
+    .room-description { font-size: 12px; color: #333; margin-bottom: 8px; line-height: 1.4; max-height: 40px; overflow: hidden; text-overflow: ellipsis; }
+    .room-features { display: flex; flex-wrap: wrap; gap: 10px; }
+    .room-feature { display: flex; align-items: center; font-size: 12px; color: #666; }
+    .room-feature i { color: #0064be; margin-right: 4px; font-size: 12px; }
+    .room-pricing { width: 160px; display: flex; flex-direction: column; justify-content: flex-start; }
+    .room-pricing .price-label { font-size: 11px; color: #666; margin-bottom: 2px; }
+    .room-pricing .price-value { font-size: 16px; font-weight: 700; color: #ff5e1f; margin-bottom: 0; }
+    .room-pricing .price-unit { font-size: 11px; color: #666; margin-bottom: 8px; }
+    .room-pricing .book-button { padding: 6px 12px; font-size: 12px; }
+    
+    /* CSS for discount badge and original price */
+    .discount-badge { 
+        color: red; 
+        padding: 2px 6px; 
+        border-radius: 3px; 
+        font-size: 11px; 
+        display: inline-block; 
+        margin-bottom: 4px;
+        font-weight: 600;
+    }
+    
+    .price-original { 
+        text-decoration: line-through; 
+        font-size: 12px; 
+        color: #999; 
+        margin-bottom: 2px;
+    }
+
+    /* CSS for amenities selection */
+    .amenities-selection {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 6px;
+    }
+
+    .amenity-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 12px;
+        color: #333;
+    }
+
+    .amenity-checkbox input {
+        width: auto;
+    }
+    
+    @media (max-width: 992px) { 
+        .info-cards { grid-template-columns: repeat(2, 1fr); } 
+    }
     @media (max-width: 768px) {
         .header-container { flex-direction: column; }
-        .pricing-container { text-align: left; margin-top: 10px; }
-        .book-button { margin-top: 10px; width: 100%; }
+        .pricing-container { text-align: left; margin-top: 8px; }
+        .book-button { margin-top: 8px; width: 100%; }
         .info-cards { grid-template-columns: 1fr; }
         .room-item-content { flex-direction: column; }
-        .room-image { width: 100%; height: 200px; margin-right: 0; margin-bottom: 15px; }
-        .room-details { width: 100%; padding-right: 0; margin-bottom: 15px; }
-        .room-pricing { width: 100%; text-align: left; }
+        .room-image { width: 100%; height: 150px; margin-right: 0; margin-bottom: 10px; }
+        .room-details { width: 100%; padding-right: 0; margin-bottom: 10px; }
+        .room-pricing { width: 100%; }
         .room-pricing .book-button { width: 100%; }
-        .form-row { flex-direction: column; }
     }
 </style>
 @endsection
@@ -161,35 +202,25 @@
                     <div class="homestay-type-rating">
                         <span class="homestay-type">Nhà Nghỉ Homestay</span>
                         <span class="star-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                            @php
+                                $rating = floatval($homestay['rating']);
+                                $full_stars = floor($rating);
+                                $half_star = ($rating - $full_stars) >= 0.5 ? 1 : 0;
+                                $empty_stars = 5 - $full_stars - $half_star;
+                            @endphp
+                            @for ($i = 0; $i < $full_stars; $i++)
+                                <i class="fas fa-star"></i>
+                            @endfor
+                            @if ($half_star)
+                                <i class="fas fa-star-half-alt"></i>
+                            @endif
+                            @for ($i = 0; $i < $empty_stars; $i++)
+                                <i class="far fa-star"></i>
+                            @endfor
                         </span>
                     </div>
                 </div>
-                <div class="pricing-container">
-                    <div class="price-label">Giá/phòng/đêm từ</div>
-                    <div class="price-value">445.607 VND</div>
-                </div>
-            </div>
-
-            <div class="booking-form">
-                <form id="booking-form" action="{{ '/booking/' . $homestay['id'] }}" method="GET">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Ngày nhận phòng</label>
-                            <input type="date" name="check_in" class="form-input" value="{{ date('Y-m-d') }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Ngày trả phòng</label>
-                            <input type="date" name="check_out" class="form-input" value="{{ date('Y-m-d', strtotime('+1 day')) }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Số khách</label>
-                            <input type="number" name="guests" class="form-input" min="1" value="1" required>
-                        </div>
-                    </div>
-                    <input type="hidden" name="room_id" id="room-id">
-                </form>
+                <div class="price-value">{{ number_format($homestay['price'] ?? 450000, 0, ',', '.') }} VND</div>
             </div>
 
             <div class="urgency-alert">
@@ -197,7 +228,7 @@
                     <i class="far fa-clock"></i>
                 </div>
                 <div class="urgency-message">
-                    Đừng khoảng chừng là 2 giây! Chỉ còn <span class="urgency-highlight">1 phòng</span> có giá thấp nhất này!
+                    Dừng khoảng chừng là 2 giây! Chỉ còn <span class="urgency-highlight">1 phòng</span> có giá thấp nhất này!
                 </div>
             </div>
 
@@ -205,11 +236,26 @@
                 <div class="info-card">
                     <div class="rating-display">
                         <i class="fas fa-dove" style="color: #0064be; font-size: 22px; margin-right: 10px;"></i>
-                        <span class="rating-value">9,0</span>
-                        <span class="rating-scale">/10</span>
+                        <span class="rating-value">{{ number_format($homestay['rating'], 1) }}</span>
+                        <span class="rating-scale">/5</span>
                     </div>
-                    <div class="rating-label">Xuất sắc</div>
-                    <a href="#" class="review-link">81 đánh giá <i class="fas fa-chevron-right"></i></a>
+                    <div class="rating-label">
+                        @php
+                            $rating = floatval($homestay['rating']);
+                            if ($rating >= 4.5) {
+                                echo 'Xuất sắc';
+                            } elseif ($rating >= 4.0) {
+                                echo 'Rất tốt';
+                            } elseif ($rating >= 3.5) {
+                                echo 'Tốt';
+                            } elseif ($rating >= 3.0) {
+                                echo 'Khá';
+                            } else {
+                                echo 'Trung bình';
+                            }
+                        @endphp
+                    </div>
+                    <a href="#" class="review-link">{{ $homestay['review_count'] ?? 0 }} đánh giá <i class="fas fa-chevron-right"></i></a>
                     <div class="review-heading">Khách nói gì về kỳ nghỉ của họ</div>
                     <div class="tag-container">
                         <div class="tag">Khoảng Cách Đến Trung Tâm (11)</div>
@@ -219,10 +265,15 @@
                         <div class="tag">Khu Vực Xung Quanh (9)</div>
                         <div class="tag">Wifi (8)</div>
                     </div>
-                    <div class="review-divider"></div>
-                    <div class="reviewer-name">Mạc t. T. n.</div>
-                    <div class="review-score">9,7 / 10</div>
-                    <div class="review-text">View xịn đét, phòng sạch sẽ, giá cả hợp lí 😘 ưng lém ạ</div>
+                    @if(isset($ratings) && count($ratings) > 0)
+                        <div class="review-divider"></div>
+                        <div class="reviewer-name">{{ $ratings[0]['full_name'] }}</div>
+                        <div class="review-score">{{ number_format($ratings[0]['score'], 1) }} / 5</div>
+                        <div class="review-text">{{ $ratings[0]['content'] ?? 'Không có nội dung đánh giá.' }}</div>
+                    @else
+                        <div class="review-divider"></div>
+                        <div class="review-text">Chưa có đánh giá nào cho homestay này.</div>
+                    @endif
                 </div>
                 <div class="info-card">
                     <div class="card-header">
@@ -258,22 +309,18 @@
                         <div class="card-title">Tiện ích chính</div>
                         <a href="#" class="card-link">Xem thêm <i class="fas fa-chevron-right"></i></a>
                     </div>
-                    <div class="amenity-item">
-                        <i class="fas fa-snowflake amenity-icon"></i>
-                        <div class="amenity-text">Máy lạnh</div>
-                    </div>
-                    <div class="amenity-item">
-                        <i class="fas fa-concierge-bell amenity-icon"></i>
-                        <div class="amenity-text">Lễ tân 24h</div>
-                    </div>
-                    <div class="amenity-item">
-                        <i class="fas fa-elevator amenity-icon"></i>
-                        <div class="amenity-text">Thang máy</div>
-                    </div>
-                    <div class="amenity-item">
-                        <i class="fas fa-wifi amenity-icon"></i>
-                        <div class="amenity-text">WiFi</div>
-                    </div>
+                    @if(isset($amenities) && count($amenities) > 0)
+                        @foreach($amenities as $amenity)
+                            <div class="amenity-item">
+                                <i class="{{ $amenity['icon'] ?? 'fas fa-check' }} amenity-icon"></i>
+                                <div class="amenity-text">{{ $amenity['name'] }}</div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="amenity-item">
+                            <div class="amenity-text">Không có thông tin tiện ích</div>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -302,16 +349,54 @@
                                 </div>
                             </div>
                             <div class="room-pricing">
-                                <div class="price-label">Giá mỗi đêm từ</div>
-                                <div class="price-value">{{ number_format($room['price'] ?? 450000, 0, ',', '.') }} VND</div>
-                                <div class="price-unit">/ đêm</div>
-                                <button type="submit" form="booking-form" onclick="document.getElementById('room-id').value = '{{ $room['id'] }}';" class="book-button">Chọn phòng</button>
+                                <form action="/booking/{{ $homestay['id'] }}" method="GET" class="booking-form">
+                                    <input type="hidden" name="room_id" value="{{ $room['id'] }}">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Ngày nhận phòng</label>
+                                            <input type="date" class="form-input" name="check_in" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Ngày trả phòng</label>
+                                            <input type="date" class="form-input" name="check_out" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Số lượng khách</label>
+                                            <input type="number" class="form-input" name="guests" min="1" max="{{ $room['capacity'] ?? 1 }}" value="1" required>
+                                        </div>
+                                        @if(isset($amenities) && count($amenities) > 0)
+                                            <div class="form-group">
+                                                <label class="form-label">Tiện ích</label>
+                                                <div class="amenities-selection">
+                                                    @foreach($amenities as $amenity)
+                                                        <div class="amenity-checkbox">
+                                                            <input type="checkbox" name="amenities[]" value="{{ $amenity['name'] }}" checked>
+                                                            <span>{{ $amenity['name'] }}</span>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <div class="form-group">
+                                            <div class="price-label">Giá mỗi đêm từ</div>
+                                            @if(isset($room['discount']) && $room['discount'] > 0)
+                                                <div class="price-original">{{ number_format($room['price'], 0, ',', '.') }} VND</div>
+                                                <div class="price-value">{{ number_format($room['price'] * (1 - $room['discount']/100), 0, ',', '.') }} VND</div>
+                                                <div class="discount-badge">Giảm {{ $room['discount'] }}%</div>
+                                            @else
+                                                <div class="price-value">{{ number_format($room['price'] ?? 450000, 0, ',', '.') }} VND</div>
+                                            @endif
+                                            <div class="price-unit">/ đêm</div>
+                                            <button type="submit" class="book-button">Chọn phòng</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                     @endforeach
                 @else
-                    <div style="padding: 20px 0; text-align: center; color: #666;">
+                    <div style="padding: 15px 0; text-align: center; color: #666;">
                         <p>Không tìm thấy phòng trống cho homestay này.</p>
                     </div>
                 @endif
@@ -345,18 +430,6 @@
         if (viewAllPhotosBtn) {
             viewAllPhotosBtn.addEventListener('click', function() {
                 alert('Chức năng xem tất cả hình ảnh sẽ được phát triển sau');
-            });
-        }
-
-        const bookingForm = document.getElementById('booking-form');
-        if (bookingForm) {
-            bookingForm.addEventListener('submit', function(e) {
-                const checkIn = new Date(document.querySelector('input[name="check_in"]').value);
-                const checkOut = new Date(document.querySelector('input[name="check_out"]').value);
-                if (checkOut <= checkIn) {
-                    e.preventDefault();
-                    alert('Ngày trả phòng phải sau ngày nhận phòng!');
-                }
             });
         }
     });

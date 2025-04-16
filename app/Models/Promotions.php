@@ -266,4 +266,23 @@ class Promotions extends Model
         $stmt->bindValue(':current_date', $currentDate);
         return $stmt->executeQuery();
     }
+
+    public function getActivePromotionForRoom($room_id) {
+        $today = date('Y-m-d');
+        $sql = "SELECT * FROM promotions 
+                WHERE room_id = :room_id 
+                AND status = 'active' 
+                AND start_date <= :today 
+                AND end_date >= :today 
+                ORDER BY discount_percent DESC 
+                LIMIT 1";
+        
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':room_id', $room_id);
+        $stmt->bindValue(':today', $today);
+        $result = $stmt->executeQuery();
+        $promotion = $result->fetchAssociative();
+        
+        return $promotion ?: null;
+    }
 }

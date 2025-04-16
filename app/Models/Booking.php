@@ -18,71 +18,67 @@ class Booking extends Model
         return $ru->fetchAllAssociative();
     }
 
-    /**
-     * Create a new booking record and return the inserted ID
-     * @param array $data Associative array of booking data
-     * @return int The ID of the newly created booking
-     * @throws \Exception If insertion fails
-     */
-    public function create($data)
+    public function insert($data)
     {
         try {
             $columns = implode(', ', array_keys($data));
-            $placeholders = implode(', ', array_fill(0, count($data), '?'));
+            $placeholders = ':' . implode(', :', array_keys($data));
             $sql = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$placeholders})";
             $stmt = $this->connection->prepare($sql);
-            $stmt->executeStatement(array_values($data));
+            
+            foreach ($data as $key => $value) {
+                $stmt->bindValue(':' . $key, $value);
+            }
+            
+            $stmt->executeStatement();
             return (int) $this->connection->lastInsertId();
         } catch (\Exception $e) {
             throw new \Exception("Failed to create booking: " . $e->getMessage());
         }
     }
 
-    /**
-     * Find a booking by its ID
-     * @param int $id The booking ID
-     * @return array|null The booking data as an associative array, or null if not found
-     */
     public function find($id)
     {
         try {
-            $sql = "SELECT * FROM {$this->tableName} WHERE id = ?";
+            $sql = "SELECT * FROM {$this->tableName} WHERE id = :id";
             $stmt = $this->connection->prepare($sql);
-            $result = $stmt->executeQuery([$id])->fetchAssociative();
-            return $result ?: null;
+            $stmt->bindValue(':id', $id);
+            $result = $stmt->executeQuery();
+            return $result->fetchAssociative() ?: null;
         } catch (\Exception $e) {
             throw new \Exception("Failed to find booking: " . $e->getMessage());
         }
     }
 
-    /**
-     * Check if a room is available for the given date range
-     * @param int $room_id The room ID
-     * @param string $check_in Check-in date (Y-m-d)
-     * @param string $check_out Check-out date (Y-m-d)
-     * @return bool True if available, false if already booked
-     */
-    public function checkAvailability($room_id, $check_in, $check_out)
+    public function checkRoomAvailability($room_id, $check_in, $check_out) {
+        $sql = "SELECT COUNT(*) as count FROM bookings 
+                WHERE room_id = :room_id 
+                AND status != 'cancelled'
+                AND ((check_in BETWEEN :check_in AND :check_out) 
+                OR (check_out BETWEEN :check_in AND :check_out)
+                OR (check_in <= :check_in AND check_out >= :check_out))";
+                
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':room_id', $room_id);
+        $stmt->bindValue(':check_in', $check_in);
+        $stmt->bindValue(':check_out', $check_out);
+        $result = $stmt->executeQuery();
+        $count = $result->fetchOne();
+        return $count == 0;
+    }
+
+    public function findUserBookings($user_id)
     {
         try {
-            $sql = "SELECT COUNT(*) FROM {$this->tableName} 
-                    WHERE room_id = ? 
-                    AND status != 'cancelled'
-                    AND (
-                        (check_in <= ? AND check_out >= ?) 
-                        OR (check_in <= ? AND check_out >= ?) 
-                        OR (check_in >= ? AND check_out <= ?)
-                    )";
+            $sql = "SELECT b.* FROM {$this->tableName} b
+                    WHERE b.user_id = :user_id
+                    ORDER BY b.created_at DESC";
             $stmt = $this->connection->prepare($sql);
-            $overlap = $stmt->executeQuery([
-                $room_id,
-                $check_out, $check_in,
-                $check_out, $check_in,
-                $check_in, $check_out
-            ])->fetchOne();
-            return $overlap == 0; // Trả về true nếu không có trùng lịch
+            $stmt->bindValue(':user_id', $user_id);
+            $result = $stmt->executeQuery();
+            return $result->fetchAllAssociative();
         } catch (\Exception $e) {
-            throw new \Exception("Failed to check room availability: " . $e->getMessage());
+            throw new \Exception("Failed to find user bookings: " . $e->getMessage());
         }
     }
 }

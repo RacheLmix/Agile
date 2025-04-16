@@ -11,7 +11,7 @@ class Homestay extends Model
     public function findAllHomestaysWithDetails()
     {
         try {
-            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.rating, c.name AS category_name, u.full_name AS host_name
+            $sql = "SELECT h.id, h.name, h.price, h.location, h.address, h.description, h.image, h.rating, c.name AS category_name, u.full_name AS host_name
                     FROM homestays h
                     LEFT JOIN categories c ON h.category_id = c.id
                     LEFT JOIN users u ON h.host_id = u.id
@@ -44,10 +44,43 @@ class Homestay extends Model
         }
     }
 
+    public function getAmenities($homestayId)
+    {
+        try {
+            $sql = "SELECT a.* 
+                    FROM amenities a
+                    INNER JOIN homestay_amenities ha ON a.id = ha.amenity_id
+                    WHERE ha.homestay_id = :homestayId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':homestayId', $homestayId);
+            $result = $stmt->executeQuery();
+            return $result->fetchAllAssociative() ?: [];
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
     public function getRooms($homestayId)
     {
         try {
             $sql = "SELECT * FROM rooms WHERE homestay_id = :homestayId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':homestayId', $homestayId);
+            $result = $stmt->executeQuery();
+            return $result->fetchAllAssociative() ?: [];
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
+    public function getRatings($homestayId)
+    {
+        try {
+            $sql = "SELECT r.score, r.content, u.full_name 
+                    FROM ratings r
+                    INNER JOIN users u ON r.user_id = u.id
+                    WHERE r.homestay_id = :homestayId
+                    ORDER BY r.created_at DESC";
             $stmt = $this->connection->prepare($sql);
             $stmt->bindValue(':homestayId', $homestayId);
             $result = $stmt->executeQuery();
@@ -135,26 +168,40 @@ class Homestay extends Model
     }
 
     public function findSimilarHomestays($category_id, $location, $excludeId, $limit = 3) {
-            try {
-                $sql = "SELECT h.*, c.name AS category_name
-                        FROM homestays h
-                        LEFT JOIN categories c ON h.category_id = c.id
-                        WHERE h.id != :exclude_id
-                          AND (h.category_id = :category_id OR h.location = :location)
-                          AND h.status = 'active'
-                        ORDER BY h.rating DESC, h.created_at DESC
-                        LIMIT :limit";
-    
-                $stmt = $this->connection->prepare($sql);
-                $stmt->bindValue(':exclude_id', $excludeId);
-                $stmt->bindValue(':category_id', $category_id);
-                $stmt->bindValue(':location', $location);
-                $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
-                $result = $stmt->executeQuery();
-                return $result->fetchAllAssociative() ?: [];
-            } catch (\Exception $e) {
-                // Log error if needed
-                return [];
-            }
+        try {
+            $sql = "SELECT h.*, c.name AS category_name
+                    FROM homestays h
+                    LEFT JOIN categories c ON h.category_id = c.id
+                    WHERE h.id != :exclude_id
+                      AND (h.category_id = :category_id OR h.location = :location)
+                      AND h.status = 'active'
+                    ORDER BY h.rating DESC, h.created_at DESC
+                    LIMIT :limit";
+
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':exclude_id', $excludeId);
+            $stmt->bindValue(':category_id', $category_id);
+            $stmt->bindValue(':location', $location);
+            $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+            $result = $stmt->executeQuery();
+            return $result->fetchAllAssociative() ?: [];
+        } catch (\Exception $e) {
+            return [];
         }
+    }
+
+    public function findByHost($hostId)
+    {
+        try {
+            $sql = "SELECT id, name, image, location, city, price, rating
+                    FROM homestays
+                    WHERE host_id = :hostId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':hostId', $hostId);
+            $result = $stmt->executeQuery();
+            return $result->fetchAllAssociative() ?: [];
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
 }

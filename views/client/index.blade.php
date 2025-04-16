@@ -4,393 +4,418 @@
 
 @section('styles')
 <style>
+    /* Reset and Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #f8fafc;
+        color: #2d3748;
+    }
+
     .main-container {
-        max-width: 1200px;
-        margin: 20px auto;
+        max-width: 1300px;
+        margin: 32px auto;
+        padding: 0 16px;
+    }
+
+    /* Search Bar Container */
+    .search-bar-container {
         display: flex;
-        gap: 20px;
+        justify-content: center;
+        margin-bottom: 32px;
+        animation: fadeIn 0.6s ease-out;
     }
 
-    /* Filter Sidebar */
-    .filter-sidebar {
-        width: 250px;
-        flex-shrink: 0;
-    }
-
-    .filter-card {
+    .search-bar {
         background: white;
-        border-radius: 8px;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-        margin-bottom: 16px;
-        overflow: hidden;
-    }
-
-    .filter-header {
-        padding: 12px 16px;
-        font-weight: 600;
-        font-size: 14px;
-        border-bottom: 1px solid #f0f0f0;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        cursor: pointer;
-    }
-
-    .filter-header i {
-        font-size: 12px;
-        color: #666;
-    }
-
-    .filter-body {
-        padding: 12px 16px;
-    }
-
-    .price-range-slider {
+        gap: 12px;
+        padding: 8px;
         width: 100%;
-        margin: 10px 0;
+        max-width: 900px;
+        border: 1px solid #e2e8f0;
     }
 
-    .price-labels {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 5px;
-        font-size: 12px;
-        color: #666;
-    }
-
-    .filter-option {
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-    }
-
-    .filter-option input[type="checkbox"] {
-        margin-right: 8px;
-    }
-
-    .filter-option label {
-        font-size: 13px;
-        cursor: pointer;
+    .search-field {
         flex: 1;
+        min-width: 200px;
+        position: relative;
     }
 
-    .filter-option .count {
-        font-size: 12px;
-        color: #999;
+    .search-field i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #3182ce;
+        font-size: 16px;
     }
 
-    .filter-actions {
-        display: flex;
-        justify-content: space-between;
-        padding-top: 10px;
-        margin-top: 10px;
-        border-top: 1px solid #f0f0f0;
+    .search-field input,
+    .search-field select {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .clear-filters {
-        background: none;
-        border: none;
-        color: #666;
-        cursor: pointer;
-        font-size: 13px;
-        padding: 6px 12px;
+    .search-field input:focus,
+    .search-field select:focus {
+        outline: none;
+        border-color: #3182ce;
+        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
     }
 
-    .apply-filters {
-        background: #0070cc;
+    .search-button {
+        background: #ff6200;
         color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
         border: none;
-        border-radius: 4px;
-        padding: 6px 15px;
-        cursor: pointer;
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 500;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .search-button:hover {
+        background: #e55b00;
+        transform: scale(1.02);
     }
 
     /* Homestay List */
     .homestay-list-container {
-        flex: 1;
-        width: 100%;
+        animation: fadeIn 0.6s ease-out;
     }
 
     .homestay-list-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 16px;
-        width: 80%;
+        margin-bottom: 24px;
     }
 
     .result-count {
-        font-size: 14px;
-        font-weight: 500;
+        font-size: 18px;
+        font-weight: 600;
+        color: #2d3748;
     }
 
     .sort-container {
         display: flex;
         align-items: center;
+        gap: 12px;
     }
 
     .sort-label {
-        font-size: 13px;
-        margin-right: 8px;
+        font-size: 14px;
+        color: #4a5568;
     }
 
     .sort-select {
-        padding: 6px 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 13px;
+        padding: 10px 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 14px;
+        background: white;
+        transition: all 0.3s ease;
+    }
+
+    .sort-select:hover,
+    .sort-select:focus {
+        border-color: #3182ce;
+        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
     }
 
     .homestay-list {
         display: flex;
-        flex-direction: column;
-        gap: 16px;
-        width: 80%;
+        flex-direction: column; /* Chuyển thành danh sách dọc */
+        gap: 16px; /* Khoảng cách giữa các homestay card */
     }
 
     .homestay-card {
         background: white;
-        border-radius: 8px;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-        display: flex;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        display: flex; /* Sử dụng flex để hiển thị hình ảnh và nội dung cạnh nhau */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         overflow: hidden;
-        position: relative;
-        transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .homestay-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-6px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
     }
 
     .homestay-image {
-        width: 200px;
-        height: 150px;
-        flex-shrink: 0;
+        width: 280px; /* Kích thước hình ảnh giống trong hình */
+        height: 200px;
         overflow: hidden;
         position: relative;
+        flex-shrink: 0; /* Đảm bảo hình ảnh không bị co lại */
     }
 
     .homestay-image img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .homestay-card:hover .homestay-image img {
+        transform: scale(1.08);
     }
 
     .homestay-details {
         padding: 16px;
-        flex: 1;
         display: flex;
         flex-direction: column;
+        gap: 8px;
+        flex: 1; /* Chiếm toàn bộ không gian còn lại */
+        position: relative;
     }
 
     .homestay-name {
         font-size: 16px;
         font-weight: 600;
-        color: #333;
-        margin-bottom: 4px;
+        color: #2d3748;
         text-decoration: none;
+        transition: color 0.3s ease;
     }
 
     .homestay-name:hover {
-        color: #0070cc;
+        color: #3182ce;
     }
 
     .rating-badge {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        margin-right: 4px;
+        gap: 8px;
     }
 
     .rating-score {
-        background: #0070cc;
+        background: #3182ce;
         color: white;
-        padding: 2px 4px;
-        border-radius: 4px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
         font-weight: 600;
-        font-size: 13px;
     }
 
     .rating-text {
-        font-size: 13px;
-        font-weight: 500;
-        margin-left: 4px;
-    }
-
-    .rating-count {
-        color: #999;
         font-size: 12px;
-        font-weight: normal;
+        color: #718096;
     }
 
     .homestay-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
-        margin: 8px 0;
+        gap: 6px;
     }
 
     .homestay-tag {
-        background-color: #f0f8ff;
-        color: #0070cc;
-        font-size: 12px;
+        background: #e6f0fa;
+        color: #3182ce;
+        font-size: 11px;
         padding: 4px 8px;
-        border-radius: 4px;
+        border-radius: 10px;
         font-weight: 500;
-        display: flex;
-        align-items: center;
+        transition: all 0.3s ease;
     }
 
-    .homestay-tag i {
-        margin-right: 4px;
-        font-size: 10px;
+    .homestay-tag.highlight {
+        background: #3182ce;
+        color: white;
     }
 
-    .location-info {
-        color: #666;
+    .amenities-info {
         font-size: 12px;
+        color: #4a5568;
         display: flex;
-        align-items: center;
-        margin-top: 4px;
+        align-items: flex-start;
+        gap: 6px;
+        max-width: 100%;
     }
 
-    .location-info i {
-        margin-right: 4px;
+    .amenities-info i {
+        color: #3182ce;
+        margin-top: 2px;
+    }
+
+    .amenities-info span {
+        display: block;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .price-container {
+        position: absolute;
+        top: 16px;
+        right: 16px;
         text-align: right;
-        margin-top: auto;
     }
 
     .price-label {
         font-size: 11px;
-        color: #666;
+        color: #718096;
     }
 
     .price-value {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 700;
-        color: #ff5e1f;
+        color: #ed8936;
     }
 
     .price-night {
-        font-size: 12px;
-        color: #666;
+        font-size: 11px;
+        color: #718096;
     }
 
     .booking-button {
-        display: inline-block;
-        background: #0070cc;
+        background: #3182ce;
         color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 8px 16px;
-        font-size: 13px;
-        font-weight: 500;
-        margin-top: 10px;
+        padding: 10px 20px;
+        border-radius: 8px;
         text-align: center;
         text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        align-self: flex-end; /* Đẩy nút sang bên phải */
+        margin-top: auto; /* Đảm bảo nút ở dưới cùng */
     }
 
     .booking-button:hover {
-        background: #005aa3;
+        background: #2b6cb0;
+        transform: scale(1.02);
     }
 
-    /* Promotion Banner */
+    .host-info {
+        font-size: 12px;
+        color: #4a5568;
+        margin-top: 8px;
+        line-height: 1.4;
+    }
+
+    /* Promo Banner */
     .promo-banner {
-        margin: 24px 0;
-        border-radius: 8px;
+        margin: 32px 0;
+        border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.6s ease-out;
     }
 
     .promo-banner img {
         width: 100%;
         height: auto;
-        display: block;
+        transition: transform 0.5s ease;
+    }
+
+    .promo-banner:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
     }
 
     /* Responsive */
     @media (max-width: 768px) {
-        .main-container {
+        .search-bar {
             flex-direction: column;
+            gap: 12px;
+            max-width: 100%;
         }
 
-        .filter-sidebar {
+        .search-field {
+            min-width: 100%;
+        }
+
+        .search-button {
             width: 100%;
         }
 
         .homestay-card {
-            flex-direction: column;
+            flex-direction: column; /* Chuyển thành dọc trên màn hình nhỏ */
         }
 
         .homestay-image {
             width: 100%;
+            height: 180px;
         }
-    }
 
-    .homestay-details p {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
+        .price-container {
+            position: static;
+            text-align: right;
+            margin-top: 8px;
+        }
 
-    .homestay-tag.highlight {
-        background-color: #0070cc;
-        color: white;
+        .booking-button {
+            width: 100%;
+            align-self: stretch;
+        }
     }
 </style>
 @endsection
 
 @section('content')
 <div class="main-container">
-    <!-- Filter Sidebar -->
-    <div class="filter-sidebar">
-        <form action="/" method="GET" id="filter-form">
+    <!-- Search Bar Container -->
+    <div class="search-bar-container">
+        <form action="/" method="GET" class="search-bar">
             <!-- Search Keyword -->
-            <div class="filter-card">
-                <div class="filter-header">
-                    Tìm kiếm
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="filter-body">
-                    <input type="text" name="keyword" placeholder="Tên homestay..." value="{{ $keyword ?? '' }}" style="width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 4px;">
-                </div>
+            <div class="search-field">
+                <i class="fas fa-search"></i>
+                <input type="text" name="keyword" placeholder="Tên homestay..." value="{{ $keyword ?? '' }}">
             </div>
 
             <!-- Location Filter -->
-            <div class="filter-card">
-                <div class="filter-header">
-                    Vị trí
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="filter-body">
-                    <input type="text" name="location" placeholder="Nhập vị trí..." value="{{ $location ?? '' }}" style="width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 4px;">
-                </div>
+            <div class="search-field">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" name="location" placeholder="Nhập vị trí..." value="{{ $location ?? '' }}">
             </div>
 
             <!-- Category Filter -->
-            <div class="filter-card">
-                <div class="filter-header">
-                    Loại hình lưu trú
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="filter-body">
-                    <select name="category_id" style="width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 4px;">
-                        <option value="">Tất cả</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category['id'] }}" {{ ($category_id === $category['id']) ? 'selected' : '' }}>{{ $category['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <div class="search-field">
+                <i class="fas fa-tag"></i>
+                <select name="category_id">
+                    <option value="">Tất cả</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category['id'] }}" {{ ($category_id === $category['id']) ? 'selected' : '' }}>{{ $category['name'] }}</option>
+                    @endforeach
+                </select>
             </div>
-            <div class="filter-actions">
-                <button type="button" class="clear-filters" onclick="window.location.href='/'">Xóa bộ lọc</button>
-                <button type="submit" class="apply-filters">Áp dụng</button>
-            </div>
+
+            <!-- Search Button -->
+            <button type="submit" class="search-button">
+                <i class="fas fa-search"></i>
+            </button>
+            <a href="/">Xóa bộ lọc</a>
         </form>
     </div>
 
@@ -400,19 +425,32 @@
             <div class="result-count">Hà Nội - {{ is_countable($homestays) ? count($homestays) : 0 }} nơi lưu trú được tìm thấy</div>
             <div class="sort-container">
                 <span class="sort-label">Xếp theo:</span>
-                <select class="sort-select" onchange="this.form.submit()">
-                    <option>Độ phổ biến</option>
-                    <option>Giá: Thấp đến Cao</option>
-                    <option>Giá: Cao đến Thấp</option>
-                    <option>Đánh giá: Cao đến Thấp</option>
-                </select>
+                <form method="GET" action="/" style="display: inline;">
+                    <!-- Preserve existing filters -->
+                    @if($keyword)
+                    <input type="hidden" name="keyword" value="{{ $keyword }}">
+                    @endif
+                    @if($location)
+                    <input type="hidden" name="location" value="{{ $location }}">
+                    @endif
+                    @if($category_id)
+                    <input type="hidden" name="category_id" value="{{ $category_id }}">
+                    @endif
+                    
+                    <select name="sort" class="sort-select" onchange="this.form.submit()">
+                        <option value="popular" {{ ($sort ?? '') == 'popular' ? 'selected' : '' }}>Độ phổ biến</option>
+                        <option value="price_asc" {{ ($sort ?? '') == 'price_asc' ? 'selected' : '' }}>Giá: Thấp đến Cao</option>
+                        <option value="price_desc" {{ ($sort ?? '') == 'price_desc' ? 'selected' : '' }}>Giá: Cao đến Thấp</option>
+                        <option value="rating_desc" {{ ($sort ?? '') == 'rating_desc' ? 'selected' : '' }}>Đánh giá: Cao đến Thấp</option>
+                    </select>
+                </form>
             </div>
         </div>
 
         <!-- Homestay Cards -->
         <div class="homestay-list">
             @if($keyword || $location || $category_id)
-                <div style="margin-bottom: 16px; padding: 10px; background: #f0f8ff; border-radius: 4px; color: #0070cc;">
+                <div style="margin-bottom: 16px; padding: 10px; background: #e6f0fa; border-radius: 4px; color: #3182ce;">
                     Kết quả tìm kiếm cho:
                     @if($keyword) <strong>Tên: {{ $keyword }}</strong> @endif
                     @if($location) <strong>Vị trí: {{ $location }}</strong> @endif
@@ -440,21 +478,27 @@
                                 </span>
                             </div>
                             <div class="homestay-tags">
-                                <span class="homestay-tag"><i class="fas fa-tag"></i>{{ $homestay['category_name'] ?? 'Nhà nghỉ Homestay' }}</span>
+                                <span class="homestay-tag highlight"><i class="fas fa-tag"></i> {{ $homestay['category_name'] ?? 'Nhà nghỉ Homestay' }}</span>
                                 <span class="homestay-tag {{ $location && $homestay['location'] === $location ? 'highlight' : '' }}">
-                                    <i class="fas fa-map-marker-alt"></i>{{ $homestay['location'] }}
+                                    <i class="fas fa-map-marker-alt"></i> {{ $homestay['location'] }}
                                 </span>
-                                <span class="homestay-tag"><i class="fas fa-user"></i>{{ $homestay['host_name'] ?? 'Chủ nhà' }}</span>
                             </div>
-                            <p class="location-info">
-                                <i class="fas fa-comment"></i>
+                            <p class="amenities-info">
+                                <i class="fas fa-check-circle"></i>
                                 <span>{{ $homestay['description'] ?? 'Không có mô tả' }}</span>
                             </p>
+                            <div class="price-container">
+                                <div class="price-label">Giá trung bình</div>
+                                <div class="price-value">{{ number_format($homestay['price'] ?? 0) }} VND</div>
+                                <div class="price-night">phòng/đêm</div>
+                            </div>
+                            <a href="{{ 'homestays/detail/' . $homestay['id'] }}" class="booking-button">Xem phòng trống</a>
+                            <p class="host-info">{{ $homestay['host_name'] ?? 'Chủ nhà' }}<br>{{ $homestay['description'] ?? 'Không có mô tả' }}</p>
                         </div>
                     </div>
                 @endforeach
             @else
-                <div style="text-align: center; padding: 30px;">
+                <div style="text-align: center; padding: 40px; font-size: 16px; color: #718096;">
                     <p>Không tìm thấy homestay nào phù hợp với tiêu chí tìm kiếm.</p>
                 </div>
             @endif
@@ -467,48 +511,13 @@
         </div>
     </div>
 </div>
-<script>
-    // Toggle filter sections
-    document.querySelectorAll('.filter-header').forEach(header => {
-        header.addEventListener('click', () => {
-            const body = header.nextElementSibling;
-            const icon = header.querySelector('i');
-            body.style.display = body.style.display === 'none' ? 'block' : 'none';
-            icon.classList.toggle('fa-chevron-down');
-            icon.classList.toggle('fa-chevron-up');
-        });
-    });
-
-    // Preserve form values on page refresh
-    document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('filter-form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const url = new URL(window.location.href);
-            url.search = new URLSearchParams(formData).toString();
-            window.location.href = url.toString();
-        });
-    });
-</script>
 @endsection
 
 @section('scripts')
 <script>
-    // Toggle filter sections
-    document.querySelectorAll('.filter-header').forEach(header => {
-        header.addEventListener('click', () => {
-            const body = header.nextElementSibling;
-            const icon = header.querySelector('i');
-
-            if (body.style.display === 'none') {
-                body.style.display = 'block';
-                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-            } else {
-                body.style.display = 'none';
-                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-            }
-        });
+    // Smooth scroll to homestay list on search
+    document.querySelector('.search-button').addEventListener('click', () => {
+        document.querySelector('.homestay-list-container').scrollIntoView({ behavior: 'smooth' });
     });
 </script>
 @endsection

@@ -88,17 +88,22 @@
 
         <div class="form-group">
             <label for="description">Description</label>
-            <input id="description" name="description" value="{{ $homestays['description'] }}">
+            <textarea id="description" name="description">{{ $homestays['description'] }}</textarea>
         </div>
 
         <div class="form-group">
             <label for="location">Location</label>
-            <input id="location" name="location" value="{{ $homestays['location'] }}">
+            <input type="text" id="location" name="location" value="{{ $homestays['location'] }}">
         </div>
 
         <div class="form-group">
             <label for="address">Address</label>
-            <input id="address" name="address" value="{{ $homestays['address'] }}">
+            <input type="text" id="address" name="address" value="{{ $homestays['address'] }}">
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price (VND)</label>
+            <input type="number" id="price" name="price" value="{{ $homestays['price'] }}" min="0" step="1000" placeholder="Enter price per night">
         </div>
 
         <div class="form-group">
@@ -116,7 +121,7 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn-submit">Create Homestay</button>
+            <button type="submit" class="btn-submit">Update Homestay</button>
         </div>
     </form>
 </div>

@@ -118,3 +118,12 @@ if (!function_exists('random_string')) {
         return $randomString;
     }
 }
+
+
+function config($key, $default = null) {
+    static $config = null;
+    if ($config === null) {
+        $config = require __DIR__ . '/config/app.php';
+    }
+    return $config[$key] ?? $default;
+}

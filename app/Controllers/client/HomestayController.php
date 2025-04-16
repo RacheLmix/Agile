@@ -7,21 +7,26 @@ use App\Models\Homestay;
 use App\Models\Room;
 use App\Models\Category;
 use App\Models\Booking;
+use App\Models\Promotions;
 
-class HomestayController extends Controller{
+class HomestayController extends Controller
+{
     protected $homestays;
     protected $rooms;
     protected $categories;
+    protected $promotions;
     
     public function __construct()
     {
         $this->homestays = new Homestay();
         $this->rooms = new Room();
         $this->categories = new Category();
+        $this->promotions = new Promotions();
     }
     
     // Homepage with all homestays
-    public function index(){
+    public function index()
+    {
         $homestays = $this->homestays->findAllHomestaysWithDetails();
         $categories = $this->categories->findAll();
         
@@ -31,30 +36,33 @@ class HomestayController extends Controller{
         
         return view("client.list", compact('homestays', 'categories'));
     }
-    public function detail($id){
-        // Get the homestay with all related details
+    
+    public function detail($id)
+    {
         $homestay = $this->homestays->findHomestayWithDetails($id);
-        
         if (!$homestay) {
-            // If homestay not found, redirect to homepage
-            redirect('/');
+            view('client.detail', ['error' => 'Không tìm thấy homestay']);
+            return;
+        }
+        $rooms = $this->homestays->getRooms($id);
+        $amenities = $this->homestays->getAmenities($id);
+        $ratings = $this->homestays->getRatings($id); // Fetch ratings
+        
+        $promotions = new Promotions();
+        foreach ($rooms as &$room) {
+            $roomPromotions = $promotions->getRoomPromotions($room['id']);
+            if (!empty($roomPromotions)) {
+                $room['discount'] = $roomPromotions[0]['discount_percent'];
+                $room['promotion_title'] = $roomPromotions[0]['title'];
+            }
         }
         
-        // Get rooms associated with this homestay
-        $rooms = $this->rooms->findByHomestay($id);
-        
-        // Get similar homestays in the same category or location
-        $similar_homestays = $this->homestays->findSimilarHomestays($homestay['category_id'], $homestay['location'], $id, 3);
-        
-        // Get categories for sidebar or filters
-        $categories = $this->categories->findAll();
-        
-        // Pass all data to the view
-        return view('client.detail', compact('homestay', 'rooms', 'similar_homestays', 'categories'));
+        view('client.detail', compact('homestay', 'rooms', 'amenities', 'ratings'));
     }
     
     // Search homestays by criteria
-    public function search(){
+    public function search()
+    {
         $keyword = $_GET['keyword'] ?? '';
         $location = $_GET['location'] ?? '';
         $category_id = $_GET['category_id'] ?? '';
@@ -78,7 +86,8 @@ class HomestayController extends Controller{
     }
     
     // Filter homestays by category
-    public function filterByCategory($category_id){
+    public function filterByCategory($category_id)
+    {
         $homestays = $this->homestays->findByCategory($category_id);
         $category = $this->categories->find($category_id);
         $categories = $this->categories->findAll();
@@ -87,7 +96,8 @@ class HomestayController extends Controller{
     }
     
     // Filter homestays by location
-    public function filterByLocation($location){
+    public function filterByLocation($location)
+    {
         $homestays = $this->homestays->findByLocation($location);
         $categories = $this->categories->findAll();
         
@@ -99,8 +109,8 @@ class HomestayController extends Controller{
     }
     
     // Method to handle booking requests
-    public function book($id){
-        // This would be implemented to handle the booking form submission
+    public function book($id)
+    {
         $homestay = $this->homestays->findHomestayWithDetails($id);
         
         if (!$homestay) {
@@ -116,7 +126,6 @@ class HomestayController extends Controller{
             
             // Validate input
             if (!$checkIn || !$checkOut) {
-                // Return with error
                 return view("client.detail", [
                     'homestay' => $homestay,
                     'error' => 'Vui lòng chọn ngày nhận phòng và trả phòng.',
@@ -124,26 +133,10 @@ class HomestayController extends Controller{
                 ]);
             }
             
-            // // Check room availability
-            // if ($room_id) {
-            //     $isAvailable = $this->rooms->checkAvailability($room_id, $checkIn, $checkOut);
-            //     if (!$isAvailable) {
-            //         return view("client.detail", [
-            //             'homestay' => $homestay,
-            //             'error' => 'Phòng đã được đặt trong khoảng thời gian này. Vui lòng chọn ngày khác.',
-            //             'rooms' => $this->homestays->getRooms($id)
-            //         ]);
-            //     }
-            // }
-            
-            // Process booking logic here
-            // Save booking to database and redirect to payment
-            
-            // Example of saving booking:
             $bookingData = [
                 'homestay_id' => $id,
                 'room_id' => $room_id,
-                'user_id' => $_SESSION['user_id'] ?? null, // Assuming user is logged in
+                'user_id' => $_SESSION['user_id'] ?? null,
                 'check_in' => $checkIn,
                 'check_out' => $checkOut,
                 'guests' => $guests,
@@ -151,21 +144,15 @@ class HomestayController extends Controller{
                 'created_at' => date('Y-m-d H:i:s')
             ];
             
-            // If you have a Booking model:
-            // $booking = new Booking();
-            // $booking_id = $booking->insert($bookingData);
-            // redirect('/booking/payment/' . $booking_id);
-            
-            // For now just redirect to success
             redirect('/booking/success');
         }
         
-        // If not a POST request, redirect back to the detail page
         redirect('/homestay/' . $id);
     }
     
     // View room details
-    public function roomDetail($homestay_id, $room_id) {
+    public function roomDetail($homestay_id, $room_id)
+    {
         $homestay = $this->homestays->findHomestayWithDetails($homestay_id);
         $room = $this->rooms->find($room_id);
         
@@ -175,4 +162,4 @@ class HomestayController extends Controller{
         
         return view("client.room_detail", compact('homestay', 'room'));
     }
-} 
+}

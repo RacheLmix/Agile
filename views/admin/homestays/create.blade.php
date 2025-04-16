@@ -92,6 +92,11 @@
         </div>
 
         <div class="form-group">
+            <label for="price">Price (VND)</label>
+            <input type="number" id="price" name="price" min="0" step="1000" placeholder="Enter price per night">
+        </div>
+
+        <div class="form-group">
             <label for="description">Description</label>
             <textarea id="description" name="description"></textarea>
         </div>

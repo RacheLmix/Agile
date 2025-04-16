@@ -40,6 +40,10 @@ $router->mount('', function () use ($router) {
     $router->get('/profile', ProfileController::class . '@index');
     $router->get('/profile/edit/{id}', ProfileController::class . '@edit');
     $router->post('/profile/update/{id}', ProfileController::class . '@update');
+    $router->get('/orderview', ProfileController::class. '@orderview');
+    $router->get('/orderview/detail/{id}', ProfileController::class . '@orderDetail');
+    $router->get('/checkin/{id}', ProfileController::class. '@checkin');
+    $router->get('/cancel/{id}', ProfileController::class. '@cancelBooking');
     $router->get('/booking/{homestay_id}', BookingController::class . '@show');
     $router->post('/booking/store', BookingController::class . '@store');
     $router->get('/booking/success/{booking_id}', BookingController::class . '@success');

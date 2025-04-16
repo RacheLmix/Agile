@@ -397,10 +397,10 @@
 
         <ul class="menu">
             <li><a href="/admin" data-title="Trang chủ"><i class="fas fa-home"></i> <span>Trang chủ</span></a></li>
-            <li><a href="/admin/categories"><i class="fa-solid fa-layer-group"></i> <span>Category</span></a></li>
+            <li><a href="/admin/categories"><i class="fa-solid fa-layer-group"></i> <span>Danh mục</span></a></li>
             <li><a href="/admin/homestays"><i class="fas fa-building"></i> <span>Homestay</span></a></li>
             <li><a href="/admin/bookings"><i class="fas fa-calendar-check"></i> <span>Đặt phòng</span></a></li>
-            <li><a href="/admin/promotions"><i class="fas fa-money-bill-wave"></i> <span>khuyến Mại</span></a></li>
+            <li><a href="/admin/promotions"><i class="fas fa-money-bill-wave"></i> <span>Khuyến mại</span></a></li>
             <div class="menu-divider"></div>
             <li><a href="/admin/rooms"><i class="fa-solid fa-door-open"></i> <span>Phòng</span></a></li>
             <li><a href="/admin/amenities"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Tiện ích</span></a>

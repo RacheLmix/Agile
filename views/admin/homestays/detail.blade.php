@@ -68,7 +68,6 @@
     .homestay-image {
         flex: 0 0 50%;
         overflow: hidden;
-        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     }
     
     .homestay-image img {
@@ -194,13 +193,13 @@
 </style>
 
 <div class="detail-container">
-    <a href="/admin/homestayss" class="back-link">← Back to Homestays</a>
+    <a href="/admin/homestays" class="back-link">← Back to Homestays</a>
 
     <div class="detail-header">
         <h1>Homestay Details</h1>
         <div class="action-buttons">
-            <a href="/admin/homestays/edit/{{ $homestay['id'] }}" class="btn btn-warning">Edit</a>
-            <form action="/admin/homestays/delete/{{ $homestay['id'] }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this homestay?');">
+            <a href="/admin/homestays/edit/{{ $homestays['id'] }}" class="btn btn-warning">Edit</a>
+            <form action="/admin/homestays/delete/{{ $homestays['id'] }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this homestay?');">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -230,6 +229,11 @@
                 <div class="rating-value">{{ $homestays['rating'] }} / 5.0</div>
             </div>
             
+            <div class="info-section">
+                <div class="info-label">Price</div>
+                <div class="info-value">{{ number_format($homestays['price'], 0, ',', '.') }} VND per night</div>
+            </div>
+
             <div class="info-section">
                 <div class="info-label">Location</div>
                 <div class="info-value">{{ $homestays['location'] }}</div>
