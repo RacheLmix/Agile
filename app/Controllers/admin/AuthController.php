@@ -41,10 +41,10 @@ class AuthController extends Controller
             }
         }
         $rules = [
-            'full_name' => 'required|min:6|max:255|regex:/^[a-zA-ZÀ-ỹ\s]+$/u',
+            'full_name' => 'required|min:6|max:255',
             'email' => 'required|email|max:255',
-            'password' => 'required|min:6|max:32|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/',
-            'phone' => 'required|numeric|min:10|max:11',
+            'password' => 'required|min:6|max:32',
+            'phone' => 'required|numeric|min:10',
         ];
         $err = $this->validate($validator, $data, $rules);
         if(!empty($err)) {
