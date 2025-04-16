@@ -1,11 +1,48 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+  <!-- Add Anime.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trợ lý Agile Homestay</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
+</head>
+<body>
+
+<!-- Chatbot Container -->
+<div class="chatbot-container" id="chatbot-container">
+  <div class="chatbot-header">
+    <h3 class="chatbot-title">Trợ lý Agile Homestay</h3>
+    <button class="chatbot-toggle" id="chatbot-toggle">
+      <i class="fas fa-minus" id="toggle-icon"></i>
+    </button>
+  </div>
+  <div class="chatbot-body">
+    <div class="chat-messages" id="chat-messages">
+      <div class="message bot-message message-appear">
+        Xin chào! Tôi là trợ lý ảo của Agile Homestay. Tôi có thể giúp gì cho bạn?
+      </div>
+      <div class="suggestion-chips">
+        <div class="suggestion-chip" onclick="sendSuggestion('Làm sao để đặt phòng?')">Làm sao để đặt phòng?</div>
+        <div class="suggestion-chip" onclick="sendSuggestion('Chính sách hủy phòng')">Chính sách hủy phòng</div>
+        <div class="suggestion-chip" onclick="sendSuggestion('Tôi cần hỗ trợ')">Tôi cần hỗ trợ</div>
+      </div>
+    </div>
+  </div>
+  <div class="chatbot-footer">
+    <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)">
+    <button class="chatbot-send" onclick="sendMessage()">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </div>
+</div>
+
+<div class="chatbot-button" id="chatbot-button">
+  <i class="fas fa-comment"></i>
+</div>
+
+<style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
@@ -180,43 +217,124 @@
         left: 5%;
       }
     }
-  </style>
-</head>
-<body>
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
 
-<!-- Chatbot Container -->
-<div class="chatbot-container" id="chatbot-container">
-  <div class="chatbot-header">
-    <h3 class="chatbot-title">Trợ lý Agile Homestay</h3>
-    <button class="chatbot-toggle" id="chatbot-toggle">
-      <i class="fas fa-minus" id="toggle-icon"></i>
-    </button>
-  </div>
-  <div class="chatbot-body">
-    <div class="chat-messages" id="chat-messages">
-      <div class="message bot-message message-appear">
-        Xin chào! Tôi là trợ lý ảo của Agile Homestay. Tôi có thể giúp gì cho bạn?
-      </div>
-      <div class="suggestion-chips">
-        <div class="suggestion-chip" onclick="sendSuggestion('Làm sao để đặt phòng?')">Làm sao để đặt phòng?</div>
-        <div class="suggestion-chip" onclick="sendSuggestion('Chính sách hủy phòng')">Chính sách hủy phòng</div>
-        <div class="suggestion-chip" onclick="sendSuggestion('Tôi cần hỗ trợ')">Tôi cần hỗ trợ</div>
-      </div>
-    </div>
-  </div>
-  <div class="chatbot-footer">
-    <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)">
-    <button class="chatbot-send" onclick="sendMessage()">
-      <i class="fas fa-paper-plane"></i>
-    </button>
-  </div>
-</div>
+    @keyframes fadeInUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
 
-<!-- Chatbot Button with animation -->
-<div class="chatbot-button" id="chatbot-button">
-  <i class="fas fa-comment"></i>
-</div>
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(7, 112, 205, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(7, 112, 205, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(7, 112, 205, 0); }
+    }
 
+    .chatbot-container {
+      transform-origin: bottom right;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    .message {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .message-appear {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .bot-message {
+      border-left: 4px solid #0770cd;
+      transition: all 0.3s ease;
+    }
+
+    .bot-message:hover {
+      transform: translateX(5px);
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-message {
+      border-right: 4px solid #0559a9;
+      transition: all 0.3s ease;
+    }
+
+    .user-message:hover {
+      transform: translateX(-5px);
+      box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .suggestion-chip {
+      transform: scale(0);
+      animation: popIn 0.4s ease forwards;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .suggestion-chip:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 8px rgba(7, 112, 205, 0.2);
+    }
+
+    .chatbot-button {
+      animation: pulseGlow 2s infinite;
+    }
+
+    .chatbot-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(7, 112, 205, 0.5);
+    }
+
+    .chatbot-send {
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .chatbot-send:hover {
+      transform: scale(1.1) rotate(15deg);
+    }
+
+    .loading-dots {
+      display: flex;
+      gap: 4px;
+      padding-left: 8px;
+    }
+
+    .loading-dots span {
+      width: 8px;
+      height: 8px;
+      background: #0770cd;
+      border-radius: 50%;
+      display: inline-block;
+      animation: bounce 0.6s infinite alternate;
+    }
+
+    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      to { transform: translateY(-8px); }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    ss
+    @media (max-width: 768px) {
+      .chatbot-container {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+        max-height: 80vh;
+      }
+    }
+</style>
+
+<!-- Update the script section to use Anime.js -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const chatbotButton = document.getElementById('chatbot-button');
@@ -225,6 +343,7 @@
     const toggleIcon = document.getElementById('toggle-icon');
     const chatMessages = document.getElementById('chat-messages');
     const chatbotInput = document.getElementById('chatbot-input');
+<<<<<<< HEAD
     
     // OpenRouter API configuration
     const apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
@@ -232,53 +351,48 @@
     const modelId = 'nvidia/llama-3.1-nemotron-ultra-253b-v1:free';
     
     // Show chatbot with animation when button is clicked
+=======
+
+    const apiUrl = '<?php echo config('openrouter.api_url'); ?>';
+    const apiKey = '<?php echo config('openrouter.api_key'); ?>';
+    const modelId = '<?php echo config('openrouter.model'); ?>';
+  
+>>>>>>> 18b0737a4ae36e204778869da79ba0f4d123435f
     chatbotButton.addEventListener('click', function() {
       chatbotContainer.style.display = 'flex';
       chatbotButton.style.display = 'none';
-      
-      // Force reflow to ensure animation plays
       void chatbotContainer.offsetWidth;
-      
-      // Add animation class
       chatbotContainer.classList.add('message-appear');
-      
-      // Focus on input after animation completes
+
       setTimeout(() => {
         chatbotInput.focus();
       }, 300);
     });
-    
-    // Minimize/maximize chatbot with animation
+  
     chatbotToggle.addEventListener('click', function() {
       if (chatbotContainer.classList.contains('chatbot-minimized')) {
         chatbotContainer.classList.remove('chatbot-minimized');
         toggleIcon.classList.remove('fa-plus');
         toggleIcon.classList.add('fa-minus');
-        
-        // Add animation for expanding
         chatbotContainer.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
       } else {
         chatbotContainer.classList.add('chatbot-minimized');
         toggleIcon.classList.remove('fa-minus');
         toggleIcon.classList.add('fa-plus');
-        
-        // Add animation for minimizing
         chatbotContainer.style.transition = 'all 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045)';
       }
     });
     
-    // Send message function with animation
     window.sendMessage = function() {
       const message = chatbotInput.value.trim();
       if (message === '') return;
-      
-      // Add user message to chat with animation
+  
       addMessage(message, 'user', true);
       
-      // Clear input
+ 
       chatbotInput.value = '';
       
-      // Process message with AI
+      
       processMessage(message);
     }
     
@@ -346,7 +460,7 @@
         chip.style.animationDelay = `${index * 0.1}s`;
         
         chip.onclick = function() {
-          // Add click animation
+  
           this.style.transform = 'scale(0.95)';
           setTimeout(() => {
             sendSuggestion(suggestion);
@@ -436,7 +550,7 @@
       }
     }
     
-    // Add contextual suggestions based on message content
+  
     function addContextualSuggestions(message) {
       let suggestions = [];
       const lowerMessage = message.toLowerCase();
@@ -462,8 +576,7 @@
       
       addSuggestions(suggestions);
     }
-    
-    // Use fallback responses when API fails
+  
     function useFallbackResponse(message) {
       let response = '';
       const lowerMessage = message.toLowerCase();
@@ -492,11 +605,7 @@
       else {
         response = 'Xin lỗi, tôi không hiểu câu hỏi của bạn. Bạn có thể hỏi về cách đặt phòng, chính sách hủy phòng, thanh toán hoặc các dịch vụ khác của Agile Homestay.';
       }
-      
-      // Add bot message with animation
       addMessage(response, 'bot', true);
-      
-      // Add suggestions with delay for better UX
       setTimeout(() => {
         addContextualSuggestions(message);
       }, 500);
