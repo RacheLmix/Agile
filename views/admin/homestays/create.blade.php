@@ -92,6 +92,11 @@
         </div>
 
         <div class="form-group">
+            <label for="location">Address</label>
+            <input type="text" id="address" name="location">
+        </div>
+
+        <div class="form-group">
             <label for="price">Price (VND)</label>
             <input type="number" id="price" name="price" min="0" step="1000" placeholder="Enter price per night">
         </div>
