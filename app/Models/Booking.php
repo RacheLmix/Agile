@@ -81,4 +81,35 @@ class Booking extends Model
             throw new \Exception("Failed to find user bookings: " . $e->getMessage());
         }
     }
+
+    public function create($data)
+    {
+        try {
+            $sql = "INSERT INTO bookings (user_id, homestay_id, room_id, check_in, check_out, guests, amenity, total_price, status, created_at, updated_at, full_name, email)
+                    VALUES (:user_id, :homestay_id, :room_id, :check_in, :check_out, :guests, :amenity, :total_price, :status, :created_at, :updated_at, :full_name, :email)";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->executeQuery($data);
+            return $this->connection->lastInsertId();
+        } catch (\Exception $e) {
+            error_log("Error creating booking: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function canUserRate($userId, $homestayId)
+    {
+        try {
+            $sql = "SELECT * FROM bookings 
+                    WHERE user_id = :user_id 
+                    AND homestay_id = :homestay_id 
+                    AND status = 'confirmed'";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':user_id', $userId);
+            $stmt->bindValue(':homestay_id', $homestayId);
+            $result = $stmt->executeQuery();
+            return $result->fetchAssociative() ? true : false;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

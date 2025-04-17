@@ -343,13 +343,13 @@
     const toggleIcon = document.getElementById('toggle-icon');
     const chatMessages = document.getElementById('chat-messages');
     const chatbotInput = document.getElementById('chatbot-input');
-
     
     // OpenRouter API configuration
-    const apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
-    const apiKey = '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';
-    const modelId = 'shisa-ai/shisa-v2-llama3.3-70b:free';
+    const apiUrl = 'Your-API-URL';
+    const apiKey = 'User-API-Key';
+    const modelId = 'Your-Model-ID';
     
+    // Show chatbot with animation when button is clicked
     chatbotButton.addEventListener('click', function() {
       chatbotContainer.style.display = 'flex';
       chatbotButton.style.display = 'none';

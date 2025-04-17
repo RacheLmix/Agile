@@ -12,4 +12,16 @@ class User extends Model
         $ru = $stmt->executeQuery();
         return $ru->fetchAllAssociative();
     }
+    public function findById($id)
+    {
+        try {
+            $sql = "SELECT * FROM users WHERE id = :id";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $result = $stmt->executeQuery();
+            return $result->fetchAssociative() ?: null;
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
 }
