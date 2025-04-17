@@ -12,6 +12,7 @@ class HomeController extends Controller
     protected $homestays;
     protected $categories;
     protected $rooms;
+
     public function __construct()
     {
         $this->homestays = new Homestay();
@@ -35,6 +36,11 @@ class HomeController extends Controller
         } else {
             $homestays = $this->homestays->findAllHomestaysWithDetails();
         }
+
+        // Lọc homestay có status = 'active'
+        $homestays = array_filter($homestays, function($homestay) {
+            return $homestay['status'] === 'active';
+        });
 
         // Apply sorting
         if (is_array($homestays) && !empty($homestays)) {
@@ -73,20 +79,25 @@ class HomeController extends Controller
         ]);
     }
 
-public function detail($id){
+    public function detail($id)
+    {
         // Get the homestay with all related details
         $homestay = $this->homestays->findHomestayWithDetails($id);
 
-        if (!$homestay) {
-            // If homestay not found, redirect to homepage
+        // Kiểm tra nếu homestay không tồn tại hoặc không active
+        if (!$homestay || $homestay['status'] !== 'active') {
+            // If homestay not found or not active, redirect to homepage
             redirect('/');
         }
 
         // Get rooms associated with this homestay
         $rooms = $this->rooms->findByHomestay($id);
 
-        // Get similar homestays in the same category or location
+        // Get similar homestays in the same category or location, chỉ lấy active
         $similar_homestays = $this->homestays->findSimilarHomestays($homestay['category_id'], $homestay['location'], $id, 3);
+        $similar_homestays = array_filter($similar_homestays, function($homestay) {
+            return $homestay['status'] === 'active';
+        });
 
         // Get categories for sidebar or filters
         $categories = $this->categories->findAll();
