@@ -74,43 +74,56 @@
     .back-link:hover {
         text-decoration: underline;
     }
+
+    .error {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+    }
 </style>
 
 <div class="create-container">
     <a href="/admin/homestays" class="back-link">← Back to List</a>
     <h1>Edit Homestay</h1>
-    
+
+    @if (isset($_SESSION['error']))
+        <div class="alert alert-danger">
+            {{ $_SESSION['error'] }}
+            <?php unset($_SESSION['error']); ?>
+        </div>
+    @endif
+
     <form class="create-form" action="/admin/homestays/update/{{ $homestays['id'] }}" method="POST" enctype="multipart/form-data">   
         <div class="form-group">
             <label for="name">Homestay Name</label>
-            <input type="text" id="name" name="name" value="{{ $homestays['name'] }}">
+            <input type="text" id="name" name="name" value="{{ $_SESSION['old']['name'] ?? $homestays['name'] }}">
         </div>
 
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea id="description" name="description">{{ $homestays['description'] }}</textarea>
+            <textarea id="description" name="description">{{ $_SESSION['old']['description'] ?? $homestays['description'] }}</textarea>
         </div>
 
         <div class="form-group">
             <label for="location">Location</label>
-            <input type="text" id="location" name="location" value="{{ $homestays['location'] }}">
+            <input type="text" id="location" name="location" value="{{ $_SESSION['old']['location'] ?? $homestays['location'] }}">
         </div>
 
         <div class="form-group">
             <label for="address">Address</label>
-            <input type="text" id="address" name="address" value="{{ $homestays['address'] }}">
+            <input type="text" id="address" name="address" value="{{ $_SESSION['old']['address'] ?? $homestays['address'] }}">
         </div>
 
         <div class="form-group">
             <label for="price">Price (VND)</label>
-            <input type="number" id="price" name="price" value="{{ $homestays['price'] }}" min="0" step="1000" placeholder="Enter price per night">
+            <input type="number" id="price" name="price" value="{{ $_SESSION['old']['price'] ?? $homestays['price'] }}" min="0" step="1000" placeholder="Enter price per night">
         </div>
 
         <div class="form-group">
             <label for="category">Category</label>
             <select id="category" name="category_id">
                 @foreach ($categories as $category)
-                    <option value="{{ $category['id'] }}" {{ $homestays['category_id'] == $category['id'] ? 'selected' : '' }}>{{ $category['name'] }}</option>
+                    <option value="{{ $category['id'] }}" {{ (isset($_SESSION['old']['category_id']) ? $_SESSION['old']['category_id'] : $homestays['category_id']) == $category['id'] ? 'selected' : '' }}>{{ $category['name'] }}</option>
                 @endforeach
             </select>
         </div>
@@ -124,5 +137,6 @@
             <button type="submit" class="btn-submit">Update Homestay</button>
         </div>
     </form>
+    <?php unset($_SESSION['old']); ?>
 </div>
 @endsection

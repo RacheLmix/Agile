@@ -132,8 +132,8 @@
                         <div class="card-actions">
                             <a href="/admin/categories/detail/{{ $categories['id'] }}" class="btn-sm btn-detail">Xem chi tiết</a>
                             <a href="/admin/categories/edit/{{ $categories['id'] }}" class="btn-sm btn-edit">Sửa</a>
-                            <a onclick="return confirm('Bạn có chắc muốn xóa danh mục {{ $categories['name'] }} không?')"
-                               href="/admin/categories/delete/{{ $categories['id'] }}" class="btn-sm btn-delete">Xóa</a>
+                            <!-- <a onclick="return confirm('Bạn có chắc muốn xóa danh mục {{ $categories['name'] }} không?')"
+                               href="/admin/categories/delete/{{ $categories['id'] }}" class="btn-sm btn-delete">Xóa</a> -->
                         </div>
                     </div>
                 @endforeach

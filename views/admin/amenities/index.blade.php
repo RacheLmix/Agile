@@ -156,8 +156,8 @@
                 <div class="card-actions">
                     <a href="/admin/amenities/detail/{{ $amenity['id'] }}" class="btn-sm btn-view">Chi tiết</a>
                     <a href="/admin/amenities/edit/{{ $amenity['id'] }}" class="btn-sm btn-edit">Sửa</a>
-                    <a onclick="return confirm('Bạn có chắc muốn xóa tiện ích {{ $amenity['name'] }} không?')" 
-                       href="/admin/amenities/delete/{{ $amenity['id'] }}" class="btn-sm btn-delete">Xóa</a>
+                    <!-- <a onclick="return confirm('Bạn có chắc muốn xóa tiện ích {{ $amenity['name'] }} không?')" 
+                       href="/admin/amenities/delete/{{ $amenity['id'] }}" class="btn-sm btn-delete">Xóa</a> -->
                 </div>
             </div>
         </div>

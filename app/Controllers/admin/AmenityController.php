@@ -28,6 +28,19 @@ class AmenityController extends Controller
     public function store()
     {
         $data = $_POST;
+
+        // Manual validation
+        if (empty($data['name'])) {
+            $_SESSION['old'] = $data;
+            $_SESSION['error'] = 'Vui lòng nhập tên tiện ích';
+            redirect('/admin/amenities/create');
+        }
+        if (empty($data['description'])) {
+            $_SESSION['old'] = $data;
+            $_SESSION['error'] = 'Vui lòng nhập mô tả';
+            redirect('/admin/amenities/create');
+        }
+
         $data['created_at'] = date('Y-m-d H:i:s');
         $this->amenities->insert($data);
         redirect('/admin/amenities');
@@ -51,6 +64,19 @@ class AmenityController extends Controller
         }
 
         $data = $_POST;
+
+        // Manual validation
+        if (empty($data['name'])) {
+            $_SESSION['old'] = $data;
+            $_SESSION['error'] = 'Vui lòng nhập tên tiện ích';
+            redirect("/admin/amenities/edit/$id");
+        }
+        if (empty($data['description'])) {
+            $_SESSION['old'] = $data;
+            $_SESSION['error'] = 'Vui lòng nhập mô tả';
+            redirect("/admin/amenities/edit/$id");
+        }
+
         $data['updated_at'] = date('Y-m-d H:i:s');
         $this->amenities->update($id, $data);
         redirect('/admin/amenities');
@@ -60,6 +86,7 @@ class AmenityController extends Controller
     {
         $amenity = $this->amenities->find($id);
         if (!$amenity) {
+            // Xử lý nếu không tìm thấy
             redirect('/admin/amenities');
         }
         return view('admin.amenities.detail', compact('amenity'));

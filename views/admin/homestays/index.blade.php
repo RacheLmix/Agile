@@ -215,8 +215,8 @@
                 <div class="card-actions">
                     <a href="/admin/homestays/detail/{{ $homestay['id'] }}" class="btn-sm btn-view">Chi tiết</a>
                     <a href="/admin/homestays/edit/{{ $homestay['id'] }}" class="btn-sm btn-edit">Sửa</a>
-                    <a onclick="return confirm('Bạn có chắc muốn xóa homestay {{ $homestay['name'] }} không?')"
-                       href="/admin/homestays/delete/{{ $homestay['id'] }}" class="btn-sm btn-delete">Xóa</a>
+                    <!-- <a onclick="return confirm('Bạn có chắc muốn xóa homestay {{ $homestay['name'] }} không?')"
+                       href="/admin/homestays/delete/{{ $homestay['id'] }}" class="btn-sm btn-delete">Xóa</a> -->
                 </div>
             </div>
         </div>
