@@ -493,7 +493,6 @@
                                 <div class="price-night">phòng/đêm</div>
                             </div>
                             <a href="{{ 'homestays/detail/' . $homestay['id'] }}" class="booking-button">Xem phòng trống</a>
-                            <p class="host-info">{{ $homestay['host_name'] ?? 'Chủ nhà' }}<br>{{ $homestay['description'] ?? 'Không có mô tả' }}</p>
                         </div>
                     </div>
                 @endforeach

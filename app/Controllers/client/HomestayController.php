@@ -57,10 +57,9 @@ class HomestayController extends Controller
         $userId = $_SESSION['user_id'] ?? null;
         $existingRating = null;
         if ($userId) {
-            // Sử dụng model Booking để kiểm tra
-            $canRate = $this->bookings->canUserRate($userId, $id);
-
-            // Sử dụng model Rating để kiểm tra xem đã đánh giá chưa
+            // Kiểm tra xem người dùng có đặt phòng đã xác nhận hay không
+            $canRate = $this->bookings->hasConfirmedBooking($userId, $id);
+            // Kiểm tra xem đã đánh giá chưa
             $existingRating = $this->ratings->hasUserRated($userId, $id);
         }
 
@@ -74,7 +73,7 @@ class HomestayController extends Controller
             if ($score < 0 || $score > 5) {
                 $error = "Điểm số phải từ 0 đến 5.";
             } else {
-                // Sử dụng model Rating để lưu đánh giá
+                // Lưu đánh giá
                 $success = $this->ratings->createRating($userId, $id, $score, $content);
                 if ($success) {
                     // Chuyển hướng để tránh gửi lại form

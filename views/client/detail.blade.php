@@ -4,7 +4,7 @@
 
 @section('styles')
 <style>
-    /* Keep original CSS with modifications for room section */
+    /* CSS giữ nguyên như file gốc */
     .breadcrumb {
         display: flex;
         padding: 10px 0;
@@ -519,7 +519,6 @@
         font-size: 12px;
     }
 
-    /* CSS for discount badge and original price */
     .discount-badge {
         color: red;
         padding: 2px 6px;
@@ -537,7 +536,6 @@
         margin-bottom: 2px;
     }
 
-    /* CSS for amenities selection */
     .amenities-selection {
         display: flex;
         flex-wrap: wrap;
@@ -754,25 +752,24 @@
                     </div>
                     <div class="location-item">
                         <i class="fas fa-map-marker-alt location-icon"></i>
-                        <div class="location-text">No. 29 Hang Chao Alley, Cát Linh, Quận Đống Đa, Hà Nội, Việt Nam, 115500</div>
+                        <div class="location-text">{{ $homestay['address'] }}</div>
                     </div>
                     <div class="location-item">
-                        <i class="fas fa-bus location-icon"></i>
-                        <div class="location-text">Xung quanh trung tâm giải trí</div>
+                        <div class="location-text">Chi tiết</div>
                     </div>
                     <div class="location-item">
                         <i class="fas fa-train location-icon"></i>
-                        <div class="location-text">Phố Đường Tàu Hà Nội</div>
+                        <div class="location-text">{{ $homestay['location'] }}</div>
                         <div class="location-distance">1.07 km</div>
                     </div>
                     <div class="location-item">
                         <i class="fas fa-landmark location-icon"></i>
-                        <div class="location-text">Nhà thờ Lớn Hà Nội</div>
+                        <div class="location-text">{{ $homestay['city'] }}</div>
                         <div class="location-distance">1.57 km</div>
                     </div>
                     <div class="location-item">
                         <i class="fas fa-water location-icon"></i>
-                        <div class="location-text">Hồ Hoàn Kiếm</div>
+                        <div class="location-text">{{ $homestay['country'] }}</div>
                         <div class="location-distance">1.91 km</div>
                     </div>
                 </div>
@@ -796,7 +793,7 @@
                 </div>
             </div>
 
-            <!-- Trong phần đánh giá (sau đoạn hiển thị các đánh giá hiện có) -->
+            <!-- Trong phần đánh giá -->
             @if(isset($ratings) && count($ratings) > 0)
             <div class="review-divider"></div>
             <div class="reviewer-name">{{ $ratings[0]['full_name'] }}</div>
@@ -832,7 +829,7 @@
             </div>
             @else
             <div class="review-text" style="margin-top: 10px; color: #666;">
-                Bạn cần đặt phòng và được xác nhận để có thể đánh giá homestay này.
+                Bạn cần đặt phòng và được xác nhận để có thể đánh giá homestay này. Vui lòng đặt phòng trước.
             </div>
             @endif
 

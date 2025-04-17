@@ -112,4 +112,20 @@ class Booking extends Model
             return false;
         }
     }
+    public function hasConfirmedBooking($userId, $homestayId)
+    {
+        try {
+            $sql = "SELECT * FROM bookings 
+                    WHERE user_id = :user_id 
+                    AND homestay_id = :homestay_id 
+                    AND status = 'confirmed'";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':user_id', $userId);
+            $stmt->bindValue(':homestay_id', $homestayId);
+            $result = $stmt->executeQuery();
+            return $result->fetchAssociative() ? true : false;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

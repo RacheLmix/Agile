@@ -30,7 +30,9 @@ class AuthController extends Controller
         $data = $_POST + $_FILES;
         $validator = new Validator();
         $email = $data['email'] ?? '';
-        if (!empty($email)) {
+        $phone = $data['phone'] ?? '';
+        
+        if (!empty($email) || !empty($phone)) {
             $users = $this->users->fetchUsers();
             foreach ($users as $user) {
                 if ($user['email'] === $email) {
@@ -38,8 +40,14 @@ class AuthController extends Controller
                     redirect('/signin');
                     exit;
                 }
+                if (!empty($phone) && isset($user['phone']) && $user['phone'] === $phone) {
+                    $_SESSION['error'] = ['phone' => 'Số điện thoại này đã được sử dụng. Vui lòng sử dụng số khác.'];
+                    redirect('/signin');
+                    exit;
+                }
             }
         }
+        
         $rules = [
             'full_name' => 'required|min:6|max:255',
             'email' => 'required|email|max:255',
@@ -58,11 +66,22 @@ class AuthController extends Controller
         }
         
         $data['created_at'] = date('Y-m-d H:i:s');
-        $this->users->insert($data);
         
-        $_SESSION['success'] = 'Đăng ký thành công! Vui lòng đăng nhập.';
-        redirect('/login');
-        exit;
+        try {
+            $this->users->insert($data);
+            $_SESSION['success'] = 'Đăng ký thành công! Vui lòng đăng nhập.';
+            redirect('/login');
+            exit;
+        } catch (\Exception $e) {
+            // Check if it's a duplicate phone error
+            if (strpos($e->getMessage(), 'Duplicate entry') !== false && strpos($e->getMessage(), 'phone') !== false) {
+                $_SESSION['error'] = ['phone' => 'Số điện thoại này đã được sử dụng. Vui lòng sử dụng số khác.'];
+            } else {
+                $_SESSION['error'] = ['general' => 'Có lỗi xảy ra khi đăng ký. Vui lòng thử lại sau.'];
+            }
+            redirect('/signin');
+            exit;
+        }
     }
 
     public function showLoginForm()
