@@ -43,6 +43,18 @@
         resize: vertical;
     }
 
+    .amenities-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .amenity-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
     .btn-submit {
         background-color: #4e73df;
         color: white;
@@ -75,10 +87,20 @@
         text-decoration: underline;
     }
 
-    .error {
-        color: red;
-        font-size: 12px;
-        margin-top: 5px;
+    .alert {
+        padding: 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-left: 5px solid #dc3545;
     }
 </style>
 
@@ -87,8 +109,9 @@
     <h1>Edit Homestay</h1>
 
     @if (isset($_SESSION['error']))
-        <div class="alert alert-danger">
-            {{ $_SESSION['error'] }}
+        <div class="alert alert-error">
+            <span>{{ $_SESSION['error'] }}</span>
+            <button type="button" class="close" onclick="this.parentElement.style.display='none'">×</button>
             <?php unset($_SESSION['error']); ?>
         </div>
     @endif
@@ -97,11 +120,6 @@
         <div class="form-group">
             <label for="name">Homestay Name</label>
             <input type="text" id="name" name="name" value="{{ $_SESSION['old']['name'] ?? $homestays['name'] }}">
-        </div>
-
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" name="description">{{ $_SESSION['old']['description'] ?? $homestays['description'] }}</textarea>
         </div>
 
         <div class="form-group">
@@ -115,8 +133,23 @@
         </div>
 
         <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" value="{{ $_SESSION['old']['city'] ?? $homestays['city'] }}">
+        </div>
+
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" value="{{ $_SESSION['old']['country'] ?? $homestays['country'] }}">
+        </div>
+
+        <div class="form-group">
             <label for="price">Price (VND)</label>
             <input type="number" id="price" name="price" value="{{ $_SESSION['old']['price'] ?? $homestays['price'] }}" min="0" step="1000" placeholder="Enter price per night">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description">{{ $_SESSION['old']['description'] ?? $homestays['description'] }}</textarea>
         </div>
 
         <div class="form-group">
@@ -126,6 +159,30 @@
                     <option value="{{ $category['id'] }}" {{ (isset($_SESSION['old']['category_id']) ? $_SESSION['old']['category_id'] : $homestays['category_id']) == $category['id'] ? 'selected' : '' }}>{{ $category['name'] }}</option>
                 @endforeach
             </select>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="active" {{ (isset($_SESSION['old']['status']) ? $_SESSION['old']['status'] : $homestays['status']) == 'active' ? 'selected' : '' }}>Hoạt động</option>
+                <option value="inactive" {{ (isset($_SESSION['old']['status']) ? $_SESSION['old']['status'] : $homestays['status']) == 'inactive' ? 'selected' : '' }}>Đang xét duyệt</option>
+                <option value="pending" {{ (isset($_SESSION['old']['status']) ? $_SESSION['old']['status'] : $homestays['status']) == 'pending' ? 'selected' : '' }}>Đang bảo trì</option>
+                <option value="blocked" {{ (isset($_SESSION['old']['status']) ? $_SESSION['old']['status'] : $homestays['status']) == 'blocked' ? 'selected' : '' }}>Đã bị chặn</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Amenities</label>
+            <div class="amenities-group">
+                @foreach ($amenities as $amenity)
+                    <div class="amenity-item">
+                        <input type="checkbox" name="amenities[]" value="{{ $amenity['id'] }}"
+                            {{ (isset($_SESSION['old']['amenities']) && in_array($amenity['id'], $_SESSION['old']['amenities'])) || 
+                               (!isset($_SESSION['old']['amenities']) && in_array($amenity['id'], array_column($selectedAmenities, 'id'))) ? 'checked' : '' }}>
+                        <label>{{ $amenity['name'] }}</label>
+                    </div>
+                @endforeach
+            </div>
         </div>
 
         <div class="form-group">

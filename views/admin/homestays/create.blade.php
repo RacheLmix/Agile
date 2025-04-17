@@ -43,6 +43,18 @@
         resize: vertical;
     }
 
+    .amenities-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .amenity-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
     .btn-submit {
         background-color: #4e73df;
         color: white;
@@ -75,33 +87,32 @@
         text-decoration: underline;
     }
 
-    /* 🔥 THÊM CSS CHO THÔNG BÁO SESSION */
     .alert {
-            padding: 12px;
-            border-radius: 5px;
-            font-size: 14px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border-left: 5px solid #dc3545;
-        }
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border-left: 5px solid #28a745;
-        }
-        .alert .close {
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            color: inherit;
-        }
+        padding: 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-left: 5px solid #dc3545;
+    }
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border-left: 5px solid #28a745;
+    }
+    .alert .close {
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: inherit;
+    }
 </style>
 
 <div class="create-container">
@@ -133,6 +144,16 @@
         </div>
 
         <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" value="{{ $_SESSION['old']['city'] ?? '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" value="{{ $_SESSION['old']['country'] ?? 'Vietnam' }}">
+        </div>
+
+        <div class="form-group">
             <label for="price">Price (VND)</label>
             <input type="number" id="price" name="price" min="0" step="1000" placeholder="Enter price per night" value="{{ $_SESSION['old']['price'] ?? '' }}">
         </div>
@@ -149,6 +170,28 @@
                     <option value="{{ $category['id'] }}" {{ (isset($_SESSION['old']['category_id']) && $_SESSION['old']['category_id'] == $category['id']) ? 'selected' : '' }}>{{ $category['name'] }}</option>
                 @endforeach
             </select>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="active" {{ (isset($_SESSION['old']['status']) && $_SESSION['old']['status'] == 'active') ? 'selected' : '' }}>Hoạt động</option>
+                <option value="inactive" {{ (isset($_SESSION['old']['status']) && $_SESSION['old']['status'] == 'inactive') ? 'selected' : '' }}>Đang xét duyệt</option>
+                <option value="pending" {{ (isset($_SESSION['old']['status']) && $_SESSION['old']['status'] == 'pending') ? 'selected' : '' }}>Đang bảo trì</option>
+                <option value="blocked" {{ (isset($_SESSION['old']['status']) && $_SESSION['old']['status'] == 'blocked') ? 'selected' : '' }}>Đã bị chặn</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Amenities</label>
+            <div class="amenities-group">
+                @foreach ($amenities as $amenity)
+                    <div class="amenity-item">
+                        <input type="checkbox" name="amenities[]" value="{{ $amenity['id'] }}" {{ (isset($_SESSION['old']['amenities']) && in_array($amenity['id'], $_SESSION['old']['amenities'])) ? 'checked' : '' }}>
+                        <label>{{ $amenity['name'] }}</label>
+                    </div>
+                @endforeach
+            </div>
         </div>
 
         <div class="form-group">

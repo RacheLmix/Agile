@@ -193,7 +193,7 @@
                 @foreach($rooms as $room)
                     <tr>
                         <td>{{ $room['id'] }}</td>
-                        <td>{{ $room['homestay_id'] }}</td>
+                        <td>{{ $room['name_homestay'] }}</td>
                         <td>
                             {{ $room['name'] }}
                             

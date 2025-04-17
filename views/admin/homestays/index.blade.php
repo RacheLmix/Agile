@@ -126,6 +126,35 @@
         margin-bottom: 12px;
     }
     
+    .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 12px;
+    }
+    
+    .status-active {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .status-inactive {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+    
+    .status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    
+    .status-blocked {
+        background-color: #d6d8d9;
+        color: #383d41;
+    }
+    
     .card-actions {
         display: flex;
         gap: 8px;
@@ -165,14 +194,14 @@
         background-color: #f8f9fa;
         border-radius: 8px;
     }
-    .id{
+    .id {
         position: absolute;
         right: 0;
         padding: 10px;
         font-size: 30px;
         transition: all ease-in-out 0.25s;
     }
-    .homestay-card:hover .id{
+    .homestay-card:hover .id {
         right: 50px;
         font-size: 40px;
     }
@@ -194,6 +223,17 @@
                 <h3 class="homestay-title">{{ $homestay['name'] }}</h3>
                 <h2 class="id">{{ $homestay['id'] }}</h2>
                 <div class="category-badge">{{ $homestay['category_name'] }}</div>
+                <div class="status-badge status-{{ $homestay['status'] }}">
+                    @if($homestay['status'] == 'active')
+                        Hoạt động
+                    @elseif($homestay['status'] == 'inactive')
+                        Đang xét duyệt
+                    @elseif($homestay['status'] == 'pending')
+                        Đang bảo trì
+                    @elseif($homestay['status'] == 'blocked')
+                        Đã bị chặn
+                    @endif
+                </div>
                 
                 <div class="rating">
                     <span class="rating-value">{{ $homestay['rating'] }}</span>
@@ -215,8 +255,8 @@
                 <div class="card-actions">
                     <a href="/admin/homestays/detail/{{ $homestay['id'] }}" class="btn-sm btn-view">Chi tiết</a>
                     <a href="/admin/homestays/edit/{{ $homestay['id'] }}" class="btn-sm btn-edit">Sửa</a>
-                    <!-- <a onclick="return confirm('Bạn có chắc muốn xóa homestay {{ $homestay['name'] }} không?')"
-                       href="/admin/homestays/delete/{{ $homestay['id'] }}" class="btn-sm btn-delete">Xóa</a> -->
+                    <a onclick="return confirm('Bạn có chắc muốn xóa homestay {{ $homestay['name'] }} không?')"
+                       href="/admin/homestays/delete/{{ $homestay['id'] }}" class="btn-sm btn-delete">Xóa</a>
                 </div>
             </div>
         </div>

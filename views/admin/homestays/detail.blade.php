@@ -123,62 +123,35 @@
         font-size: 18px;
     }
 
-    .rooms-section {
+    .amenities-section {
         margin-top: 40px;
     }
 
-    .rooms-section h2 {
+    .amenities-section h2 {
         color: #333;
         margin-bottom: 20px;
         padding-bottom: 10px;
         border-bottom: 1px solid #eee;
     }
 
-    .rooms-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
+    .amenities-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
     }
 
-    .room-card {
+    .amenity-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
         border: 1px solid #ddd;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border-radius: 5px;
+        background-color: #f9f9f9;
     }
 
-    .room-image {
-        height: 180px;
-        overflow: hidden;
-    }
-
-    .room-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .room-info {
-        padding: 15px;
-    }
-
-    .room-info h3 {
-        margin-top: 0;
-        margin-bottom: 10px;
-        color: #333;
-        font-size: 18px;
-    }
-
-    .room-price {
+    .amenity-item i {
         color: #4e73df;
-        font-weight: bold;
-        margin-bottom: 10px;
-        font-size: 18px;
-    }
-
-    .room-details {
-        margin-bottom: 10px;
-        color: #666;
     }
 
     .meta-info {
@@ -226,7 +199,7 @@
                         @endif
                     @endfor
                 </div>
-                <div class="rating-value">{{ $homestays['rating'] }} / 5.0</div>
+                <div class="rating-value">{{ $homestays['rating'] }} / 5.0 ({{ $homestays['review_count'] ?? 0 }} reviews)</div>
             </div>
             
             <div class="info-section">
@@ -243,28 +216,54 @@
                 <div class="info-label">Address</div>
                 <div class="info-value">{{ $homestays['address'] }}</div>
             </div>
+
+            <div class="info-section">
+                <div class="info-label">City</div>
+                <div class="info-value">{{ $homestays['city'] }}</div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-label">Country</div>
+                <div class="info-value">{{ $homestays['country'] }}</div>
+            </div>
             
             <div class="info-section">
                 <div class="info-label">Category</div>
-                <div class="info-value">
-                 @foreach ($categories as $category)
-                    @if ($homestays['category_id'] == $category['id'])
-                        <p>{{ $category['name'] }}</p>
-                    @endif
-                @endforeach
-                </div>
+                <div class="info-value">{{ $homestays['category_name'] ?? 'N/A' }}</div>
             </div>
             
             <div class="info-section">
                 <div class="info-label">Description</div>
                 <div class="info-value description">{{ $homestays['description'] }}</div>
             </div>
+
+            <div class="info-section">
+                <div class="info-label">Status</div>
+                <div class="info-value">{{ ucfirst($homestays['status']) }}</div>
+            </div>
             
             <div class="meta-info">
-                <div>Host: {{ $homestays['host_name'] ?? 'Unknown' }}</div>
-                <div>Created: {{ $homestays['created_at'] }}</div>
+                <div>Created: {{ date('d/m/Y H:i', strtotime($homestays['created_at'])) }}</div>
+                <div>Updated: {{ date('d/m/Y H:i', strtotime($homestays['updated_at'])) }}</div>
             </div>
         </div>
+    </div>
+
+    <!-- Amenities Section -->
+    <div class="amenities-section">
+        <h2>Amenities</h2>
+        @if (!empty($amenities))
+            <div class="amenities-list">
+                @foreach ($amenities as $amenity)
+                    <div class="amenity-item">
+                        <i class="{{ $amenity['icon'] }}"></i>
+                        <span>{{ $amenity['name'] }}</span>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p>No amenities available.</p>
+        @endif
     </div>
 </div>
 @endsection
