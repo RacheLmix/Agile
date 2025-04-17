@@ -11,10 +11,9 @@ class Homestay extends Model
     public function findAllHomestaysWithDetails()
     {
         try {
-            $sql = "SELECT h.id, h.name, h.price, h.location, h.address, h.description, h.image, h.rating, c.name AS category_name, u.full_name AS host_name
+            $sql = "SELECT h.id, h.name, h.price, h.location, h.address, h.description, h.image, h.rating, h.status, c.name AS category_name
                     FROM homestays h
                     LEFT JOIN categories c ON h.category_id = c.id
-                    LEFT JOIN users u ON h.host_id = u.id
                     ORDER BY h.created_at DESC";
             $stmt = $this->connection->prepare($sql);
             $result = $stmt->executeQuery();
@@ -28,15 +27,27 @@ class Homestay extends Model
     public function findHomestayWithDetails($id)
     {
         try {
-            $sql = "SELECT h.*, c.name AS category_name, u.full_name AS host_name, 
+            $sql = "SELECT h.*, c.name AS category_name, 
                     (SELECT COUNT(*) FROM ratings WHERE homestay_id = h.id) as review_count
                     FROM homestays h
                     LEFT JOIN categories c ON h.category_id = c.id
-                    LEFT JOIN users u ON h.host_id = u.id
                     WHERE h.id = :id";
 
             $stmt = $this->connection->prepare($sql);
             $stmt->bindValue(':id', $id);
+            $result = $stmt->executeQuery();
+            return $result->fetchAssociative() ?: null;
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public function findByName($name)
+    {
+        try {
+            $sql = "SELECT * FROM homestays WHERE name = :name";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':name', $name);
             $result = $stmt->executeQuery();
             return $result->fetchAssociative() ?: null;
         } catch (\Exception $e) {
@@ -57,6 +68,43 @@ class Homestay extends Model
             return $result->fetchAllAssociative() ?: [];
         } catch (\Exception $e) {
             return [];
+        }
+    }
+
+    public function getAllAmenities()
+    {
+        try {
+            $sql = "SELECT * FROM amenities ORDER BY name";
+            $stmt = $this->connection->prepare($sql);
+            $result = $stmt->executeQuery();
+            return $result->fetchAllAssociative() ?: [];
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
+    public function addAmenity($homestayId, $amenityId)
+    {
+        try {
+            $sql = "INSERT INTO homestay_amenities (homestay_id, amenity_id) VALUES (:homestayId, :amenityId)";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':homestayId', $homestayId);
+            $stmt->bindValue(':amenityId', $amenityId);
+            $stmt->executeQuery();
+        } catch (\Exception $e) {
+            // Xử lý lỗi nếu cần
+        }
+    }
+
+    public function deleteAmenities($homestayId)
+    {
+        try {
+            $sql = "DELETE FROM homestay_amenities WHERE homestay_id = :homestayId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':homestayId', $homestayId);
+            $stmt->executeQuery();
+        } catch (\Exception $e) {
+            // Xử lý lỗi nếu cần
         }
     }
 
@@ -93,11 +141,10 @@ class Homestay extends Model
     public function searchHomestays($keyword = null, $location = null, $category_id = null)
     {
         try {
-            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.rating,
-                    c.name AS category_name, u.full_name AS host_name
+            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.rating, h.status,
+                    c.name AS category_name
                     FROM homestays h
                     LEFT JOIN categories c ON h.category_id = c.id
-                    LEFT JOIN users u ON h.host_id = u.id
                     WHERE 1=1";
             
             $params = [];
@@ -131,7 +178,7 @@ class Homestay extends Model
     public function findByCategory($category_id)
     {
         try {
-            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.rating, h.price, c.name AS category_name
+            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.rating, h.price, h.status, c.name AS category_name
                     FROM homestays h
                     LEFT JOIN categories c ON h.category_id = c.id
                     WHERE h.category_id = :category_id
@@ -149,11 +196,10 @@ class Homestay extends Model
     public function findByLocation($location)
     {
         try {
-            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.rating, h.price,
-                           c.name AS category_name, u.full_name AS host_name
+            $sql = "SELECT h.id, h.name, h.location, h.address, h.description, h.image, h.rating, h.price, h.status,
+                    c.name AS category_name
                     FROM homestays h
                     LEFT JOIN categories c ON h.category_id = c.id
-                    LEFT JOIN users u ON h.host_id = u.id
                     WHERE h.location LIKE :location
                     AND h.status = 'active'
                     ORDER BY h.rating DESC, h.created_at DESC";
@@ -167,7 +213,8 @@ class Homestay extends Model
         }
     }
 
-    public function findSimilarHomestays($category_id, $location, $excludeId, $limit = 3) {
+    public function findSimilarHomestays($category_id, $location, $excludeId, $limit = 3)
+    {
         try {
             $sql = "SELECT h.*, c.name AS category_name
                     FROM homestays h
@@ -193,7 +240,7 @@ class Homestay extends Model
     public function findByHost($hostId)
     {
         try {
-            $sql = "SELECT id, name, image, location, city, price, rating
+            $sql = "SELECT id, name, image, location, city, price, rating, status
                     FROM homestays
                     WHERE host_id = :hostId";
             $stmt = $this->connection->prepare($sql);

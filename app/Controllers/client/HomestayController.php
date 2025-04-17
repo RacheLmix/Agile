@@ -88,6 +88,7 @@ class HomestayController extends Controller
         view('client.detail', compact('homestay', 'rooms', 'amenities', 'ratings', 'canRate', 'existingRating', 'error'));
     }
 
+    // Các phương thức khác giữ nguyên
     public function index()
     {
         $homestays = $this->homestays->findAllHomestaysWithDetails();

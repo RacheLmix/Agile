@@ -4,6 +4,7 @@
 
 @section('styles')
 <style>
+    /* Keep original CSS with modifications for room section */
     .breadcrumb {
         display: flex;
         padding: 10px 0;
@@ -796,48 +797,50 @@
             </div>
 
             <!-- Trong phần đánh giá (sau đoạn hiển thị các đánh giá hiện có) -->
-{{--            @if(isset($ratings) && count($ratings) > 0)--}}
-{{--            <div class="review-divider"></div>--}}
-{{--            <div class="reviewer-name">{{ $ratings[0]['full_name'] }}</div>--}}
-{{--            <div class="review-score">{{ number_format($ratings[0]['score'], 1) }} / 5</div>--}}
-{{--            <div class="review-text">{{ $ratings[0]['content'] ?? 'Không có nội dung đánh giá.' }}</div>--}}
-{{--            @else--}}
-{{--            <div class="review-divider"></div>--}}
-{{--            <div class="review-text">Chưa có đánh giá nào cho homestay này.</div>--}}
-{{--            @endif--}}
+            @if(isset($ratings) && count($ratings) > 0)
+            <div class="review-divider"></div>
+            <div class="reviewer-name">{{ $ratings[0]['full_name'] }}</div>
+            <div class="review-score">{{ number_format($ratings[0]['score'], 1) }} / 5</div>
+            <div class="review-text">{{ $ratings[0]['content'] ?? 'Không có nội dung đánh giá.' }}</div>
+            @else
+            <div class="review-divider"></div>
+            <div class="review-text">Chưa có đánh giá nào cho homestay này.</div>
+            @endif
 
-{{--            <!-- Thêm form đánh giá -->--}}
-
-{{--            <div class="review-form" style="margin-top: 20px;">--}}
-{{--                <h3 class="review-heading">Để lại đánh giá của bạn</h3>--}}
-{{--                @if(isset($error))--}}
-{{--                <div style="color: red; margin-bottom: 10px;">{{ $error }}</div>--}}
-{{--                @endif--}}
-{{--                <form method="POST" action="">--}}
-{{--                    <div class="form-group">--}}
-{{--                        <label class="form-label">Điểm số (0-5)</label>--}}
-{{--                        <input type="number" class="form-input" name="score" min="0" max="5" step="0.1" required>--}}
-{{--                    </div>--}}
-{{--                    <div class="form-group">--}}
-{{--                        <label class="form-label">Nội dung đánh giá</label>--}}
-{{--                        <textarea class="form-input" name="content" rows="3" placeholder="Chia sẻ trải nghiệm của bạn..." required></textarea>--}}
-{{--                    </div>--}}
-{{--                    <button type="submit" name="submit_rating" class="book-button">Gửi đánh giá</button>--}}
-{{--                </form>--}}
-{{--            </div>--}}
-
-{{--            <div class="review-text" style="margin-top: 10px; color: #666;">--}}
-{{--                Bạn đã đánh giá homestay này: {{ number_format($existingRating['score'], 1) }} / 5 - {{ $existingRating['content'] }}--}}
-{{--            </div>--}}
-
-{{--            <div class="review-text" style="margin-top: 10px; color: #666;">--}}
-{{--                Bạn cần đặt phòng và được xác nhận để có thể đánh giá homestay này.--}}
-{{--            </div>--}}
+            <!-- Thêm form đánh giá -->
+            @if($canRate && !$existingRating)
+            <div class="review-form" style="margin-top: 20px;">
+                <h3 class="review-heading">Để lại đánh giá của bạn</h3>
+                @if(isset($error))
+                <div style="color: red; margin-bottom: 10px;">{{ $error }}</div>
+                @endif
+                <form method="POST" action="">
+                    <div class="form-group">
+                        <label class="form-label">Điểm số (0-5)</label>
+                        <input type="number" class="form-input" name="score" min="0" max="5" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nội dung đánh giá</label>
+                        <textarea class="form-input" name="content" rows="3" placeholder="Chia sẻ trải nghiệm của bạn..." required></textarea>
+                    </div>
+                    <button type="submit" name="submit_rating" class="book-button">Gửi đánh giá</button>
+                </form>
+            </div>
+            @elseif($existingRating)
+            <div class="review-text" style="margin-top: 10px; color: #666;">
+                Bạn đã đánh giá homestay này: {{ number_format($existingRating['score'], 1) }} / 5 - {{ $existingRating['content'] }}
+            </div>
+            @else
+            <div class="review-text" style="margin-top: 10px; color: #666;">
+                Bạn cần đặt phòng và được xác nhận để có thể đánh giá homestay này.
+            </div>
+            @endif
 
             <div class="panel-section">
                 <div class="room-header">
                     <h2 class="section-title">Những phòng còn trống tại {{ $homestay['name'] }}</h2>
                 </div>
+
                 @if(isset($rooms) && count($rooms) > 0)
                 @foreach($rooms as $room)
                 <div class="room-item">
