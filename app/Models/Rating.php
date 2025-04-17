@@ -19,6 +19,24 @@ class Rating extends Model
         return $result->fetchAllAssociative();
     }
 
+    // Lấy một đánh giá theo ID
+    public function find($id)
+    {
+        try {
+            $sql = "SELECT r.*, u.full_name AS user_name, h.name AS homestay_name
+                    FROM ratings r
+                    LEFT JOIN users u ON r.user_id = u.id
+                    LEFT JOIN homestays h ON r.homestay_id = h.id
+                    WHERE r.id = :id";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $result = $stmt->executeQuery();
+            return $result->fetchAssociative() ?: null;
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
     // Kiểm tra xem người dùng đã đánh giá homestay này chưa
     public function hasUserRated($userId, $homestayId)
     {
