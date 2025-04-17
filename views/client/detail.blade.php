@@ -835,7 +835,6 @@
                 Bạn cần đặt phòng và được xác nhận để có thể đánh giá homestay này.
             </div>
             @endif
-
             <div class="panel-section">
                 <div class="room-header">
                     <h2 class="section-title">Những phòng còn trống tại {{ $homestay['name'] }}</h2>

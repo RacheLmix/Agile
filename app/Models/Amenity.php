@@ -21,7 +21,7 @@ class Amenity extends Model
         } catch (\Exception $e) {
             return [];
         }
-    }
+    }   
 
     // Lấy một tiện ích theo ID
     public function find($id)
