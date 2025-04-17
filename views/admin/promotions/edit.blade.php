@@ -133,7 +133,7 @@
     <form action="/admin/promotions/update/{{ $promotion['id'] }}" method="POST">
         <div class="form-group">
             <label>Phòng áp dụng</label>
-            <select name="room_id" class="form-control" required>
+            <select name="room_id" class="form-control" >
                 @foreach($rooms as $room)
                     <option value="{{ $room['id'] }}" 
                             {{ $room['id'] == $promotion['room_id'] ? 'selected' : '' }}>
@@ -149,7 +149,7 @@
                    name="title" 
                    class="form-control" 
                    value="{{ $promotion['title'] }}" 
-                   required>
+                   >
         </div>
 
         <div class="form-group">
@@ -168,7 +168,7 @@
                    min="0" 
                    max="100" 
                    step="0.01" 
-                   required>
+                   >
         </div>
 
         <div class="date-inputs">
@@ -178,7 +178,7 @@
                        name="start_date" 
                        class="form-control" 
                        value="{{ $promotion['start_date'] }}" 
-                       required>
+                       >
             </div>
 
             <div class="form-group">
@@ -187,7 +187,7 @@
                        name="end_date" 
                        class="form-control" 
                        value="{{ $promotion['end_date'] }}" 
-                       required>
+                       >
             </div>
         </div>
 
@@ -207,9 +207,53 @@
         </div>
 
         <div class="button-group">
-            <button type="submit" class="btn btn-primary">Cập nhật</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Cập nhật</button>
             <a href="/admin/promotions" class="btn btn-default">Hủy</a>
         </div>
     </form>
 </div>
+
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Get form values
+    const title = document.querySelector('input[name="title"]').value.trim();
+    const discountPercent = document.querySelector('input[name="discount_percent"]').value;
+    const startDate = new Date(document.querySelector('input[name="start_date"]').value);
+    const endDate = new Date(document.querySelector('input[name="end_date"]').value);
+    
+    // Validate form
+    let isValid = true;
+    let errorMessage = '';
+    
+    if (title.length < 5) {
+        errorMessage = 'Tiêu đề khuyến mãi phải có ít nhất 5 ký tự';
+        isValid = false;
+    } else if (discountPercent <= 0 || discountPercent > 100) {
+        errorMessage = 'Phần trăm giảm giá phải lớn hơn 0 và nhỏ hơn hoặc bằng 100';
+        isValid = false;
+    } else if (isNaN(startDate.getTime())) {
+        errorMessage = 'Vui lòng chọn ngày bắt đầu';
+        isValid = false;
+    } else if (isNaN(endDate.getTime())) {
+        errorMessage = 'Vui lòng chọn ngày kết thúc';
+        isValid = false;
+    } else if (endDate <= startDate) {
+        errorMessage = 'Ngày kết thúc phải sau ngày bắt đầu';
+        isValid = false;
+    }
+    
+    if (!isValid) {
+        alert(errorMessage);
+        return false;
+    }
+    
+    // If validation passes, submit the form
+    const submitBtn = document.querySelector('button[type="submit"]');
+    submitBtn.textContent = 'Đang xử lý...';
+    submitBtn.disabled = true;
+    this.submit();
+});
+</script>
 @endsection

@@ -157,17 +157,17 @@
         <form action="/admin/rooms/store" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Tên phòng</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name">
             </div>
 
             <div class="form-group">
                 <label for="description">Mô tả</label>
-                <textarea id="description" name="description" required></textarea>
+                <textarea id="description" name="description"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="homestay_id">Homestay</label>
-                <select id="homestay_id" name="homestay_id" required>
+                <select id="homestay_id" name="homestay_id">
                     <option value="">-- Chọn homestay --</option>
                     @foreach($homestays as $homestay)
                         <option value="{{ $homestay['id'] }}">{{ $homestay['name'] }}</option>
@@ -187,7 +187,7 @@
 
             <div class="form-group">
                 <label for="price">Giá (VNĐ)</label>
-                <input type="number" id="price" name="price" min="0" required>
+                <input type="number" id="price" name="price" min="0">
             </div>
 
             <div class="form-group">
@@ -267,7 +267,7 @@
         if (form) {
             form.addEventListener('submit', function (e) {
                 let isValid = true;
-                const requiredFields = this.querySelectorAll('[required]');
+                const requiredFields = this.querySelectorAll(']');
 
                 requiredFields.forEach(field => {
                     const errorSpan = field.nextElementSibling;

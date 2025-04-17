@@ -202,7 +202,7 @@
                 <div class="form-group">
                     <label>Tiêu đề khuyến mãi</label>
                     <input type="text" name="title" class="form-control" 
-                           placeholder="Nhập tiêu đề khuyến mãi" required>
+                           placeholder="Nhập tiêu đề khuyến mãi">
                 </div>
 
                 <div class="form-group">
@@ -215,18 +215,18 @@
                     <label>Phần trăm giảm giá (%)</label>
                     <input type="number" name="discount_percent" class="form-control" 
                            placeholder="Nhập phần trăm giảm giá"
-                           min="0" max="100" step="0.01" required>
+                           min="0" max="100" step="0.01" >
                 </div>
 
                 <div class="date-inputs">
                     <div class="form-group">
                         <label>Ngày bắt đầu</label>
-                        <input type="date" name="start_date" class="form-control" required>
+                        <input type="date" name="start_date" class="form-control" >
                     </div>
 
                     <div class="form-group">
                         <label>Ngày kết thúc</label>
-                        <input type="date" name="end_date" class="form-control" required>
+                        <input type="date" name="end_date" class="form-control" >
                     </div>
                 </div>
 
@@ -248,10 +248,51 @@
 </div>
 
 <script>
-document.getElementById('promotionForm').addEventListener('submit', function() {
+document.getElementById('promotionForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Get form values
+    const title = document.querySelector('input[name="title"]').value.trim();
+    const discountPercent = document.querySelector('input[name="discount_percent"]').value;
+    const startDate = new Date(document.querySelector('input[name="start_date"]').value);
+    const endDate = new Date(document.querySelector('input[name="end_date"]').value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Validate form
+    let isValid = true;
+    let errorMessage = '';
+    
+    if (title.length < 5) {
+        errorMessage = 'Tiêu đề khuyến mãi phải có ít nhất 5 ký tự';
+        isValid = false;
+    } else if (discountPercent <= 0 || discountPercent > 100) {
+        errorMessage = 'Phần trăm giảm giá phải lớn hơn 0 và nhỏ hơn hoặc bằng 100';
+        isValid = false;
+    } else if (isNaN(startDate.getTime())) {
+        errorMessage = 'Vui lòng chọn ngày bắt đầu';
+        isValid = false;
+    } else if (isNaN(endDate.getTime())) {
+        errorMessage = 'Vui lòng chọn ngày kết thúc';
+        isValid = false;
+    } else if (startDate < today) {
+        errorMessage = 'Ngày bắt đầu không thể là ngày trong quá khứ';
+        isValid = false;
+    } else if (endDate <= startDate) {
+        errorMessage = 'Ngày kết thúc phải sau ngày bắt đầu';
+        isValid = false;
+    }
+    
+    if (!isValid) {
+        alert(errorMessage);
+        return false;
+    }
+    
+    // If validation passes, submit the form
     const submitBtn = document.getElementById('submitBtn');
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
+    this.submit();
 });
 </script>
 @endsection
