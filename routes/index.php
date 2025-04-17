@@ -85,8 +85,6 @@ $router->mount('', function () use ($router) {
         $router->post('/bookings/update/{id}', AdminBookingController::class . '@update');
 
         $router->get('/ratings', RatingController::class . '@index');
-        $router->get('/ratings/edit/{id}', RatingController::class . '@edit');
-        $router->post('/ratings/update/{id}', RatingController::class . '@update');
         $router->get('/ratings/detail/{id}', RatingController::class . '@detail');
 
         $router->get('/amenities', AmenityController::class . '@index');
