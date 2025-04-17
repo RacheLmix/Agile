@@ -343,21 +343,13 @@
     const toggleIcon = document.getElementById('toggle-icon');
     const chatMessages = document.getElementById('chat-messages');
     const chatbotInput = document.getElementById('chatbot-input');
-<<<<<<< HEAD
+
     
     // OpenRouter API configuration
     const apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
-    const apiKey = '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';
-    const modelId = 'nvidia/llama-3.1-nemotron-ultra-253b-v1:free';
+    const apiKey = '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';
+    const modelId = 'shisa-ai/shisa-v2-llama3.3-70b:free';
     
-    // Show chatbot with animation when button is clicked
-=======
-
-    const apiUrl = '<?php echo config('openrouter.api_url'); ?>';
-    const apiKey = '<?php echo config('openrouter.api_key'); ?>';
-    const modelId = '<?php echo config('openrouter.model'); ?>';
-  
->>>>>>> 18b0737a4ae36e204778869da79ba0f4d123435f
     chatbotButton.addEventListener('click', function() {
       chatbotContainer.style.display = 'flex';
       chatbotButton.style.display = 'none';
