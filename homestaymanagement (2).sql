@@ -63,7 +63,7 @@ CREATE TABLE `bookings` (
   `guests` int NOT NULL,
   `amenity` text,
   `total_price` decimal(10,2) NOT NULL,
-  `status` varchar(50) NOT NULL,
+  `status` enum('pending','confirmed','cancelled','completed') DEFAULT 'active',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `full_name` varchar(255) DEFAULT NULL,

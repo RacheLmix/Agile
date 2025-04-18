@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lịch sử đặt phòng</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <style>
@@ -17,7 +16,7 @@
         }
 
         :root {
-            --primary-color: #0070cc;
+            --primary-color: #2563eb;
             --secondary-color: #ff5e1f;
             --gray-color: #687176;
             --dark-color: #333;
@@ -51,6 +50,7 @@
             color: white;
             position: relative;
         }
+
         .background img {
             z-index: -1;
             position: absolute;
@@ -128,26 +128,6 @@
 
         .user-link i {
             margin-right: 5px;
-        }
-
-        .btn-login, .btn-register {
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            margin-left: 10px;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .btn-login {
-            color: white;
-            border: 1px solid white;
-            background-color: transparent;
-        }
-
-        .btn-register {
-            background-color: #fff;
-            color: #0770cd;
         }
 
         /* User Menu */
@@ -301,7 +281,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             overflow: hidden;
-            min-height: calc(100vh - 170px); /* Adjust for header and margin */
+            min-height: calc(100vh - 170px);
         }
 
         /* Sidebar */
@@ -413,11 +393,51 @@
             text-align: center;
         }
 
+        /* Filter and Search */
+        .filter-search {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .filter-select,
+        .search-input {
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #1f2937;
+            background-color: #f9fafb;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .filter-select {
+            width: 220px;
+        }
+
+        .search-input {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .filter-select:focus,
+        .search-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Booking Item */
         .booking-item {
             background-color: #f9fafb;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
             transition: box-shadow 0.2s;
         }
 
@@ -429,11 +449,23 @@
             margin-bottom: 0;
         }
 
+        .booking-image {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .booking-content {
+            flex: 1;
+        }
+
         .booking-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .booking-header h3 {
@@ -470,49 +502,20 @@
             color: #2563eb;
         }
 
-        .toggle-link {
-            display: flex;
-            align-items: center;
-            color: #2563eb;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            margin-top: 10px;
-            transition: color 0.2s;
-        }
-
-        .toggle-link:hover {
-            color: #1d4ed8;
-        }
-
-        .toggle-link i {
-            margin-right: 8px;
-            font-size: 14px;
-            transition: transform 0.2s;
-        }
-
-        .toggle-link i.rotate-180 {
-            transform: rotate(180deg);
-        }
-
-        .booking-details {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .booking-details.active {
+        .booking-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
-        .booking-details p {
+        .booking-info p {
             font-size: 14px;
             color: #6b7280;
-            margin-bottom: 8px;
+            margin: 0;
         }
 
-        .booking-details p span {
+        .booking-info p span {
             color: #1f2937;
             font-weight: 500;
         }
@@ -521,7 +524,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 20px;
             padding-top: 15px;
             border-top: 1px solid #e5e7eb;
         }
@@ -546,6 +548,18 @@
             transition: background-color 0.2s;
             cursor: pointer;
             border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .view-button {
+            background-color: #6b7280;
+            color: #ffffff;
+        }
+
+        .view-button:hover {
+            background-color: #4b5563;
         }
 
         .cancel-button {
@@ -566,11 +580,15 @@
             background-color: #1d4ed8;
         }
 
+        .action-button i {
+            font-size: 14px;
+        }
+
         .empty-state {
             text-align: center;
             padding: 50px 20px;
             background-color: #f9fafb;
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         .empty-state p {
@@ -616,6 +634,17 @@
             .profile-card {
                 max-width: 100%;
             }
+
+            .filter-search {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-select,
+            .search-input {
+                width: 100%;
+                max-width: none;
+            }
         }
 
         @media (max-width: 576px) {
@@ -632,7 +661,14 @@
             }
 
             .booking-item {
+                flex-direction: column;
+                align-items: flex-start;
                 padding: 15px;
+            }
+
+            .booking-image {
+                width: 100%;
+                height: 120px;
             }
 
             .booking-header h3 {
@@ -644,9 +680,9 @@
                 padding: 5px 10px;
             }
 
-            .booking-details.active {
+            .booking-info {
                 grid-template-columns: 1fr;
-                gap: 15px;
+                gap: 8px;
             }
 
             .action-button {
@@ -699,15 +735,15 @@
                     </a>
                     <a href="#" class="user-link">Hợp tác với chúng tôi</a>
                     <div class="header-right">
-                        @if(isset($_SESSION['user']))
+                        @if(isset($user))
                             <div class="user-menu">
                                 <div class="user-info" data-dropdown="userDropdown">
-                                    @if(isset($_SESSION['user']['avatar']) && $_SESSION['user']['avatar'])
-                                        <img src="/storage/uploads/avatar/{{ $_SESSION['user']['avatar'] }}" alt="Avatar" class="user-avatar">
+                                    @if(isset($user['avatar']) && $user['avatar'])
+                                        <img src="/storage/uploads/avatar/{{ $user['avatar'] }}" alt="Avatar" class="user-avatar">
                                     @else
                                         <i class="fas fa-user-circle" style="font-size: 24px; margin-right: 8px; color: white;"></i>
                                     @endif
-                                    <span class="user-name">{{ $_SESSION['user']['full_name'] }}</span>
+                                    <span class="user-name">{{ $user['full_name'] }}</span>
                                     <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 8px;"></i>
                                 </div>
                                 <div class="user-dropdown" id="userDropdown">
@@ -752,8 +788,8 @@
                 <h1>Homestay Management</h1>
             </div>
             <div class="user-info">
-                <span class="user-name">{{ $_SESSION['user']['full_name'] ?? 'Khách hàng' }}</span>
-                <span class="user-email">{{ $_SESSION['user']['email'] ?? 'Không có thông tin' }}</span>
+                <span class="user-name">{{ $user['full_name'] ?? 'Khách hàng' }}</span>
+                <span class="user-email">{{ $user['email'] ?? 'Không có thông tin' }}</span>
             </div>
             <div class="sidebar-nav">
                 <a href="/profile">
@@ -771,82 +807,86 @@
         <div class="content">
             <div class="profile-card">
                 <h2>Lịch sử đặt phòng</h2>
-                
+
                 @if(empty($bookings))
                     <div class="empty-state">
-                        <p>Bạn chưa có đơn đặt phòng nào.</p>
-                        <a href="/" class="explore-button">Khám phá các homestay</a>
+                        <p>Bạn chưa có đơn đặt phòng nào. Hãy khám phá các homestay tuyệt vời!</p>
+                        <a href="/" class="explore-button">Khám phá ngay</a>
                     </div>
                 @else
-                    @foreach($bookings as $booking)
-                        <div class="booking-item">
-                            <div class="booking-header">
-                                <h3>Đơn đặt phòng #{{ $booking['id'] }}</h3>
-                                <span class="status-badge 
-                                    @if($booking['status'] == 'pending') status-pending
-                                    @elseif($booking['status'] == 'confirmed') status-confirmed
-                                    @elseif($booking['status'] == 'cancelled') status-cancelled
-                                    @elseif($booking['status'] == 'completed') status-completed
-                                    @endif">
-                                    @if($booking['status'] == 'pending')
-                                        Đang chờ xác nhận
-                                    @elseif($booking['status'] == 'confirmed')
-                                        Đã xác nhận
-                                    @elseif($booking['status'] == 'cancelled')
-                                        Đã hủy
-                                    @elseif($booking['status'] == 'completed')
-                                        Hoàn thành
-                                    @else
-                                        {{ $booking['status'] }}
-                                    @endif
-                                </span>
-                            </div>
+                    <div class="filter-search">
+                        <select depositing class="filter-select" onchange="filterBookings(this.value)">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="pending">Đang chờ xác nhận</option>
+                            <option value="confirmed">Đã xác nhận</option>
+                            <option value="cancelled">Đã hủy</option>
+                            <option value="completed">Hoàn thành</option>
+                        </selecting>
+                        <input type="text" class="search-input" placeholder="Tìm theo homestay hoặc phòng..." oninput="searchBookings(this.value)">
+                    </div>
 
-                            <div class="toggle-link" onclick="toggleBookingDetails({{ $booking['id'] }})">
-                                <i class="fas fa-chevron-down" id="toggle-icon-{{ $booking['id'] }}"></i>
-                                <span id="toggle-text-{{ $booking['id'] }}">Xem chi tiết đơn đặt phòng</span>
+                    <div id="booking-list">
+                        @foreach($bookings as $booking)
+                            <div class="booking-item" data-status="{{ $booking['status'] }}" data-search="{{ strtolower($booking['homestay_name'] . ' ' . $booking['room_name']) }}">
+                                <img src="{{ $booking['homestay_image'] ?? 'https://via.placeholder.com/120x80' }}" alt="Homestay" class="booking-image">
+                                <div class="booking-content">
+                                    <div class="booking-header">
+                                        <h3>{{ $booking['homestay_name'] }} - {{ $booking['room_name'] }}</h3>
+                                        <span class="status-badge 
+                                            @if($booking['status'] == 'pending') status-pending
+                                            @elseif($booking['status'] == 'confirmed') status-confirmed
+                                            @elseif($booking['status'] == 'cancelled') status-cancelled
+                                            @elseif($booking['status'] == 'completed') status-completed
+                                            @endif">
+                                            @if($booking['status'] == 'pending')
+                                                Đang chờ xác nhận
+                                            @elseif($booking['status'] == 'confirmed')
+                                                Đã xác nhận
+                                            @elseif($booking['status'] == 'cancelled')
+                                                Đã hủy
+                                            @elseif($booking['status'] == 'completed')
+                                                Hoàn thành
+                                            @else
+                                                {{ $booking['status'] }}
+                                            @endif
+                                        </span>
+                                    </div>
+                                    <div class="booking-info">
+                                        <p>Check-in: <span>{{ date('d/m/Y', strtotime($booking['check_in'])) }}</span></p>
+                                        <p>Check-out: <span>{{ date('d/m/Y', strtotime($booking['check_out'])) }}</span></p>
+                                        <p>Tổng tiền: <span>{{ number_format($booking['total_price'], 0, ',', '.') }} VND</span></p>
+                                    </div>
+                                    <div class="booking-footer">
+                                        <p class="total-price">Mã đơn: #{{ $booking['id'] }}</p>
+                                        <div class="button-container">
+                                            <a href="/booking/{{ $booking['id'] }}" class="action-button view-button">
+                                                <i class="fas fa-eye"></i> Xem chi tiết
+                                            </a>
+                                            @if($booking['status'] == 'pending')
+                                                <button class="action-button cancel-button" onclick="cancelBooking({{ $booking['id'] }})">
+                                                    <i class="fas fa-times"></i> Hủy
+                                                </button>
+                                            @endif
+                                            @if($booking['status'] == 'confirmed')
+                                                <button class="action-button checkin-button" onclick="checkIn({{ $booking['id'] }})">
+                                                    <i class="fas fa-check"></i> Check-in
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="booking-details" id="booking-details-{{ $booking['id'] }}">
-                                <div>
-                                    <p>Người đặt: <span>{{ $_SESSION['user']['full_name'] ?? 'Không có thông tin' }}</span></p>
-                                </div>
-                                <div>
-                                    <p>Email: <span>{{ $_SESSION['user']['email'] ?? 'Không có thông tin' }}</span></p>
-                                </div>
-                                <div>
-                                    <p>Homestay: <span>{{ $booking['homestay_name'] }}</span></p>
-                                </div>
-                                <div>
-                                    <p>Phòng: <span>{{ $booking['room_name'] }}</span></p>
-                                </div>
-                                <div>
-                                    <p>Ngày nhận phòng: <span>{{ date('d/m/Y', strtotime($booking['check_in'])) }}</span></p>
-                                </div>
-                                <div>
-                                    <p>Ngày trả phòng: <span>{{ date('d/m/Y', strtotime($booking['check_out'])) }}</span></p>
-                                </div>
-                                <div>
-                                    <p>Số đêm: <span>{{ $booking['nights'] }}</span></p>
-                                </div>
-                                <div>
-                                    <p>Số khách: <span>{{ $booking['guests'] }}</span></p>
-                                </div>
-                                <div>
-                                    <p>Ngày đặt: <span>{{ date('d/m/Y H:i', strtotime($booking['created_at'])) }}</span></p>
-                                </div>
-                            </div>
+                        @endforeach
+                    </div>
 
-                            <div class="booking-footer">
-                                <p class="total-price">Tổng tiền: {{ number_format($booking['total_price'], 0, ',', '.') }} VND</p>
-                                <div class="button-container">
-                                    @if($booking['status'] == 'pending')
-                                        <button class="action-button cancel-button" onclick="cancelBooking({{ $booking['id'] }})">Hủy đặt phòng</button>
-                                    @endif
-                                    <button class="action-button checkin-button" onclick="checkIn({{ $booking['id'] }})">Đã đến checkin</button>
-                                </div>
-                            </div>
+                    <!-- Pagination (nếu có) -->
+                    @if(isset($pagination) && $pagination['total_pages'] > 1)
+                        <div class="pagination">
+                            @for($i = 1; $i <= $pagination['total_pages']; $i++)
+                                <a href="/orderview?page={{ $i }}" class="{{ $i == $pagination['current_page'] ? 'active' : '' }}">{{ $i }}</a>
+                            @endfor
                         </div>
-                    @endforeach
+                    @endif
                 @endif
             </div>
         </div>
@@ -859,25 +899,27 @@
             }
         }
 
-        function toggleBookingDetails(bookingId) {
-            const detailsElement = document.getElementById('booking-details-' + bookingId);
-            const toggleElement = document.getElementById('toggle-icon-' + bookingId);
-            const toggleText = document.getElementById('toggle-text-' + bookingId);
-            if (detailsElement.classList.contains('active')) {
-                detailsElement.classList.remove('active');
-                toggleElement.classList.remove('rotate-180');
-                toggleText.textContent = 'Xem chi tiết đơn đặt phòng';
-            } else {
-                detailsElement.classList.add('active');
-                toggleElement.classList.add('rotate-180');
-                toggleText.textContent = 'Ẩn chi tiết đơn đặt phòng';
+        function checkIn(bookingId) {
+            if (confirm('Xác nhận bạn đã đến và check-in?')) {
+                window.location.href = '/checkin/' + bookingId;
             }
         }
 
-        function checkIn(bookingId) {
-            if (confirm('Xác nhận bạn đã đến và checkin?')) {
-                window.location.href = '/checkin/' + bookingId;
-            }
+        function filterBookings(status) {
+            const items = document.querySelectorAll('.booking-item');
+            items.forEach(item => {
+                const itemStatus = item.getAttribute('data-status');
+                item.style.display = (status === '' || itemStatus === status) ? '' : 'none';
+            });
+        }
+
+        function searchBookings(query) {
+            const items = document.querySelectorAll('.booking-item');
+            const searchTerm = query.toLowerCase();
+            items.forEach(item => {
+                const searchData = item.getAttribute('data-search');
+                item.style.display = searchData.includes(searchTerm) ? '' : 'none';
+            });
         }
 
         document.addEventListener('DOMContentLoaded', function() {

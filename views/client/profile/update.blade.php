@@ -4,127 +4,424 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chỉnh sửa thông tin cá nhân</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
     <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #ff5e1f;
+            --gray-color: #687176;
+            --dark-color: #333;
+            --light-color: #f8f9fc;
+            --border-color: #e3e6f0;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
-        body {
-            background: #f0f2f5;
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
+        /* Container */
         .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 15px;
         }
 
-        .edit-header {
-            background: white;
-            padding: 16px 20px;
-            border-radius: 8px 8px 0 0;
-            border-bottom: 1px solid #e4e6eb;
+        /* Top Header */
+        .top-header {
+            height: 130px;
+            padding: 10px 0;
+            color: white;
+            position: relative;
         }
 
-        .edit-header h1 {
-            font-size: 20px;
-            color: #1c1e21;
+        .background img {
+            z-index: -1;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 110%;
+            background-position: center;
+            filter: brightness(80%);
         }
 
-        .edit-form {
-            background: white;
-            border-radius: 0 0 8px 8px;
-            padding: 20px;
+        .top-header .container {
+            display: flex;
+            justify-content: space-between;
         }
 
-        .form-section {
-            margin-bottom: 24px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid #e4e6eb;
+        .logo-img {
+            width: 20%;
+            background-color: white;
+            border-radius: 30%;
         }
 
-        .section-title {
-            font-size: 17px;
+        .top-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .language-currency {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .language-currency .divider {
+            margin: 0 10px;
+            opacity: 0.7;
+        }
+
+        .dropdown {
+            position: relative;
+            cursor: pointer;
             font-weight: 600;
-            color: #1c1e21;
-            margin-bottom: 12px;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        .flag-icon {
+            width: 16px;
+            height: 11px;
+            margin-right: 5px;
+        }
+
+        .user-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-link {
+            color: white;
+            text-decoration: none;
+            padding: 10px 12px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .user-link:hover {
+            background-color: #999;
+            opacity: 0.5;
+            border-radius: 3px;
+        }
+
+        .user-link i {
+            margin-right: 5px;
+        }
+
+        /* User Menu */
+        .header-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 4px;
+            color: white;
+            transition: background-color 0.2s;
+        }
+
+        .user-info:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .user-name {
+            font-weight: 500;
+            margin-right: 5px;
+            max-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            margin-top: 10px;
+            display: none;
+            overflow: hidden;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown-item i {
+            margin-right: 10px;
+            font-size: 14px;
+            color: #666;
+            width: 16px;
+            text-align: center;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 5px 0;
+        }
+
+        /* Auth Buttons */
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .auth-btn {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: 500;
+            margin-left: 10px;
+            transition: all 0.2s;
+        }
+
+        .login-btn {
+            color: white;
+            border: 1px solid white;
+            background-color: transparent;
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .register-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid white;
+        }
+
+        .register-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Responsive Adjustments for Header */
+        @media (max-width: 768px) {
+            .top-header .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .user-links {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+            .user-name {
+                max-width: 80px;
+            }
+            .auth-buttons {
+                margin-top: 10px;
+            }
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            min-height: calc(100vh - 170px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: #fafafa;
+            padding: 30px 20px;
+            border-right: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-header i {
+            color: #f59e0b;
+            font-size: 24px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .sidebar .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar .user-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .sidebar .user-email {
+            font-size: 13px;
+            color: #6b7280;
+            word-break: break-all;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #4b5563;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-nav a.active {
+            background-color: #e3f2fd;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .sidebar-nav a:hover {
+            background-color: #f1f5f9;
+        }
+
+        .sidebar-nav i {
+            margin-right: 10px;
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            padding: 40px;
+            background-color: #ffffff;
+        }
+
+        .profile-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 25px;
+            text-align: center;
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
-        .form-label {
+        .form-group label {
             display: block;
-            font-size: 15px;
-            color: #65676b;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
             margin-bottom: 8px;
         }
 
-        .form-input {
+        .form-group input,
+        .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #dddfe2;
-            border-radius: 6px;
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background-color: #f9fafb;
+            color: #1f2937;
             font-size: 15px;
-            color: #1c1e21;
+            outline: none;
             transition: border-color 0.2s;
         }
 
-        .form-input:focus {
-            border-color: #1b74e4;
-            outline: none;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .cancel-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 600;
-            color: #65676b;
-            background: #e4e6eb;
-            cursor: pointer;
-            transition: background 0.2s;
-            text-decoration: none;
-        }
-
-        .cancel-btn:hover {
-            background: #d8dadf;
-        }
-
-        .save-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 600;
-            color: white;
-            background: #1b74e4;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .save-btn:hover {
-            background: #1967d2;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 20px auto;
-            }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .avatar-upload-container {
@@ -148,13 +445,14 @@
         }
 
         .custom-file-upload {
-            background: #e4e6eb;
-            color: #050505;
-            padding: 8px 16px;
-            border-radius: 6px;
+            background: #f9fafb;
+            color: #374151;
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 500;
+            font-size: 15px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -162,8 +460,8 @@
         }
 
         .custom-file-upload:hover {
-            background: #d8dadf;
-            transform: translateY(-1px);
+            background: #e5e7eb;
+            border-color: #2563eb;
         }
 
         .custom-file-upload i {
@@ -173,72 +471,299 @@
         input[type="file"] {
             display: none;
         }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="edit-header">
-            <h1>Chỉnh sửa thông tin cá nhân</h1>
-        </div>
 
-        <form action="/profile/update/{{ $user['id'] }}" method="POST" class="edit-form" enctype="multipart/form-data">
-            <div class="form-section">
-                <div class="section-title">Ảnh đại diện</div>
-                <div class="avatar-upload-container">
-                    @if($user['avatar'])
-                        <img src="{{ $user['avatar'] }}" alt="Avatar" class="avatar-preview">
-                    @else
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode($user['full_name']) }}&background=random" 
-                             alt="Avatar" class="avatar-preview">
-                    @endif
-                    <div class="file-upload-wrapper">
-                        <label for="avatar" class="custom-file-upload">
-                            <i class="fas fa-camera"></i>
-                            Chọn ảnh mới
-                        </label>
-                        <input type="file" name="avatar" id="avatar" accept="image/*">
+        .button-container {
+            margin-top: 30px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .save-button,
+        .cancel-button {
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            display: inline-block;
+        }
+
+        .save-button {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        .save-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .cancel-button {
+            background-color: #f9fafb;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .cancel-button:hover {
+            background-color: #e5e7eb;
+        }
+
+        /* Responsive Adjustments for Main Content */
+        @media (max-width: 992px) {
+            .main-container {
+                flex-direction: column;
+                margin: 15px;
+                min-height: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .content {
+                padding: 30px;
+            }
+
+            .profile-card {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content {
+                padding: 20px;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+
+            .profile-card h2 {
+                font-size: 20px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .save-button,
+            .cancel-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .avatar-upload-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="container">
+            <div class="background">
+                <img src="https://ik.imagekit.io/tvlk/image/imageResource/2019/10/10/1570674738648-1337bd802b0a2aa503a105ec976bd3f3.jpeg?tr=h-460,q-75" alt="">
+            </div>
+            <div class="logo-container">
+                <a href="/" class="logo">
+                    <img src="../../Logo/icon.png" alt="Homestay" class="logo-img">
+                </a>
+            </div>
+            <div class="top-right">
+                <div class="language-currency">
+                    <div class="dropdown">
+                        <span class="dropdown-toggle">
+                            <img src="../storage/uploads/flag.png" alt="VN" class="flag-icon">
+                            VI
+                        </span>
+                    </div>
+                    <span class="divider">|</span>
+                    <div class="dropdown">
+                        <span class="dropdown-toggle">
+                            VND
+                        </span>
+                    </div>
+                </div>
+                <div class="user-links">
+                    <a href="#" class="user-link">
+                        <i class="fas fa-tag"></i>
+                        Khuyến mãi
+                    </a>
+                    <a href="#" class="user-link">
+                        <i class="fas fa-question-circle"></i>
+                        Hỗ trợ
+                        <i style="margin-left: 5px;" class="fas fa-chevron-down fa-xs"></i>
+                    </a>
+                    <a href="#" class="user-link">Hợp tác với chúng tôi</a>
+                    <div class="header-right">
+                        @if(isset($user))
+                            <div class="user-menu">
+                                <div class="user-info" data-dropdown="userDropdown">
+                                    @if(isset($user['avatar']) && $user['avatar'])
+                                        <img src="/storage/uploads/avatar/{{ $user['avatar'] }}" alt="Avatar" class="user-avatar">
+                                    @else
+                                        <i class="fas fa-user-circle" style="font-size: 24px; margin-right: 8px; color: white;"></i>
+                                    @endif
+                                    <span class="user-name">{{ $user['full_name'] }}</span>
+                                    <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 8px;"></i>
+                                </div>
+                                <div class="user-dropdown" id="userDropdown">
+                                    <a href="/profile" class="dropdown-item">
+                                        <i class="fas fa-user"></i>
+                                        <span>Tài khoản của tôi</span>
+                                    </a>
+                                    <a href="/orderview" class="dropdown-item">
+                                        <i class="fas fa-list"></i>
+                                        <span>Đặt chỗ của tôi</span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="/logout" class="dropdown-item">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span>Đăng xuất</span>
+                                    </a>
+                                </div>
+                            </div>
+                        @else
+                            <div class="auth-buttons">
+                                <a href="/login" class="auth-btn login-btn">
+                                    <i class="fas fa-sign-in-alt" style="margin-right: 5px;"></i>
+                                    <span>Đăng nhập</span>
+                                </a>
+                                <a href="/signin" class="auth-btn register-btn">
+                                    <i class="fas fa-user-plus" style="margin-right: 5px;"></i>
+                                    <span>Đăng ký</span>
+                                </a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="form-section">
-                <div class="section-title">Thông tin cá nhân</div>
-                <div class="form-group">
-                    <label class="form-label" for="full_name">Họ và tên</label>
-                    <input type="text" id="full_name" name="full_name" class="form-input" 
-                           value="{{ $user['full_name'] }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-input" 
-                           value="{{ $user['email'] }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="phone">Số điện thoại</label>
-                    <input type="tel" id="phone" name="phone" class="form-input" 
-                           value="{{ $user['phone'] }}">
-                </div>
-
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-home"></i>
+                <h1>Homestay Management</h1>
             </div>
-
-            <div class="form-actions">
-                <a href="/profile" class="cancel-btn">Hủy</a>
-                <button type="submit" class="save-btn">Lưu thay đổi</button>
+            <div class="user-info">
+                <span class="user-name">{{ $user['full_name'] }}</span>
+                <span class="user-email">{{ $user['email'] }}</span>
             </div>
-        </form>
+            <div class="sidebar-nav">
+                <a href="/profile" class="active">
+                    <i class="fas fa-user"></i>
+                    <span>Thông tin cá nhân</span>
+                </a>
+                <a href="/orderview">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Đơn hàng của tôi</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <div class="profile-card">
+                <h2>Chỉnh sửa thông tin cá nhân</h2>
+                <form action="/profile/update/{{ $user['id'] }}" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Ảnh đại diện</label>
+                        <div class="avatar-upload-container">
+                            @if($user['avatar'])
+                                <img src="{{ $user['avatar'] }}" alt="Avatar" class="avatar-preview">
+                            @else
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode($user['full_name']) }}&background=random" 
+                                     alt="Avatar" class="avatar-preview">
+                            @endif
+                            <div class="file-upload-wrapper">
+                                <label for="avatar" class="custom-file-upload">
+                                    <i class="fas fa-camera"></i>
+                                    Chọn ảnh mới
+                                </label>
+                                <input type="file" name="avatar" id="avatar" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" name="full_name" class="form-group input" 
+                               value="{{ $user['full_name'] }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-group input" 
+                               value="{{ $user['email'] }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" name="phone" class="form-group input" 
+                               value="{{ $user['phone'] }}">
+                    </div>
+
+                    <div class="button-container">
+                        <a href="/profile" class="cancel-button">Hủy</a>
+                        <button type="submit" class="save-button">Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script>
-        document.getElementById('avatar').addEventListener('change', function(e) {
-            if (e.target.files && e.target.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelector('.avatar-preview').src = e.target.result;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle dropdown toggle
+            document.querySelectorAll('[data-dropdown]').forEach(toggleBtn => {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const dropdownId = this.getAttribute('data-dropdown');
+                    const dropdown = document.getElementById(dropdownId);
+                    dropdown.classList.toggle('show');
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                const dropdowns = document.querySelectorAll('.user-dropdown');
+                dropdowns.forEach(dropdown => {
+                    if (!dropdown.contains(e.target) && !e.target.hasAttribute('data-dropdown')) {
+                        dropdown.classList.remove('show');
+                    }
+                });
+            });
+
+            // Close dropdown on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const dropdowns = document.querySelectorAll('.user-dropdown');
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('show');
+                    });
                 }
-                reader.readAsDataURL(e.target.files[0]);
-            }
+            });
+
+            // Handle avatar preview
+            document.getElementById('avatar').addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('.avatar-preview').src = e.target.result;
+                    }
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
         });
     </script>
 </body>
