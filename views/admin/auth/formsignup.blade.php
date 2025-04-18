@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Ký</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             margin: 0;
@@ -209,6 +210,83 @@
             50% { transform: scale(1.05); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
+        
+        /* Action buttons styles */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 15px;
+        }
+
+        .btn-home, .btn-login {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-home {
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+        }
+
+        .btn-login {
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
+        }
+
+        .btn-icon {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .btn-home:before, .btn-login:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-home:hover, .btn-login:hover {
+            transform: translateY(-5px);
+            color: white;
+        }
+
+        .btn-home:hover {
+            box-shadow: 0 7px 20px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-login:hover {
+            box-shadow: 0 7px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-home:hover:before, .btn-login:hover:before {
+            left: 0;
+        }
+
+        /* Button press effect */
+        .btn-home:active, .btn-login:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -253,6 +331,25 @@
         
         <button type="submit">Đăng Ký</button>
     </form>
+    
+    <div class="action-buttons">
+        <form action="/" method="GET" style="flex: 1;">
+            <button type="submit" class="btn-home">
+                <span class="btn-icon">
+                    <i class="fas fa-home"></i>
+                </span>
+                <span class="btn-text">Trang chủ</span>
+            </button>
+        </form>
+        <form action="/login" method="GET" style="flex: 1;">
+            <button type="submit" class="btn-login">
+                <span class="btn-icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                </span>
+                <span class="btn-text">Đăng nhập</span>
+            </button>
+        </form>
+    </div>
 </div>
 
 <script>
