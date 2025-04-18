@@ -206,6 +206,10 @@
         font-size: 40px;
     }
 </style>
+
+<!-- Thêm SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <div class="table-container">
     <div class="table-header">
         <h2>Quản lý Homestay</h2>
@@ -268,4 +272,31 @@
     </div>
     @endif
 </div>
+
+<!-- JavaScript để hiển thị alert -->
+<script>
+    @if(isset($_SESSION['success']))
+        Swal.fire({
+            icon: 'success',
+            title: 'Thành công!',
+            text: '{{ addslashes($_SESSION['success']) }}',
+            timer: 3000,
+            showConfirmButton: false
+        });
+        // Xóa session sau khi hiển thị
+        <?php unset($_SESSION['success']); ?>
+    @endif
+
+    @if(isset($_SESSION['error']))
+        Swal.fire({
+            icon: 'error',
+            title: 'Lỗi!',
+            text: '{{ addslashes($_SESSION['error']) }}',
+            timer: 3000,
+            showConfirmButton: false
+        });
+        // Xóa session sau khi hiển thị
+        <?php unset($_SESSION['error']); ?>
+    @endif
+</script>
 @endsection

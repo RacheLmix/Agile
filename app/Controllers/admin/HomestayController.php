@@ -240,10 +240,20 @@ class HomestayController extends Controller
     public function delete($id)
     {
         $homestay = $this->homestays->find($id);
-        if (file_exists($homestay['image'])) {
+        
+        // Kiểm tra xem homestay có phòng liên quan hay không
+        $rooms = $this->homestays->getRooms($id);
+        if (!empty($rooms)) {
+            $_SESSION['error'] = 'Khong the xoa homestay vi van con phong lien quan. Vui long xoa phong truoc.';
+            redirect('/admin/homestays');
+        }
+
+        // Nếu không có phòng, tiến hành xóa homestay
+        if ($homestay['image'] && file_exists($homestay['image'])) {
             unlink($homestay['image']);
         }
         $this->homestays->delete($id);
+        $_SESSION['success'] = 'Homestay đã được xóa thành công.';
         redirect('/admin/homestays');
     }
 }
