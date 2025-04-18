@@ -106,7 +106,7 @@ class PromotionController extends Controller
             $endDate = strtotime($data['end_date']);
             $today = strtotime(date('Y-m-d'));
             
-            // For new promotions, start date should not be in the past
+        
             if (!isset($data['id']) && $startDate < $today) {
                 $errors[] = 'Ngày bắt đầu không thể là ngày trong quá khứ';
             }

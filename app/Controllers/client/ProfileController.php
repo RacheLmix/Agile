@@ -111,8 +111,8 @@ class ProfileController extends Controller
             redirect('/login');
             return;
         }
-
         $user_id = $_SESSION['user']['id'];
+        $user = $this->users->find($user_id);
         $booking = new Booking();
         $bookings = $booking->findUserBookings($user_id);
         if (!$bookings) {
@@ -128,7 +128,7 @@ class ProfileController extends Controller
             $booking['nights'] = (strtotime($booking['check_out']) - strtotime($booking['check_in'])) / (60 * 60 * 24);
         }
 
-        return view('client.profile.order', compact('bookings'));
+        return view('client.profile.order', compact('bookings', 'user'));
     }
 
     public function orderDetail($id)
@@ -139,6 +139,7 @@ class ProfileController extends Controller
         }
 
         $user_id = $_SESSION['user']['id'];
+        $user = $this->users->find($user_id);
         $bookingModel = new Booking();
         $booking = $bookingModel->find($id);
 
@@ -160,7 +161,7 @@ class ProfileController extends Controller
         ];
         $booking['nights'] = (strtotime($booking['check_out']) - strtotime($booking['check_in'])) / (60 * 60 * 24);
 
-        return view('client.profile.order_detail', compact('booking', 'homestay', 'room', 'amenities'));
+        return view('client.profile.order_detail', compact('booking', 'homestay', 'room', 'amenities', 'user'));
     }
 
     public function checkin($id)
@@ -181,7 +182,7 @@ class ProfileController extends Controller
         }
 
         $booking->update($id, [
-            'status' => 'confirmed',
+            'status' => 'completed', // Changed from 'confirmed' to 'completed'
             'updated_at' => date('Y-m-d H:i:s')
         ]);
 
