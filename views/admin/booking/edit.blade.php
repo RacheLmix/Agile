@@ -156,11 +156,19 @@
                 }
             } else if (currentStatus === 'confirmed') {
                 if (newStatus !== 'cancelled') {
-                    alert('Từ trạng thái Đã Xác Nhận, bạn chỉ có thể chuyển sang Đã Hủy');
+                    alert('Từ trạng thái Đã Xác Nhận, bạn chỉ có thể chuyển sang Đã Check In');
                     statusSelect.value = selectedStatus;
                     return false;
                 }
-            } else if (currentStatus === 'cancelled') {
+            }
+            else if (currentStatus === 'completed') {
+                if (newStatus !== 'cancelled') {
+                    alert('Từ trạng thái Đã Check In, bạn chỉ có thể chuyển sang Đã Hủy');
+                    statusSelect.value = selectedStatus;
+                    return false;
+                }
+            }  
+            else if (currentStatus === 'cancelled') {
                 alert('Không thể thay đổi trạng thái từ Đã Hủy');
                 statusSelect.value = selectedStatus;
                 return false;
@@ -234,6 +242,7 @@
             <select id="status" name="status" class="form-control">
                 <option value="pending" {{ $booking['status'] == 'pending' ? 'selected' : '' }}>Chờ Xác Nhận</option>
                 <option value="confirmed" {{ $booking['status'] == 'confirmed' ? 'selected' : '' }}>Đã Xác Nhận</option>
+                <option value="completed" {{ $booking['status'] == 'completed' ? 'selected' : '' }}>Đã Checkin</option>
                 <option value="cancelled" {{ $booking['status'] == 'cancelled' ? 'selected' : '' }}>Đã Hủy</option>
             </select>
         </div>

@@ -4,16 +4,23 @@ use App\Controller;
 use App\Models\Booking;
 use App\Models\Room;
 use App\Models\User;
+use App\Models\Homestay;
+use App\Models\Amenity;
 
 class BookingController extends Controller{
     protected $booking;
     protected $user;
     protected $room;
+    protected $homestay;
+    protected $amenity;
+    
     public function __construct()
     {
         $this->booking = new Booking();
         $this->user = new User();
         $this->room = new Room();
+        $this->homestay = new Homestay();
+        $this->amenity = new Amenity();
     }
     public function index()
     {
@@ -25,7 +32,28 @@ class BookingController extends Controller{
         $booking = $this->booking->find($id);
         $room = $this->room->findAll();
         $user = $this->user->findAll();
-        view('admin.booking.details', compact('booking', 'room', 'user'));
+        
+        // Get the room details
+        $roomDetails = null;
+        foreach($room as $r) {
+            if($r['id'] == $booking['room_id']) {
+                $roomDetails = $r;
+                break;
+            }
+        }
+        
+        $homestayDetails = null;
+        $amenities = [];
+        if($roomDetails) {
+            $homestayDetails = $this->homestay->findHomestayWithDetails($roomDetails['homestay_id']);
+            $amenities = $this->homestay->getAmenities($roomDetails['homestay_id']);
+        }
+        
+        $checkIn = new \DateTime($booking['check_in']);
+        $checkOut = new \DateTime($booking['check_out']);
+        $duration = $checkIn->diff($checkOut)->days;
+        
+        view('admin.booking.details', compact('booking', 'room', 'user', 'homestayDetails', 'amenities', 'duration'));
     }
     public function edit($id)
     {

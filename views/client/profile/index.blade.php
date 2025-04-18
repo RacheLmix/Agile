@@ -667,26 +667,8 @@
                         <i class="fas fa-calendar-alt"></i>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Vai trò</label>
-                    <div class="input-icon">
-                        <input type="text" value="{{ $user['role'] }}" readonly>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Trạng thái</label>
-                    <div class="input-icon">
-                        <input type="text" value="@switch($user['status']) @case('active') Đang hoạt động @break @case('inactive') Đã khóa @break @case('banned') Đã bị cấm @break @default Không xác định @endswitch" readonly>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Giới thiệu</label>
-                    <textarea readonly>Xin chào! Tôi là thành viên của cộng đồng Homestay. Rất vui được kết nối và chia sẻ những trải nghiệm tuyệt vời!</textarea>
-                </div>
                 <div class="button-container">
-                    <a href="/profile/edit/{{ $user['id'] }}" class="save-button">LƯU THAY ĐỔI</a>
+                    <a href="/profile/edit/{{ $user['id'] }}" class="save-button">Chỉnh sửa thông tin</a>
                 </div>
             </div>
         </div>

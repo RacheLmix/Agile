@@ -348,6 +348,7 @@
     const apiUrl = 'https://openrouter.ai/api/v1/chat/completions';
     const apiKey = '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';
     const modelId = 'meta-llama/llama-4-scout:free';
+    
     // Show chatbot with animation when button is clicked
     chatbotButton.addEventListener('click', function() {
       chatbotContainer.style.display = 'flex';

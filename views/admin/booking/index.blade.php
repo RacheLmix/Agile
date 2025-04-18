@@ -87,6 +87,11 @@
             color: #f44336;
         }
         
+        .status-completed {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
         .action-cell {
             display: flex;
             gap: 8px;
@@ -159,7 +164,8 @@
                         <td>
                             <span class="status status-{{ strtolower($book['status']) }}">
                                 {{ $book['status'] == 'pending' ? 'Đang chờ' : 
-                                   ($book['status'] == 'confirmed' ? 'Đã xác nhận' : 'Đã hủy') }}
+                                   ($book['status'] == 'confirmed' ? 'Đã xác nhận' : 
+                                   ($book['status'] == 'completed' ? 'Đã checkin' : 'Đã hủy')) }}
                             </span>
                         </td>
                         <td class="action-cell">
